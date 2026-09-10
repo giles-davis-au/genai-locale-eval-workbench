@@ -10,6 +10,7 @@ The judge is also kept blind to two things, by construction of what it is given:
 
 - **Blind to the reference assessment** — it is never shown Giles's annotations, status, or points.
 - **Blind, where practical, to whether the output is V1 or V2** — the judge is given only the user's own prompt, the target locale, the rubric, and the output text. It is never given the V2 locale profile or glossary context packet, and the prompt shape is identical for V1 and V2 outputs. This is "where practical" because a careful reader could sometimes infer version from writing style, but nothing in the input labels it.
+  - **The `system_instruction` is deliberately excluded too, for the same reason.** V1's and V2's system instructions differ in wording -- V2's explicitly says to "follow the supplied locale profile, brand guidance and relevant terminology entries," which doesn't exist in V1 at all -- so including it would trivially reveal version even without the retrieved context itself. Nothing is lost by leaving it out: it adds no information beyond what the user's own prompt and the rubric already supply, and excluding it is consistent with `system_instruction` being labelled "platform-level, hidden from the user" everywhere else in this project -- a real evaluator wouldn't see a product's internal system prompt either.
 
 ## The generated artefact: `docs/judge-run-<version>.md`
 

@@ -108,6 +108,11 @@ def main():
     lines.append("")
     lines.append(f"## The {len(task_ids)} tasks to assess")
     lines.append("")
+    # Deliberately not including record["context_packet"]["system_instruction"] here: V1's and
+    # V2's system instructions differ in wording (V2's names "locale profile, brand guidance and
+    # terminology entries", which V1 has none of), so including it would reveal version on its own.
+    # It adds nothing the judge needs anyway -- user_prompt + the rubric already cover it -- and
+    # omitting it matches system_instruction being "platform-level, hidden from the user" elsewhere.
     for tid in task_ids:
         task = tasks_by_id[tid]
         record = results_by_id[tid]
