@@ -28,11 +28,11 @@ The file's shape: a role instruction, the rubric (dimension/subtype ids, severit
 
 1. Generate the file: `python3 scripts/build_judge_run.py v1`.
 2. Upload or paste the full content of `docs/judge-run-v1.md` to a separate model (GPT-5.6 Sol), run outside this repository's tooling and outside the session that built this project.
-3. Save the model's raw JSON response to a local file (anywhere — it doesn't need to live in this repo).
+3. Save the model's raw JSON response as `docs/judge-response-<version>.json` (e.g. `docs/judge-response-v1.json`) — kept alongside `docs/judge-run-<version>.md` so the pair is inspectable together: exactly what was sent, exactly what came back.
 4. Split it into the per-record files the importer expects:
 
    ```bash
-   python3 scripts/split_judge_response.py v1 path/to/saved-response.json
+   python3 scripts/split_judge_response.py v1 docs/judge-response-v1.json
    ```
 
    This writes `data/judge-intake/<task_id>-v1.json` for each task ID present in the response.
