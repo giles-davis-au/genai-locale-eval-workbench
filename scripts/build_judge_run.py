@@ -66,7 +66,6 @@ def main():
         for b in bands
     )
     lines.append(f"Status bands (sum your annotations' points for a task, using the bands below): {band_desc}.")
-    lines.append("Any critical-severity annotation fails that task's assessment outright, regardless of point total.")
     lines.append("")
     lines.append("## Required output format")
     lines.append("")

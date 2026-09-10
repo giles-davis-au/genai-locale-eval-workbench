@@ -27,7 +27,6 @@ Severities and points:
 - `critical` = 10 point(s) -- A deviation serious enough to fail this assessment outright, such as a factual error or a violated hard constraint. This describes how the assessment is scored, not a real-time publishing gate -- this project's review happens after generation, not while a live user is being served the output.
 
 Status bands (sum your annotations' points for a task, using the bands below): Pass: 0-1; Needs revision: 2-4; Fail: 5+.
-Any critical-severity annotation fails that task's assessment outright, regardless of point total.
 
 ## Required output format
 
