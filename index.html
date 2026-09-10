@@ -23,16 +23,17 @@
 <nav class="view-nav" aria-label="Evaluation lifecycle steps">
   <ol>
     <li><button type="button" class="nav-tab" data-view="view-1" aria-current="page">1. Setup &amp; records</button></li>
-    <li><button type="button" class="nav-tab" data-view="view-2">2. Explore V1 results</button></li>
-    <li><button type="button" class="nav-tab" data-view="view-3">3. Investigate the pattern</button></li>
-    <li><button type="button" class="nav-tab" data-view="view-4">4. Compare V1 vs V2</button></li>
+    <li><button type="button" class="nav-tab" data-view="view-2">2. V1 evaluation</button></li>
+    <li><button type="button" class="nav-tab" data-view="view-3">3. V1 dashboard</button></li>
+    <li><button type="button" class="nav-tab" data-view="view-4">4. Investigate the pattern</button></li>
+    <li><button type="button" class="nav-tab" data-view="view-5">5. Compare V1 vs V2</button></li>
   </ol>
 </nav>
 
 <main id="main-content">
 
   <section id="view-1" class="view" data-view-panel>
-    <h2>Evaluation setup and record inspection</h2>
+    <h2>Evaluation setup</h2>
 
     <div id="v1-load-error" class="empty-state" hidden></div>
 
@@ -55,6 +56,11 @@
       <h3 id="rubric-heading">Rubric, severities and status thresholds</h3>
       <div id="rubric-content"></div>
     </section>
+  </section>
+
+  <section id="view-2" class="view" data-view-panel hidden>
+    <h2>V1 evaluation</h2>
+    <p class="prose">One task's full record, end to end — its exact input, its raw output, and both assessments — so you can see the shape of a single evaluated record. View 3 aggregates counts and patterns across all ten; this view stays at the single-record level.</p>
 
     <section aria-labelledby="record-heading">
       <h3 id="record-heading">Inspect one complete record</h3>
@@ -64,22 +70,22 @@
     </section>
   </section>
 
-  <section id="view-2" class="view" data-view-panel hidden>
-    <h2>Explore V1 results</h2>
-    <div id="v2-empty-state" class="empty-state"></div>
-    <div id="v2-content" hidden></div>
-  </section>
-
   <section id="view-3" class="view" data-view-panel hidden>
-    <h2>Investigate the pattern and intervention</h2>
+    <h2>V1 dashboard</h2>
     <div id="v3-empty-state" class="empty-state"></div>
     <div id="v3-content" hidden></div>
   </section>
 
   <section id="view-4" class="view" data-view-panel hidden>
-    <h2>Compare V1 and V2</h2>
+    <h2>Investigate the pattern and intervention</h2>
     <div id="v4-empty-state" class="empty-state"></div>
     <div id="v4-content" hidden></div>
+  </section>
+
+  <section id="view-5" class="view" data-view-panel hidden>
+    <h2>Compare V1 and V2</h2>
+    <div id="v5-empty-state" class="empty-state"></div>
+    <div id="v5-content" hidden></div>
   </section>
 
 </main>

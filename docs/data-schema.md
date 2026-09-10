@@ -115,7 +115,7 @@ For V2 records, `context_packet.retrieved_context` is `{ "locale_profile": ..., 
 
 ## `data/findings.json`
 
-Array of finding objects used by View 3 (pattern investigation):
+Array of finding objects used by View 4 (pattern investigation):
 
 ```json
 {

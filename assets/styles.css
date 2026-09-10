@@ -125,7 +125,7 @@ main {
   margin-bottom: 2.5rem;
 }
 
-.prose p { margin: 0 0 0.75rem; }
+.prose p, p.prose { margin: 0 0 0.75rem; }
 
 .empty-state {
   border: 1px dashed var(--color-border);

@@ -92,7 +92,7 @@
     return state.tasks.find((t) => t.task_id === taskId);
   }
 
-  // ---------- View 1: setup and record inspection ----------
+  // ---------- View 1: setup ----------
 
   function renderPurpose() {
     const container = document.getElementById("purpose-content");
@@ -207,6 +207,8 @@
     }));
   }
 
+  // ---------- View 2: V1 evaluation (inspect one complete record) ----------
+
   function renderAssessment(kind, assessment) {
     const label = kind === "reference" ? "reference" : "judge";
     const block = el("div", { class: `assessment-block ${label}` }, [
@@ -300,26 +302,29 @@
     renderTasks();
     renderV1Config();
     renderRubric();
+  }
+
+  function renderView2() {
     renderRecordInspector();
   }
 
-  // ---------- Views 2-4: populated once results/findings data exists ----------
-
-  function renderView2() {
-    const empty = document.getElementById("v2-empty-state");
-    const content = document.getElementById("v2-content");
-    // V1 result data exists (see View 1), but this view's summaries, filters and
-    // drilldowns are not implemented yet -- that lands in Phase 3. Gate on that,
-    // not on data presence, so this doesn't silently render an empty panel once
-    // data/v1-results.json is populated.
-    empty.textContent = "V1 result data is loaded (see View 1 for the 10 records), but this view's Pass/Needs revision/Fail summary, error-point breakdown by dimension, and reference-vs-judge comparison have not been implemented yet.";
-    empty.hidden = false;
-    content.hidden = true;
-  }
+  // ---------- Views 3-5: populated once results/findings data exists ----------
 
   function renderView3() {
     const empty = document.getElementById("v3-empty-state");
     const content = document.getElementById("v3-content");
+    // V1 result data exists (see View 2), but this view's summaries, filters and
+    // drilldowns are not implemented yet -- that lands in Phase 3. Gate on that,
+    // not on data presence, so this doesn't silently render an empty panel once
+    // data/v1-results.json is populated.
+    empty.textContent = "V1 result data is loaded (see View 2 for individual records), but this view's Pass/Needs revision/Fail summary, error-point breakdown by dimension, and reference-vs-judge comparison have not been implemented yet.";
+    empty.hidden = false;
+    content.hidden = true;
+  }
+
+  function renderView4() {
+    const empty = document.getElementById("v4-empty-state");
+    const content = document.getElementById("v4-content");
     if (state.findings.length === 0) {
       empty.textContent = "No findings recorded yet. This view will show the observation, examples, alternative explanations, hypothesis and proposed V2 intervention derived from the V1 evidence.";
       empty.hidden = false;
@@ -331,9 +336,9 @@
     // Full implementation lands in Phase 3 (evidence-linked V1 pattern analysis).
   }
 
-  function renderView4() {
-    const empty = document.getElementById("v4-empty-state");
-    const content = document.getElementById("v4-content");
+  function renderView5() {
+    const empty = document.getElementById("v5-empty-state");
+    const content = document.getElementById("v5-content");
     if (state.v2Results.length === 0) {
       empty.textContent = "V2 result data has not been added yet. This view will pair each task's V1 and V2 context, output, assessments, and surface any new errors introduced in V2.";
       empty.hidden = false;
@@ -376,6 +381,7 @@
     renderView2();
     renderView3();
     renderView4();
+    renderView5();
   }
 
   document.addEventListener("DOMContentLoaded", boot);

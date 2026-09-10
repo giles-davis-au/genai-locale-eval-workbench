@@ -24,7 +24,7 @@ A static, offline, read-only web app that walks an interviewer through one evalu
 
 | File | Role |
 |---|---|
-| `assets/app.js` | All rendering and derived-metric logic. View 1 (setup and record inspection) is fully implemented. Views 2–4 currently render an explicit "not implemented yet" empty state pending Phase 3/4 — View 2's is gated on that status directly, not on data presence, since `data/v1-results.json` is already populated; Views 3/4 are still correctly gated on `data/findings.json`/`data/v2-results.json` being empty. |
+| `assets/app.js` | All rendering and derived-metric logic. Five views: **View 1** (setup) and **View 2** (V1 evaluation — inspect one complete record) are fully implemented. **View 3** (V1 dashboard), **View 4** (investigate the pattern) and **View 5** (compare V1 vs V2) currently render an explicit "not implemented yet" empty state pending Phase 3/4 — View 3's is gated on that status directly, not on data presence, since `data/v1-results.json` is already populated; Views 4/5 are still correctly gated on `data/findings.json`/`data/v2-results.json` being empty. |
 | `data/rubric.json` | Scoring source of truth. |
 | `scripts/validate_data.py` | Independent structural + arithmetic check over everything in `data/`. Run after any data edit. |
 | `scripts/import_judge_results.py` | Merges externally-run judge JSON from `data/judge-intake/` into the results files. |
