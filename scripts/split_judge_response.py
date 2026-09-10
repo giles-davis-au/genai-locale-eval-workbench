@@ -54,7 +54,7 @@ def main():
     if skipped:
         print(f"Skipped {len(skipped)}:")
         for tid, reason in skipped:
-            print(f"  {tid} -- {reason}")
+            print(f"  {tid}: {reason}")
     print("\nNext: python3 scripts/import_judge_results.py")
     return 0
 

@@ -4,13 +4,13 @@ This document is the source of truth for the shape of every JSON file in `data/`
 
 ## `data/rubric.json`
 
-See the file directly — it is small and self-describing. Key fields consumed elsewhere:
+See the file directly; it is small and self-describing. Key fields consumed elsewhere:
 
-- `dimensions[].id`, `dimensions[].subtypes[].id` — the only valid values for `annotation.dimension` / `annotation.subtype` in results files.
-- `dimensions[].source` / `dimensions[].subtypes[].source` — `"mqm_core"` or `"project_addition"`, rendered as the app's Source column (with an asterisk when a subtype's source differs from its dimension's). Optional `source_note` fields on either give the reason and render as a hover tooltip.
-- `framing` — an array of paragraph strings (not a single block), rendered as separate `<p>` elements so it stays readable; any `http(s)://` URL inside a paragraph is auto-linked.
-- `severities.<minor|major|critical>.points` — the only valid severities and their point values.
-- `status_policy.critical_forces_fail` and `status_policy.bands` — the only source of status-threshold logic. Nothing else in the repository should hardcode `0-1 = Pass` etc.
+- `dimensions[].id`, `dimensions[].subtypes[].id`: the only valid values for `annotation.dimension` / `annotation.subtype` in results files.
+- `dimensions[].source` / `dimensions[].subtypes[].source`: `"mqm_core"` or `"project_addition"`, rendered as the app's Source column (with an asterisk when a subtype's source differs from its dimension's). Optional `source_note` fields on either give the reason and render as a hover tooltip.
+- `framing`: an array of paragraph strings (not a single block), rendered as separate `<p>` elements so it stays readable; any `http(s)://` URL inside a paragraph is auto-linked.
+- `severities.<minor|major|critical>.points`: the only valid severities and their point values.
+- `status_policy.critical_forces_fail` and `status_policy.bands`: the only source of status-threshold logic. Nothing else in the repository should hardcode `0-1 = Pass` etc.
 
 ## `data/locale-profiles.json`
 
@@ -30,7 +30,7 @@ One row per glossary entry. Columns:
 | `dimension_subtype` | `wrong_term` or `inconsistent_with_terminology_resource` (must match a `terminology` subtype in `rubric.json`) |
 | `note` | short human-readable explanation |
 
-**Retrieval rule (V2 only, deterministic, no embeddings):** for a given task, select every row where (`scope == "category"` and `match_key == task.content_category`) or (`scope == "task"` and `match_key == task.task_id`). This is the entire retrieval mechanism — see [methodology.md](methodology.md) for why this counts as lightweight retrieval-augmented context rather than semantic RAG.
+**Retrieval rule (V2 only, deterministic, no embeddings):** for a given task, select every row where (`scope == "category"` and `match_key == task.content_category`) or (`scope == "task"` and `match_key == task.task_id`). This is the entire retrieval mechanism; see [methodology.md](methodology.md) for why this counts as lightweight retrieval-augmented context rather than semantic RAG.
 
 ## `data/tasks.json`
 
@@ -48,11 +48,11 @@ Array of exactly 10 task objects:
 }
 ```
 
-`user_prompt` is the model's actual input (combined with the system instruction, and for V2 the retrieved context — see below), and the sole specification of what each task asks for. It is identical across V1 and V2 for a given task, because a real user's own prompt does not change when the platform's retrieval behaviour changes behind the scenes.
+`user_prompt` is the model's actual input (combined with the system instruction, and for V2 the retrieved context; see below), and the sole specification of what each task asks for. It is identical across V1 and V2 for a given task, because a real user's own prompt does not change when the platform's retrieval behaviour changes behind the scenes.
 
-There is deliberately no separate structured `facts`/`constraints` breakdown. An earlier draft of this schema had one, reasoned as a "grading checklist" the human evaluator and LLM-as-a-judge could consult — but on reflection that doesn't correspond to any real evaluation mechanism: a real evaluator, human or LLM-as-a-judge, only ever receives prompt, response, and rubric, and derives what matters from the prompt themselves. A pre-extracted checklist was never given to the LLM-as-a-judge (see [judge-prompt.md](judge-prompt.md), which has always used only `user_prompt`) and has been removed everywhere else too, rather than kept as an unused artifact that could be mistaken for a real pipeline step. Each annotation's own `rationale` field cites the specific requirement it's checking, in context, exactly as a real evaluator would.
+There is deliberately no separate structured `facts`/`constraints` breakdown. An earlier draft of this schema had one, reasoned as a "grading checklist" the human evaluator and LLM-as-a-judge could consult, but on reflection that doesn't correspond to any real evaluation mechanism: a real evaluator, human or LLM-as-a-judge, only ever receives prompt, response, and rubric, and derives what matters from the prompt themselves. A pre-extracted checklist was never given to the LLM-as-a-judge (see [judge-prompt.md](judge-prompt.md), which has always used only `user_prompt`) and has been removed everywhere else too, rather than kept as an unused artifact that could be mistaken for a real pipeline step. Each annotation's own `rationale` field cites the specific requirement it's checking, in context, exactly as a real evaluator would.
 
-**Disclosed build note:** V1 generation was originally performed against a structured breakdown of this same request (a brief, a facts list, a constraints list) rather than by typing the `user_prompt` text shown above. That breakdown has since been deleted from this repository's data model for the reason above; the generated output was not regenerated to match its removal. Both forms carried identical informational content, and the frozen output was never edited, regenerated, or cherry-picked to fit either — see [provenance.md](provenance.md) for the full disclosure.
+**Disclosed build note:** V1 generation was originally performed against a structured breakdown of this same request (a brief, a facts list, a constraints list) rather than by typing the `user_prompt` text shown above. That breakdown has since been deleted from this repository's data model for the reason above; the generated output was not regenerated to match its removal. Both forms carried identical informational content, and the frozen output was never edited, regenerated, or cherry-picked to fit either; see [provenance.md](provenance.md) for the full disclosure.
 
 ## `data/v1-results.json` and `data/v2-results.json`
 
@@ -63,18 +63,18 @@ Array of exactly 10 records each (one per task), same task IDs in both files.
   "task_id": "T01",
   "version": "v1",
   "context_packet": {
-    "system_instruction": "exact platform-level system instruction for this version -- hidden from the user, never typed by them",
-    "user_prompt": "copied verbatim from tasks.json -- identical in v1 and v2",
+    "system_instruction": "exact platform-level system instruction for this version: hidden from the user, never typed by them",
+    "user_prompt": "copied verbatim from tasks.json: identical in v1 and v2",
     "retrieved_context": null
   },
   "output": {
     "text": "raw, unedited generated marketing copy",
     "model_name": "claude-sonnet-5",
     "run_date": "2026-09-10",
-    "generation_notes": "free text — how and when this was generated, and any honesty caveats"
+    "generation_notes": "free text: how and when this was generated, and any honesty caveats"
   },
   "reference_assessment": {
-    "label": "Human evaluator assessment — created by the MVP author for demonstration",
+    "label": "Human evaluator assessment: created by the MVP author for demonstration",
     "status": "Pass",
     "total_points": 0,
     "annotations": [
@@ -107,7 +107,7 @@ Array of exactly 10 records each (one per task), same task IDs in both files.
 }
 ```
 
-For V2 records, `context_packet.retrieved_context` is `{ "locale_profile": ..., "glossary_entries": [...] }` — `locale_profile` is the full object from `locale-profiles.json` for the task's `target_locale`, and `glossary_entries` is the array of matched rows from `terminology.csv` (see retrieval rule above), stored as objects. This block is injected by the platform alongside the system instruction — the user never sees or types it — so an interviewer can see exactly what was retrieved and supplied without mistaking it for something the user asked for.
+For V2 records, `context_packet.retrieved_context` is `{ "locale_profile": ..., "glossary_entries": [...] }`: `locale_profile` is the full object from `locale-profiles.json` for the task's `target_locale`, and `glossary_entries` is the array of matched rows from `terminology.csv` (see retrieval rule above), stored as objects. This block is injected by the platform alongside the system instruction (the user never sees or types it), so an interviewer can see exactly what was retrieved and supplied without mistaking it for something the user asked for.
 
 `review_status` is `"pending_review"` until Giles has explicitly reviewed and approved that specific annotation set, at which point it becomes `"approved"` and `review_date` is filled in. **No record may be described in the UI or docs as a finished human evaluator assessment while `review_status` is `"pending_review"`.**
 
@@ -121,6 +121,7 @@ Array of finding objects used by View 4 (pattern investigation):
 {
   "finding_id": "F1",
   "title": "short title",
+  "recommendation_type": "system_change",
   "observation": {
     "summary": "what occurred and in how many records",
     "affected_task_ids": ["T01", "T05"],
@@ -131,13 +132,15 @@ Array of finding objects used by View 4 (pattern investigation):
     { "task_id": "T01", "version": "v1", "annotation_id": "T01-V1-REF-1" }
   ],
   "alternative_explanations": ["..."],
-  "hypothesis": "bounded hypothesis about the V1 generation configuration",
-  "proposed_intervention": "the specific V2 change this motivates",
-  "expected_effect": "what should change in V2 if the hypothesis is right"
+  "hypothesis": "bounded hypothesis about the V1 generation system configuration",
+  "proposed_recommendation": "the specific change this motivates",
+  "expected_effect": "what should change if the hypothesis is right"
 }
 ```
 
-Every `task_id` and `annotation_id` referenced here must resolve to a real record in `v1-results.json` (the validator checks this).
+`finding_id` is a short internal reference (`F1`, `F2`, ...), analogous to `task_id`; the app displays it spelled out ("Finding 1"). Every finding drives a recommendation; `recommendation_type` states, as authored fact rather than something the reader has to infer from `proposed_recommendation`'s wording, which kind: `"system_change"` (a change to the V1/V2 generation system configuration, e.g. Finding 1's locale-profile retrieval) or `"evaluator_training"` (a change to how the human evaluator works, not to the generation system, e.g. Finding 2). The app's step-5 heading and coloured badge both read this field directly ("Recommendation: system change" / "Recommendation: evaluator training"), so the two never drift apart. Findings are ordered in the array by this field, `"system_change"` first: that's the recommendation actually built into this artifact's V2, so it's the finding chain a reader most needs to see before View 5's V1/V2 comparison; the `"evaluator_training"` finding, which nothing in this build implements, follows.
+
+Every `task_id` and `annotation_id` referenced here must resolve to a real record in `v1-results.json` (the validator checks this). An `evidence_links` entry's `annotation_id` is `null` when the entry points at an LLM-as-a-judge annotation, since judge annotations (imported from external output) carry no per-annotation id; only reference/human annotations do.
 
 ## Validation summary
 

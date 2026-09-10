@@ -2,8 +2,8 @@
   "version": "2.0",
   "framing": [
     "This rubric adapts the MQM Council's MQM Core error typology (verified live, not recalled from memory) rather than starting from scratch. The Source column below shows which dimensions are adopted from MQM Core and which are this project's own additions; an asterisk (*) on a subtype means that one subtype breaks from its dimension's source, with a tooltip explaining why.",
-    "MQM Core defines seven top-level dimensions. This project adopts six and omits Design and markup entirely, since the generated output is always a single plain-text paragraph with no headings, layout, or markup for that dimension to ever apply to. Within each adopted dimension, only the subtypes plausible for locale-conditioned marketing-copy generation are kept -- translation-only subtypes (e.g. Accuracy's Mistranslation, Overtranslation, Undertranslation, Untranslated and Do not translate, all source-language/target-language bitext concepts) are dropped rather than renamed, since this project evaluates monolingual generation against a task brief, not translation against a source text.",
-    "Severities and status thresholds are project-specific evaluation choices, not taken from MQM's own scoring model. All seven dimensions are weighted equally -- a minor annotation costs the same 1 point regardless of which dimension it is filed under, with no per-dimension multiplier.",
+    "MQM Core defines seven top-level dimensions. This project adopts six and omits Design and markup entirely, since the generated output is always a single plain-text paragraph with no headings, layout, or markup for that dimension to ever apply to. Within each adopted dimension, only the subtypes plausible for locale-conditioned marketing-copy generation are kept: translation-only subtypes (e.g. Accuracy's Mistranslation, Overtranslation, Undertranslation, Untranslated and Do not translate, all source-language/target-language bitext concepts) are dropped rather than renamed, since this project evaluates monolingual generation against a task brief, not translation against a source text.",
+    "Severities and status thresholds are project-specific evaluation choices, not taken from MQM's own scoring model. All seven dimensions are weighted equally: a minor annotation costs the same 1 point regardless of which dimension it is filed under, with no per-dimension multiplier.",
     "Overall this rubric is MQM-informed, not MQM-compliant. Source: MQM Core typology, https://www.themqm.org/mqm-pillars/the-mqm-core-typology/"
   ],
   "dimensions": [
@@ -72,7 +72,7 @@
       "id": "audience_appropriateness",
       "name": "Audience appropriateness",
       "source": "mqm_core",
-      "source_note": "Named \"Verity\" in MQM v1; renamed \"Audience appropriateness\" in MQM v2. MQM Core also defines an \"Offensive\" subtype here, which this project omits as out of scope -- content-safety/offense evaluation is not this project's purpose, and none of the 10 synthetic, low-risk-domain tasks were ever likely to produce it.",
+      "source_note": "Named \"Verity\" in MQM v1; renamed \"Audience appropriateness\" in MQM v2. MQM Core also defines an \"Offensive\" subtype here, which this project omits as out of scope: content-safety/offense evaluation is not this project's purpose, and none of the 10 synthetic, low-risk-domain tasks were ever likely to produce it.",
       "description": "Errors where content uses a culture-specific reference that would not be understood by, or would land oddly for, the target-locale audience.",
       "subtypes": [
         { "id": "culture_specific_reference", "name": "Culture-specific reference", "source": "mqm_core" }
@@ -83,7 +83,7 @@
       "name": "Instruction & constraint compliance",
       "source": "project_addition",
       "source_note": "No MQM dimension covers this. MQM assumes a source-text/target-text correspondence task; it has no concept of an arbitrary user-supplied constraint (a word-count range, a required mention) because translation tasks don't have that. This project's tasks do, so this dimension is this project's own addition, not adapted from MQM.",
-      "description": "The output satisfies the task's explicit constraints, such as required mentions, length limits or format. This dimension is not part of MQM's typology -- MQM assumes a translation task with no concept of an arbitrary user-supplied constraint like a word count, so it is this project's own addition.",
+      "description": "The output satisfies the task's explicit constraints, such as required mentions, length limits or format. This dimension is not part of MQM's typology: MQM assumes a translation task with no concept of an arbitrary user-supplied constraint like a word count, so it is this project's own addition.",
       "subtypes": [
         { "id": "length_violation", "name": "Length constraint violated", "source": "project_addition" },
         { "id": "missing_required_element", "name": "Missing required element", "source": "project_addition" },
@@ -94,7 +94,7 @@
   "severities": {
     "minor": { "points": 1, "description": "A small deviation that a reviewer would likely note but that would not, on its own, move an assessment out of Pass." },
     "major": { "points": 5, "description": "A deviation a locale-aware reviewer would flag as needing correction. One major-severity annotation on its own already reaches this project's Fail threshold (5+ points)." },
-    "critical": { "points": 10, "description": "A deviation serious enough to fail this assessment outright, such as a factual error or a violated hard constraint. This describes how the assessment is scored, not a real-time publishing gate -- this project's review happens after generation, not while a live user is being served the output." }
+    "critical": { "points": 10, "description": "A deviation serious enough to fail this assessment outright, such as a factual error or a violated hard constraint. This describes how the assessment is scored, not a real-time publishing gate; this project's review happens after generation, not while a live user is being served the output." }
   },
   "status_policy": {
     "description": "Status is derived from the sum of annotation points for a single assessment, using the bands below.",

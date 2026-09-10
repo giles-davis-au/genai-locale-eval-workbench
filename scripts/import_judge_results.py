@@ -91,7 +91,7 @@ def main():
     if skipped:
         print(f"Skipped: {len(skipped)}")
         for name, reason in skipped:
-            print(f"  skip {name} -- {reason}")
+            print(f"  skip {name}: {reason}")
 
     missing = sorted(expected - found)
     if missing:

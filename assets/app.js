@@ -1,4 +1,4 @@
-// GenAI Locale Evaluation Workbench — static, offline, read-only app.
+// GenAI Locale Evaluation Workbench: static, offline, read-only app.
 // No network calls other than fetching bundled files in data/. No persistence.
 
 (function () {
@@ -104,7 +104,7 @@
   function renderPurpose() {
     const container = document.getElementById("purpose-content");
     container.appendChild(el("p", {
-      text: "This workbench walks through one bounded evaluation lifecycle for locale-conditioned English marketing-copy generation, worked through Australian English (en-AU): inspect a V1 baseline, explore its results, investigate one recurring pattern, then compare V1 against a V2 generation configuration that adds lightweight retrieval-augmented context.",
+      text: "This workbench walks through one bounded evaluation lifecycle for locale-conditioned English marketing-copy generation, worked through Australian English (en-AU): inspect a V1 baseline, explore its results, investigate one recurring pattern, then compare V1 against a V2 generation system configuration that adds lightweight retrieval-augmented context.",
     }));
     container.appendChild(el("p", {
       text: "It is a preloaded, reproducible case study, not a live AI product. It contains no database, build step, package installation or external runtime dependency, and it makes no network requests.",
@@ -119,7 +119,7 @@
     for (const task of state.tasks) {
       const card = el("div", { class: "task-card" }, [
         el("span", { class: "category-tag", text: task.category_label }),
-        el("h4", { text: `${task.task_id} — ${task.business_name}` }),
+        el("h4", { text: `${task.task_id}: ${task.business_name}` }),
         el("p", { text: task.brief }),
         el("p", { html: "<strong>User prompt (what was actually sent):</strong>" }),
         el("p", { class: "output-text", text: task.user_prompt }),
@@ -188,7 +188,7 @@
       })),
     ]);
     container.appendChild(dimTable);
-    container.appendChild(el("p", { class: "meta", text: "* this one subtype's source differs from the rest of its dimension -- hover it, or the Source cell, for why." }));
+    container.appendChild(el("p", { class: "meta", text: "* this one subtype's source differs from the rest of its dimension: hover it, or the Source cell, for why." }));
 
     const sevTable = el("table", { class: "data-table" }, [
       el("thead", {}, [el("tr", {}, [el("th", { text: "Severity" }), el("th", { text: "Points" }), el("th", { text: "Description" })])]),
@@ -210,7 +210,7 @@
     ]);
     container.appendChild(bandTable);
     container.appendChild(el("p", {
-      html: "<strong>These dimensions and thresholds are project-specific evaluation choices, not a universal MQM scoring standard.</strong> The design is MQM-informed, not MQM-compliant — see the README references.",
+      html: "<strong>These dimensions and thresholds are project-specific evaluation choices, not a universal MQM scoring standard.</strong> The design is MQM-informed, not MQM-compliant; see the README references.",
     }));
   }
 
@@ -225,14 +225,14 @@
     const draft = kind === "reference" && assessment.review_status === "pending_review";
 
     if (pending) {
-      block.appendChild(el("p", { class: "meta", text: "Awaiting external LLM-as-a-judge run — not yet imported." }));
+      block.appendChild(el("p", { class: "meta", text: "Awaiting external LLM-as-a-judge run: not yet imported." }));
       return block;
     }
 
     block.appendChild(statusPill(assessment.status));
-    block.appendChild(el("span", { text: ` — ${assessment.total_points} error point(s)` }));
+    block.appendChild(el("span", { text: `: ${assessment.total_points} error point(s)` }));
     if (draft) {
-      block.appendChild(el("p", { class: "meta", text: "Draft — pending Giles's explicit review before this counts as the human evaluator's assessment." }));
+      block.appendChild(el("p", { class: "meta", text: "Draft: pending Giles's explicit review before this counts as the human evaluator's assessment." }));
     }
 
     if (!assessment.annotations || assessment.annotations.length === 0) {
@@ -240,7 +240,7 @@
     } else {
       for (const a of assessment.annotations) {
         block.appendChild(el("div", { class: "annotation" }, [
-          el("div", { class: "meta", text: `${a.dimension} / ${a.subtype} — ${a.severity}` }),
+          el("div", { class: "meta", text: `${a.dimension} / ${a.subtype} (${a.severity})` }),
           a.span ? el("p", { html: `<em>“${a.span}”</em>` }) : null,
           el("p", { text: a.rationale }),
           a.suggested_correction ? el("p", { text: `Suggested correction: ${a.suggested_correction}` }) : null,
@@ -298,7 +298,7 @@
   function renderRecordInspector() {
     const select = document.getElementById("record-task-select");
     for (const task of state.tasks) {
-      select.appendChild(el("option", { value: task.task_id, text: `${task.task_id} — ${task.business_name}` }));
+      select.appendChild(el("option", { value: task.task_id, text: `${task.task_id}: ${task.business_name}` }));
     }
     select.addEventListener("change", () => renderRecordDetail(select.value));
     if (state.tasks.length) renderRecordDetail(state.tasks[0].task_id);
@@ -413,7 +413,7 @@
   function taskDrilldownList(taskIds) {
     return el("ul", { class: "drilldown-list" }, taskIds.map((tid) => {
       const task = findTask(tid);
-      const btn = el("button", { type: "button", class: "link-button", text: `${tid} — ${task ? task.business_name : ""}` });
+      const btn = el("button", { type: "button", class: "link-button", text: `${tid}: ${task ? task.business_name : ""}` });
       btn.addEventListener("click", () => jumpToRecord(tid));
       return el("li", {}, [btn]);
     }));
@@ -425,7 +425,7 @@
       const btn = el("button", {
         type: "button",
         class: "link-button",
-        text: `${e.task_id} — ${task ? task.business_name : ""} (${e.severity})`,
+        text: `${e.task_id}: ${task ? task.business_name : ""} (${e.severity})`,
       });
       btn.addEventListener("click", () => jumpToRecord(e.task_id));
       return el("li", {}, [btn, el("div", { class: "meta", text: e.rationale })]);
@@ -438,7 +438,7 @@
     node.setAttribute("role", "button");
     const isRow = node.tagName === "TR";
     // A <td>/<th> (e.g. one status cell in a row that has other, non-clickable
-    // cells) can't have a <ul> inserted as its next sibling either -- that
+    // cells) can't have a <ul> inserted as its next sibling either: that
     // sibling would sit directly inside <tr>, which is just as invalid as a
     // <ul> sitting inside <tbody>. Anchor on the containing <tr> instead so
     // the drilldown row goes after the *row*, not after one cell of it.
@@ -583,7 +583,7 @@
       const ref = r.reference_assessment;
       const judgeUsable = judgeIsUsable(r);
       const judge = r.judge_assessment;
-      const taskBtn = el("button", { type: "button", class: "link-button", text: `${r.task_id} — ${task ? task.business_name : ""}` });
+      const taskBtn = el("button", { type: "button", class: "link-button", text: `${r.task_id}: ${task ? task.business_name : ""}` });
       taskBtn.addEventListener("click", () => jumpToRecord(r.task_id));
       const refCell = el("td", {}, [statusPill(ref.status), el("span", { text: ` (${ref.total_points})` })]);
       const judgeCell = judgeUsable
@@ -614,7 +614,7 @@
     }
     for (const d of disagreements) {
       const task = findTask(d.task_id);
-      const btn = el("button", { type: "button", class: "link-button", text: `${d.task_id} — ${task ? task.business_name : ""}` });
+      const btn = el("button", { type: "button", class: "link-button", text: `${d.task_id}: ${task ? task.business_name : ""}` });
       btn.addEventListener("click", () => jumpToRecord(d.task_id));
       container.appendChild(el("div", { class: "disagreement-row" }, [
         btn,
@@ -684,18 +684,109 @@
     renderDashboardContent();
   }
 
+  // ---------- View 4: investigate the pattern and recommendation ----------
+
+  function findAnnotationById(taskId, annotationId) {
+    if (!annotationId) return null;
+    const r = state.v1Results.find((rec) => rec.task_id === taskId);
+    if (!r) return null;
+    const all = [...(r.reference_assessment.annotations || []), ...(r.judge_assessment.annotations || [])];
+    return all.find((a) => a.annotation_id === annotationId) || null;
+  }
+
+  function evidenceLinkList(links) {
+    return el("ul", { class: "drilldown-list" }, links.map((link) => {
+      const task = findTask(link.task_id);
+      const ann = findAnnotationById(link.task_id, link.annotation_id);
+      const btn = el("button", {
+        type: "button",
+        class: "link-button",
+        text: `${link.task_id}: ${task ? task.business_name : ""}`,
+      });
+      btn.addEventListener("click", () => jumpToRecord(link.task_id));
+      const metaText = ann
+        ? `${ann.dimension} / ${ann.subtype} (${ann.severity}); reference annotation ${link.annotation_id}`
+        : "LLM-as-a-judge annotation on this task";
+      return el("li", {}, [btn, el("div", { class: "meta", text: metaText })]);
+    }));
+  }
+
+  function labeledParagraph(label, text) {
+    return el("p", {}, [el("strong", { text: `${label} ` }), document.createTextNode(text)]);
+  }
+
+  function findingLabel(findingId) {
+    return findingId.replace(/^F/, "Finding ");
+  }
+
+  const RECOMMENDATION_TYPE_LABELS = { system_change: "system change", evaluator_training: "evaluator training" };
+
+  function findingCard(finding) {
+    const obs = finding.observation;
+    const badge = el("span", {
+      class: "finding-badge",
+      text: `Recommendation: ${RECOMMENDATION_TYPE_LABELS[finding.recommendation_type] || finding.recommendation_type}`,
+    });
+    const card = el("article", { class: "finding-card" }, [
+      el("h3", { text: `${findingLabel(finding.finding_id)}: ${finding.title}` }),
+      badge,
+    ]);
+
+    const obsSection = el("section", { class: "reasoning-step" }, [
+      el("h4", { text: "1. Observation" }),
+      el("p", { text: obs.summary }),
+    ]);
+    const statCard = el("div", { class: "metric-card" }, [
+      el("div", { class: "metric-value", text: `${obs.count} / ${obs.denominator}` }),
+      el("div", { class: "metric-label", text: "affected tasks" }),
+    ]);
+    obsSection.appendChild(statCard);
+    card.appendChild(obsSection);
+
+    card.appendChild(el("section", { class: "reasoning-step" }, [
+      el("h4", { text: "2. Examples" }),
+      el("p", { class: "prose", text: "Every task and annotation this finding is grounded in. Click through to see the full record." }),
+      evidenceLinkList(finding.evidence_links),
+    ]));
+
+    card.appendChild(el("section", { class: "reasoning-step" }, [
+      el("h4", { text: "3. Alternative explanations considered" }),
+      el("ul", {}, finding.alternative_explanations.map((a) => el("li", { text: a }))),
+    ]));
+
+    card.appendChild(el("section", { class: "reasoning-step" }, [
+      el("h4", { text: "4. Hypothesis" }),
+      el("p", { text: finding.hypothesis }),
+    ]));
+
+    card.appendChild(el("section", { class: "reasoning-step" }, [
+      el("h4", { text: "5. Recommendation and expected effect" }),
+      labeledParagraph("Recommendation:", finding.proposed_recommendation),
+      labeledParagraph("Expected effect:", finding.expected_effect),
+    ]));
+
+    return card;
+  }
+
   function renderView4() {
     const empty = document.getElementById("v4-empty-state");
     const content = document.getElementById("v4-content");
     if (state.findings.length === 0) {
-      empty.textContent = "No findings recorded yet. This view will show the observation, examples, alternative explanations, hypothesis and proposed V2 intervention derived from the V1 evidence.";
+      empty.textContent = "No findings recorded yet. This view will show the observation, examples, alternative explanations, hypothesis and proposed recommendation derived from the V1 evidence.";
       empty.hidden = false;
       content.hidden = true;
       return;
     }
     empty.hidden = true;
     content.hidden = false;
-    // Full implementation lands in Phase 3 (evidence-linked V1 pattern analysis).
+    content.innerHTML = "";
+    content.appendChild(el("p", {
+      class: "prose",
+      text: "Each finding below follows the same chain: what was observed and how often, the specific examples it's grounded in, the alternative explanations considered before accepting it as signal, the bounded hypothesis about the V1 generation system configuration, and the recommendation it motivates. Both findings drive a recommendation; they differ in type (shown on each card), and are ordered accordingly: the system-change recommendation that actually shaped this artifact's V2 comes first, followed by the evaluator-training recommendation, which isn't implemented anywhere in this build.",
+    }));
+    for (const finding of state.findings) {
+      content.appendChild(findingCard(finding));
+    }
   }
 
   function renderView5() {
@@ -737,7 +828,7 @@
     } catch (e) {
       const box = document.getElementById("v1-load-error");
       box.hidden = false;
-      box.textContent = `Could not load bundled data: ${e.message}. If you opened index.html directly from disk, browsers block local file fetches — run "python3 -m http.server 8080" from the repository root and open http://localhost:8080 instead.`;
+      box.textContent = `Could not load bundled data: ${e.message}. If you opened index.html directly from disk, browsers block local file fetches; run "python3 -m http.server 8080" from the repository root and open http://localhost:8080 instead.`;
       return;
     }
     renderView1();

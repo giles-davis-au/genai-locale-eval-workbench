@@ -8,27 +8,27 @@ The human evaluator assessment, the app, and this documentation were all produce
 
 The LLM-as-a-judge is also kept blind to two things, by construction of what it is given:
 
-- **Blind to the human evaluator's assessment** — it is never shown Giles's annotations, status, or points.
-- **Blind, where practical, to whether the output is V1 or V2** — the LLM-as-a-judge is given only the user's own prompt, the target locale, the rubric, and the output text. It is never given the V2 locale profile or glossary context packet, and the prompt shape is identical for V1 and V2 outputs. This is "where practical" because a careful reader could sometimes infer version from writing style, but nothing in the input labels it.
-  - **The `system_instruction` is deliberately excluded too, for the same reason.** V1's and V2's system instructions differ in wording -- V2's explicitly says to "follow the supplied locale profile, brand guidance and relevant terminology entries," which doesn't exist in V1 at all -- so including it would trivially reveal version even without the retrieved context itself. Nothing is lost by leaving it out: it adds no information beyond what the user's own prompt and the rubric already supply, and excluding it is consistent with `system_instruction` being labelled "platform-level, hidden from the user" everywhere else in this project -- a real evaluator wouldn't see a product's internal system prompt either.
+- **Blind to the human evaluator's assessment:** it is never shown Giles's annotations, status, or points.
+- **Blind, where practical, to whether the output is V1 or V2:** the LLM-as-a-judge is given only the user's own prompt, the target locale, the rubric, and the output text. It is never given the V2 locale profile or glossary context packet, and the prompt shape is identical for V1 and V2 outputs. This is "where practical" because a careful reader could sometimes infer version from writing style, but nothing in the input labels it.
+  - **The `system_instruction` is deliberately excluded too, for the same reason.** V1's and V2's system instructions differ in wording (V2's explicitly says to "follow the supplied locale profile, brand guidance and relevant terminology entries," which doesn't exist in V1 at all), so including it would trivially reveal version even without the retrieved context itself. Nothing is lost by leaving it out: it adds no information beyond what the user's own prompt and the rubric already supply, and excluding it is consistent with `system_instruction` being labelled "platform-level, hidden from the user" everywhere else in this project: a real evaluator wouldn't see a product's internal system prompt either.
 
 ## The generated artefact: `docs/judge-run-<version>.md`
 
-Rather than 20 separate one-record calls, the actual process used is one batched upload per version (`docs/judge-run-v1.md`, and later `docs/judge-run-v2.md`) — practical for a human running this through a chat UI, and it produces one combined response to import instead of 20. `scripts/build_judge_run.py` generates it from `data/rubric.json`, `data/tasks.json` and the relevant `data/v1-results.json`/`data/v2-results.json`, so it is always in sync with the live rubric and outputs rather than hand-maintained. Generate (or regenerate) it with:
+Rather than 20 separate one-record calls, the actual process used is one batched upload per version (`docs/judge-run-v1.md`, and later `docs/judge-run-v2.md`): practical for a human running this through a chat UI, and it produces one combined response to import instead of 20. `scripts/build_judge_run.py` generates it from `data/rubric.json`, `data/tasks.json` and the relevant `data/v1-results.json`/`data/v2-results.json`, so it is always in sync with the live rubric and outputs rather than hand-maintained. Generate (or regenerate) it with:
 
 ```bash
 python3 scripts/build_judge_run.py v1
 ```
 
-The generated file contains **no version-identifying text anywhere in its content** — no "V1"/"V2" string appears in the role instructions, rubric, format spec, or task list — specifically so that uploading the *whole* file, not just an excerpt, still preserves blindness to which generation version it's assessing. (The filename itself does say `v1`, purely for Giles's own bookkeeping across runs; the LLM-as-a-judge model only ever sees the file's contents, not its filename.)
+The generated file contains **no version-identifying text anywhere in its content** (no "V1"/"V2" string appears in the role instructions, rubric, format spec, or task list), specifically so that uploading the *whole* file, not just an excerpt, still preserves blindness to which generation version it's assessing. (The filename itself does say `v1`, purely for Giles's own bookkeeping across runs; the LLM-as-a-judge model only ever sees the file's contents, not its filename.)
 
-The file's shape: a role instruction, the rubric (dimension/subtype ids, severities, status bands — mirrors `data/rubric.json` exactly, regenerated from it), a required-output-format spec, then each task as its user prompt, target locale, and raw generated copy. It asks for **one combined JSON response**, an object keyed by task ID, each value in the same `{annotations, total_points, status}` shape as an individual assessment.
+The file's shape: a role instruction, the rubric (dimension/subtype ids, severities, status bands; mirrors `data/rubric.json` exactly, regenerated from it), a required-output-format spec, then each task as its user prompt, target locale, and raw generated copy. It asks for **one combined JSON response**, an object keyed by task ID, each value in the same `{annotations, total_points, status}` shape as an individual assessment.
 
 ## Import process
 
 1. Generate the file: `python3 scripts/build_judge_run.py v1`.
 2. Upload or paste the full content of `docs/judge-run-v1.md` to a separate model (GPT-5.6 Sol), run outside this repository's tooling and outside the session that built this project.
-3. Save the model's raw JSON response as `data/judge-intake/responses/judge-response-<version>.json` (e.g. `judge-response-v1.json`) — a machine artifact, so it lives under `data/` with the rest of the LLM-as-a-judge pipeline (not `docs/`, which is prose); nested under `responses/` specifically so the importer's non-recursive scan of `data/judge-intake/` never picks it up directly.
+3. Save the model's raw JSON response as `data/judge-intake/responses/judge-response-<version>.json` (e.g. `judge-response-v1.json`): a machine artifact, so it lives under `data/` with the rest of the LLM-as-a-judge pipeline (not `docs/`, which is prose); nested under `responses/` specifically so the importer's non-recursive scan of `data/judge-intake/` never picks it up directly.
 4. Split it into the per-record files the importer expects:
 
    ```bash

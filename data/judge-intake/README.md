@@ -1,6 +1,6 @@
 # LLM-as-a-judge intake staging folder
 
-Files here are named `<task_id>-<version>.json` (e.g. `T01-v1.json`, `T01-v2.json`) and contain one task's LLM-as-a-judge output — see [../../docs/judge-prompt.md](../../docs/judge-prompt.md) for the full process.
+Files here are named `<task_id>-<version>.json` (e.g. `T01-v1.json`, `T01-v2.json`) and contain one task's LLM-as-a-judge output; see [../../docs/judge-prompt.md](../../docs/judge-prompt.md) for the full process.
 
 They're not hand-written: upload `docs/judge-run-<version>.md` to the external LLM-as-a-judge, save its single combined response as `responses/judge-response-<version>.json` (see that folder's own README for why it's nested here), then run `python3 scripts/split_judge_response.py <version> data/judge-intake/responses/judge-response-<version>.json` to explode it into the individual files here.
 

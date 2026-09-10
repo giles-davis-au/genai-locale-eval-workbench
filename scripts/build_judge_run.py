@@ -4,8 +4,8 @@ upload to an external model for an independent LLM-as-a-judge pass over
 one version's 10 outputs. Standard library only.
 
 The generated file contains no version-identifying text (no "V1"/"V2"
-anywhere in its content) so that uploading the whole file -- not just an
-excerpt -- still keeps the LLM-as-a-judge blind to which generation
+anywhere in its content) so that uploading the whole file, not just an
+excerpt, still keeps the LLM-as-a-judge blind to which generation
 version it is assessing. See docs/judge-prompt.md for the full process
 this supports.
 
@@ -34,7 +34,7 @@ def main():
     tasks_by_id = {t["task_id"]: t for t in tasks}
     results_by_id = {r["task_id"]: r for r in results}
     if not results_by_id:
-        print(f"{version}-results.json has no records yet -- nothing to generate.", file=sys.stderr)
+        print(f"{version}-results.json has no records yet: nothing to generate.", file=sys.stderr)
         return 1
 
     lines = []
@@ -59,7 +59,7 @@ def main():
     lines.append("")
     lines.append("Severities and points:")
     for name, v in rubric["severities"].items():
-        lines.append(f"- `{name}` = {v['points']} point(s) -- {v['description']}")
+        lines.append(f"- `{name}` = {v['points']} point(s): {v['description']}")
     lines.append("")
     bands = rubric["status_policy"]["bands"]
     band_desc = "; ".join(
@@ -100,7 +100,7 @@ def main():
     lines.append("")
     lines.append(
         'An empty `annotations` array (with `total_points: 0`, `status: "Pass"`) is a valid response '
-        "for a task with no issues. Only use dimension/subtype ids from the rubric above -- do not "
+        "for a task with no issues. Only use dimension/subtype ids from the rubric above: do not "
         "invent new ones."
     )
     lines.append("")
@@ -111,7 +111,7 @@ def main():
     # Deliberately not including record["context_packet"]["system_instruction"] here: V1's and
     # V2's system instructions differ in wording (V2's names "locale profile, brand guidance and
     # terminology entries", which V1 has none of), so including it would reveal version on its own.
-    # It adds nothing the LLM-as-a-judge needs anyway -- user_prompt + the rubric already cover it -- and
+    # It adds nothing the LLM-as-a-judge needs anyway (user_prompt + the rubric already cover it), and
     # omitting it matches system_instruction being "platform-level, hidden from the user" elsewhere.
     for tid in task_ids:
         task = tasks_by_id[tid]
