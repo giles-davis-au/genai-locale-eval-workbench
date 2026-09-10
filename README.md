@@ -96,9 +96,12 @@ genai-locale-eval-workbench/
 │   ├── limitations.md
 │   ├── provenance.md
 │   ├── judge-prompt.md
+│   ├── judge-run-v1.md      # generated -- see scripts/build_judge_run.py
 │   └── data-schema.md
 └── scripts/
     ├── validate_data.py
+    ├── build_judge_run.py
+    ├── split_judge_response.py
     └── import_judge_results.py
 ```
 

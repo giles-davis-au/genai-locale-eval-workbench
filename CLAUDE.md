@@ -29,13 +29,16 @@ A static, offline, read-only web app that walks an interviewer through one evalu
 | `scripts/validate_data.py` | Independent structural + arithmetic check over everything in `data/`. Run after any data edit. |
 | `scripts/import_judge_results.py` | Merges externally-run judge JSON from `data/judge-intake/` into the results files. |
 | `docs/data-schema.md` | Exact JSON shape for every file in `data/` — read this before touching any data file. |
-| `docs/judge-prompt.md` | The exact prompt used for the external LLM judge, and the intake process. |
+| `docs/judge-prompt.md` | The judge process and the source template `scripts/build_judge_run.py` renders. |
+| `docs/judge-run-v1.md` | Generated -- the actual content uploaded to the external judge for V1. Regenerate with `scripts/build_judge_run.py`, never hand-edit. |
 
 ## Commands
 
 ```bash
 python3 -m http.server 8080          # run the app at http://localhost:8080
 python3 scripts/validate_data.py     # validate all data files
+python3 scripts/build_judge_run.py v1        # (re)generate docs/judge-run-v1.md
+python3 scripts/split_judge_response.py v1 <path>   # split a combined judge response into data/judge-intake/
 python3 scripts/import_judge_results.py   # merge staged judge results
 ```
 
