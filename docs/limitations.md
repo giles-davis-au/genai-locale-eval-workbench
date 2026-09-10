@@ -34,6 +34,6 @@ This project is a small, deliberately bounded learning and interview artefact. T
 ## What this repository does not claim at all
 
 - Professional evaluator, localisation-specialist, ML-engineer, or production-platform experience.
-- Any Canva data, workflow, internal tooling, or product resemblance.
+- Any real company's data, workflow, internal tooling, or product resemblance.
 - Multilingual expertise or translation-quality evaluation.
 - A production evaluation platform, Label Studio functionality, or real evaluator-workforce operations.

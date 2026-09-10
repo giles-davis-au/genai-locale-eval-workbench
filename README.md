@@ -46,10 +46,10 @@ The only dependency is Python's standard library (`http.server`) to serve static
 
 - **Not a statistically representative measurement.** Ten synthetic tasks produce diagnostic signal, not a production-quality rate. The app deliberately uses language like *concentration*, *recurring observation* and *diagnostic signal* rather than *statistically significant*.
 - **Not a validated automated evaluator.** The LLM judge is a provisional comparison signal, run independently and kept blind to the reference assessment. Ten examples do not calibrate or validate it (Zheng et al. document real LLM-judge biases — see references below).
-- **Not gold-standard human evaluation.** The reference assessment is a demonstration record in the shape of one, created by this project's author — not expert judgement, not validated ground truth, and not Canva evaluator output.
+- **Not gold-standard human evaluation.** The reference assessment is a demonstration record in the shape of one, created by this project's author — not expert judgement, not validated ground truth, and not any company's real evaluator output.
 - **Not sophisticated RAG.** V2's context construction is transparent, deterministic keyword/alias matching over a CSV glossary — no embeddings, vector database or retrieval service.
 - **Not production regression testing.** The V1/V2 paired comparison is a rudimentary regression check on ten fixed tasks, not an independent validation set or longitudinal monitoring.
-- **Not translation evaluation, not multilingual expertise, not a Canva product.** This repository is not affiliated with, endorsed by, or built using data or tooling from Canva.
+- **Not translation evaluation, not multilingual expertise, not any specific company's product.** This repository is independent and self-contained — not affiliated with, endorsed by, or built using data or tooling from any real organisation.
 
 ## Why these design choices
 
