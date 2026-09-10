@@ -591,7 +591,7 @@
         container.appendChild(el("p", { class: "meta", text: "No tasks match the current filters." }));
         continue;
       }
-      const table = el("table", { class: "data-table" }, [
+      const table = el("table", { class: "data-table status-by-category" }, [
         el("thead", {}, [el("tr", {}, [
           el("th", { text: "Category" }),
           ...STATUSES.map((st) => el("th", { text: st })),
