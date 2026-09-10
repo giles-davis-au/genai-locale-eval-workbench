@@ -1,0 +1,297 @@
+:root {
+  --color-bg: #ffffff;
+  --color-bg-alt: #f5f6f8;
+  --color-border: #d6dae0;
+  --color-text: #1c2126;
+  --color-text-muted: #4b5563;
+  --color-accent: #1d4e89;
+  --color-accent-contrast: #ffffff;
+  --color-pass: #1a6b3c;
+  --color-pass-bg: #e6f4ea;
+  --color-revision: #8a5a00;
+  --color-revision-bg: #fbf0d9;
+  --color-fail: #a3242a;
+  --color-fail-bg: #fbe8e8;
+  --color-reference: #1d4e89;
+  --color-judge: #6a3fa0;
+  --focus-ring: 3px solid #1d4e89;
+  --radius: 6px;
+  font-size: 16px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.5;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  padding: 0.5rem 1rem;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+a { color: var(--color-accent); }
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+.header-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 1rem;
+}
+.header-inner h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.6rem;
+}
+.subtitle {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+.safety-banner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0.5rem 1.25rem 1rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.view-nav {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.view-nav ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0.5rem 1.25rem;
+}
+.nav-tab {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.5rem 0.9rem;
+  color: var(--color-text);
+  font-weight: 600;
+}
+.nav-tab:hover {
+  background: var(--color-bg-alt);
+}
+.nav-tab[aria-current="page"] {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+.view h2 {
+  margin-top: 0;
+}
+
+.view section {
+  margin-bottom: 2.5rem;
+}
+
+.prose p { margin: 0 0 0.75rem; }
+
+.empty-state {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg-alt);
+}
+
+.task-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.task-card h4 {
+  margin: 0 0 0.25rem;
+}
+.task-card .category-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg-alt);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  margin-bottom: 0.5rem;
+}
+.task-card ul {
+  margin: 0.25rem 0 0;
+  padding-left: 1.25rem;
+}
+
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0 1rem;
+}
+table.data-table th,
+table.data-table td {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+table.data-table th {
+  background: var(--color-bg-alt);
+}
+
+.status-pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.15rem 0.7rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid transparent;
+}
+.status-pass { background: var(--color-pass-bg); color: var(--color-pass); }
+.status-needs-revision { background: var(--color-revision-bg); color: var(--color-revision); }
+.status-fail { background: var(--color-fail-bg); color: var(--color-fail); }
+.status-pending { background: var(--color-bg-alt); color: var(--color-text-muted); border-color: var(--color-border); }
+
+.assessment-block {
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.assessment-block.reference { border-left: 4px solid var(--color-reference); }
+.assessment-block.judge { border-left: 4px solid var(--color-judge); }
+.assessment-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+.assessment-block.reference .assessment-label { color: var(--color-reference); }
+.assessment-block.judge .assessment-label { color: var(--color-judge); }
+
+.annotation {
+  border-top: 1px solid var(--color-border);
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+}
+.annotation:first-of-type { border-top: none; }
+.annotation .meta {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.output-text {
+  white-space: pre-wrap;
+  background: var(--color-bg-alt);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+}
+
+.context-packet dt {
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+.context-packet dd {
+  margin: 0.15rem 0 0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.75rem;
+}
+
+.metric-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  background: var(--color-bg-alt);
+}
+.metric-card .metric-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+.metric-card .metric-label {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 12rem 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+.bar-track {
+  background: var(--color-bg-alt);
+  border-radius: 999px;
+  overflow: hidden;
+  height: 0.9rem;
+  border: 1px solid var(--color-border);
+}
+.bar-fill {
+  background: var(--color-accent);
+  height: 100%;
+}
+.bar-fill.clickable {
+  cursor: pointer;
+}
+
+.drilldown-list {
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding: 1.5rem 1.25rem;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+.site-footer p {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .bar-row { grid-template-columns: 1fr; }
+}

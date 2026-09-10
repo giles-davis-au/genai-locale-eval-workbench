@@ -1,0 +1,194 @@
+[
+  {
+    "task_id": "T01",
+    "content_category": "clothing",
+    "category_label": "Clothing",
+    "target_locale": "en-AU",
+    "business_name": "Rowan & Ash",
+    "brief": "Rowan & Ash, a Sydney-based sustainable clothing label, wants short marketing copy announcing this week's promotion.",
+    "facts": [
+      "20% off puffer jackets, this week only",
+      "Free shipping on orders over $75",
+      "New merino wool range just launched"
+    ],
+    "constraints": [
+      "State the discount as 20% off puffer jackets.",
+      "State that free shipping applies to orders over $75.",
+      "Do not invent or alter the fabric composition (the jackets are not described as organic cotton anywhere in the brief).",
+      "Keep the copy to 40-60 words.",
+      "Write as a single short paragraph with no headings."
+    ]
+  },
+  {
+    "task_id": "T02",
+    "content_category": "food_delivery",
+    "category_label": "Food delivery",
+    "target_locale": "en-AU",
+    "business_name": "Cartly",
+    "brief": "Cartly, a same-day grocery and meal delivery service, wants promo copy for new customers in Melbourne and Brisbane.",
+    "facts": [
+      "Same-day delivery is available in Melbourne and Brisbane only",
+      "$30 minimum order",
+      "$10 credit on a customer's first order only"
+    ],
+    "constraints": [
+      "Name both service cities: Melbourne and Brisbane.",
+      "State the $30 minimum order.",
+      "State that the $10 credit applies to the first order only, not ongoing orders.",
+      "Keep the copy to 40-60 words."
+    ]
+  },
+  {
+    "task_id": "T03",
+    "content_category": "fitness_membership",
+    "category_label": "Fitness membership",
+    "target_locale": "en-AU",
+    "business_name": "Pulse Studio",
+    "brief": "Pulse Studio, a boutique gym chain, wants copy promoting membership ahead of opening a new Perth location.",
+    "facts": [
+      "No lock-in contract",
+      "7-day free trial",
+      "New location opening in Perth"
+    ],
+    "constraints": [
+      "State explicitly that there is no lock-in contract.",
+      "State the free trial length as 7 days, not any other number.",
+      "Mention the new Perth location.",
+      "Keep the copy to 40-60 words."
+    ]
+  },
+  {
+    "task_id": "T04",
+    "content_category": "community_event",
+    "category_label": "Community event",
+    "target_locale": "en-AU",
+    "business_name": "Riverside Markets",
+    "brief": "Riverside Markets, a council-run community market, wants short flyer-style promo copy for its regular market day.",
+    "facts": [
+      "Held the first Sunday of every month",
+      "Free entry",
+      "Local produce and live music, with on-site parking for stallholders and visitors"
+    ],
+    "constraints": [
+      "State that entry is free.",
+      "State the frequency accurately as the first Sunday of the month (not weekly, not a different day).",
+      "Mention both local produce and live music.",
+      "Keep the copy under 50 words.",
+      "Write in a short, flyer-style promo tone rather than a full narrative."
+    ]
+  },
+  {
+    "task_id": "T05",
+    "content_category": "homewares",
+    "category_label": "Homewares",
+    "target_locale": "en-AU",
+    "business_name": "Feld & Co",
+    "brief": "Feld & Co, a homewares brand, wants promo copy for a weekend sale on its linen bedding range.",
+    "facts": [
+      "15% off doona covers this weekend only",
+      "Ships Australia-wide",
+      "Part of the linen bedding range"
+    ],
+    "constraints": [
+      "State the discount as 15% off.",
+      "Refer to the discounted product using the bedding-cover terminology given in this brief, not a generic substitute.",
+      "State that shipping is available Australia-wide.",
+      "Keep the copy to 40-60 words."
+    ]
+  },
+  {
+    "task_id": "T06",
+    "content_category": "travel_accessories",
+    "category_label": "Travel accessories",
+    "target_locale": "en-AU",
+    "business_name": "Wanderlow",
+    "brief": "Wanderlow, a travel accessories brand, wants copy promoting its carry-on compliant cabin bags.",
+    "facts": [
+      "Cabin bags are carry-on compliant",
+      "Lifetime warranty",
+      "10% off for newsletter signups"
+    ],
+    "constraints": [
+      "State that the bags are carry-on compliant.",
+      "Mention the lifetime warranty.",
+      "State that the 10% discount is tied to signing up for the newsletter.",
+      "Keep the copy to 40-60 words."
+    ]
+  },
+  {
+    "task_id": "T07",
+    "content_category": "streaming_subscription",
+    "category_label": "Streaming subscription",
+    "target_locale": "en-AU",
+    "business_name": "ReelHouse",
+    "brief": "ReelHouse, a video streaming service, wants promo copy for its ad-free tier and a new local drama series.",
+    "facts": [
+      "30-day free trial",
+      "Ad-free tier priced at $12.99/month",
+      "New Australian-made drama series launching"
+    ],
+    "constraints": [
+      "State the 30-day free trial.",
+      "State the ad-free tier price as exactly $12.99/month.",
+      "Mention that the new drama series is launching.",
+      "Keep the copy under 45 words."
+    ]
+  },
+  {
+    "task_id": "T08",
+    "content_category": "cafe_promotion",
+    "category_label": "Café promotion",
+    "target_locale": "en-AU",
+    "business_name": "Milk & Bean",
+    "brief": "Milk & Bean, a café chain, wants copy promoting its app-based coffee loyalty stamp card.",
+    "facts": [
+      "Buy 5 coffees, get 1 free",
+      "Tracked through the café's app",
+      "Valid at Melbourne CBD stores only, ends end of month"
+    ],
+    "constraints": [
+      "State the '5 get 1 free' offer accurately.",
+      "State that the offer is tracked through the app.",
+      "State the Melbourne CBD-only restriction and that the offer ends at the end of the month.",
+      "Keep the copy to 40-60 words."
+    ]
+  },
+  {
+    "task_id": "T09",
+    "content_category": "personal_care",
+    "category_label": "Personal care",
+    "target_locale": "en-AU",
+    "business_name": "Native Bloom",
+    "brief": "Native Bloom, a skincare brand, wants promo copy for its fragrance-free moisturiser range aimed at new customers.",
+    "facts": [
+      "Fragrance-free moisturiser range",
+      "Dermatologist-tested",
+      "20% off for new customers using code NEW20"
+    ],
+    "constraints": [
+      "State that the range is fragrance-free.",
+      "State the claim as 'dermatologist-tested' exactly; do not upgrade it to a stronger or different claim such as 'clinically proven' or 'dermatologist-approved'.",
+      "Include the exact code NEW20 and the 20% discount.",
+      "Keep the copy to 40-60 words."
+    ]
+  },
+  {
+    "task_id": "T10",
+    "content_category": "online_course",
+    "category_label": "Online course",
+    "target_locale": "en-AU",
+    "business_name": "Brightpath Learning",
+    "brief": "Brightpath Learning, an online education provider, wants promo copy for its 6-week digital marketing course.",
+    "facts": [
+      "6 weeks long, with live weekly Zoom sessions",
+      "Early-bird price $249, before 20 March",
+      "Certificate on completion"
+    ],
+    "constraints": [
+      "State the course length as 6 weeks with live weekly sessions.",
+      "State the early-bird price as $249 and the deadline date accurately; do not alter the date or omit it.",
+      "Mention the certificate on completion.",
+      "Keep the copy to 40-60 words."
+    ]
+  }
+]

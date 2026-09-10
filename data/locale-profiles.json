@@ -1,0 +1,15 @@
+{
+  "en-AU": {
+    "label": "Australian English",
+    "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+    "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+    "currency": {
+      "symbol": "$",
+      "code": "AUD",
+      "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+    },
+    "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+    "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+    "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any Canva locale documentation."
+  }
+}

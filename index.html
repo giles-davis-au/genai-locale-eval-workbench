@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GenAI Locale Evaluation Workbench</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <h1>GenAI Locale Evaluation Workbench</h1>
+    <p class="subtitle">An inspectable case study of evaluating and improving locale-conditioned AI-generated text.</p>
+  </div>
+  <div class="safety-banner" role="note">
+    Static, offline, read-only. No network requests, no API keys, no accounts, no data persistence. Read the
+    <a href="README.md">README</a> before relying on anything shown here.
+  </div>
+</header>
+
+<nav class="view-nav" aria-label="Evaluation lifecycle steps">
+  <ol>
+    <li><button type="button" class="nav-tab" data-view="view-1" aria-current="page">1. Setup &amp; records</button></li>
+    <li><button type="button" class="nav-tab" data-view="view-2">2. Explore V1 results</button></li>
+    <li><button type="button" class="nav-tab" data-view="view-3">3. Investigate the pattern</button></li>
+    <li><button type="button" class="nav-tab" data-view="view-4">4. Compare V1 vs V2</button></li>
+  </ol>
+</nav>
+
+<main id="main-content">
+
+  <section id="view-1" class="view" data-view-panel>
+    <h2>Evaluation setup and record inspection</h2>
+
+    <div id="v1-load-error" class="empty-state" hidden></div>
+
+    <section aria-labelledby="purpose-heading">
+      <h3 id="purpose-heading">Purpose and limits</h3>
+      <div id="purpose-content" class="prose"></div>
+    </section>
+
+    <section aria-labelledby="tasks-heading">
+      <h3 id="tasks-heading">The ten task briefs</h3>
+      <div id="tasks-list"></div>
+    </section>
+
+    <section aria-labelledby="config-heading">
+      <h3 id="config-heading">V1 generation configuration</h3>
+      <div id="v1-config-content" class="prose"></div>
+    </section>
+
+    <section aria-labelledby="rubric-heading">
+      <h3 id="rubric-heading">Rubric, severities and status thresholds</h3>
+      <div id="rubric-content"></div>
+    </section>
+
+    <section aria-labelledby="record-heading">
+      <h3 id="record-heading">Inspect one complete record</h3>
+      <label for="record-task-select">Task</label>
+      <select id="record-task-select"></select>
+      <div id="record-detail"></div>
+    </section>
+  </section>
+
+  <section id="view-2" class="view" data-view-panel hidden>
+    <h2>Explore V1 results</h2>
+    <div id="v2-empty-state" class="empty-state"></div>
+    <div id="v2-content" hidden></div>
+  </section>
+
+  <section id="view-3" class="view" data-view-panel hidden>
+    <h2>Investigate the pattern and intervention</h2>
+    <div id="v3-empty-state" class="empty-state"></div>
+    <div id="v3-content" hidden></div>
+  </section>
+
+  <section id="view-4" class="view" data-view-panel hidden>
+    <h2>Compare V1 and V2</h2>
+    <div id="v4-empty-state" class="empty-state"></div>
+    <div id="v4-content" hidden></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Synthetic case study. Not a Canva product, not affiliated with or endorsed by Canva, and does not use Canva data or reproduce Canva's internal tooling. See <a href="docs/limitations.md">limitations</a> and <a href="docs/provenance.md">provenance</a>.</p>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

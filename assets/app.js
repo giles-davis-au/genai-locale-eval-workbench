@@ -1,0 +1,349 @@
+// GenAI Locale Evaluation Workbench — static, offline, read-only app.
+// No network calls other than fetching bundled files in data/. No persistence.
+
+(function () {
+  "use strict";
+
+  const state = {
+    rubric: null,
+    localeProfiles: null,
+    terminology: [],
+    tasks: [],
+    v1Results: [],
+    v2Results: [],
+    findings: [],
+    loadError: null,
+  };
+
+  const DATA_FILES = [
+    ["rubric", "data/rubric.json", "json"],
+    ["localeProfiles", "data/locale-profiles.json", "json"],
+    ["terminology", "data/terminology.csv", "csv"],
+    ["tasks", "data/tasks.json", "json"],
+    ["v1Results", "data/v1-results.json", "json"],
+    ["v2Results", "data/v2-results.json", "json"],
+    ["findings", "data/findings.json", "json"],
+  ];
+
+  function parseCsv(text) {
+    const rows = [];
+    let row = [];
+    let field = "";
+    let inQuotes = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (inQuotes) {
+        if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+        else if (c === '"') { inQuotes = false; }
+        else { field += c; }
+      } else if (c === '"') {
+        inQuotes = true;
+      } else if (c === ",") {
+        row.push(field); field = "";
+      } else if (c === "\n" || c === "\r") {
+        if (c === "\r" && text[i + 1] === "\n") i++;
+        row.push(field); field = "";
+        if (row.length > 1 || row[0] !== "") rows.push(row);
+        row = [];
+      } else {
+        field += c;
+      }
+    }
+    if (field !== "" || row.length) { row.push(field); rows.push(row); }
+    const header = rows.shift();
+    return rows.map((r) => Object.fromEntries(header.map((h, idx) => [h, r[idx] ?? ""])));
+  }
+
+  async function loadAll() {
+    for (const [key, path, kind] of DATA_FILES) {
+      const res = await fetch(path);
+      if (!res.ok) throw new Error(`Failed to load ${path}: HTTP ${res.status}`);
+      state[key] = kind === "json" ? await res.json() : parseCsv(await res.text());
+    }
+  }
+
+  // ---------- small render helpers ----------
+
+  function el(tag, attrs, children) {
+    const node = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (k === "text") node.textContent = v;
+      else if (k === "html") node.innerHTML = v;
+      else node.setAttribute(k, v);
+    }
+    for (const child of children || []) {
+      if (child) node.appendChild(child);
+    }
+    return node;
+  }
+
+  function statusPillClass(status) {
+    if (status === "Pass") return "status-pass";
+    if (status === "Needs revision") return "status-needs-revision";
+    if (status === "Fail") return "status-fail";
+    return "status-pending";
+  }
+
+  function statusPill(status) {
+    return el("span", { class: `status-pill ${statusPillClass(status)}`, text: status || "Pending" });
+  }
+
+  function findTask(taskId) {
+    return state.tasks.find((t) => t.task_id === taskId);
+  }
+
+  // ---------- View 1: setup and record inspection ----------
+
+  function renderPurpose() {
+    const container = document.getElementById("purpose-content");
+    container.appendChild(el("p", {
+      text: "This workbench walks through one bounded evaluation lifecycle for locale-conditioned English marketing-copy generation, worked through Australian English (en-AU): inspect a V1 baseline, explore its results, investigate one recurring pattern, then compare V1 against a V2 generation configuration that adds lightweight retrieval-augmented context.",
+    }));
+    container.appendChild(el("p", {
+      text: "It is a preloaded, reproducible case study, not a live AI product. It contains no database, build step, package installation or external runtime dependency, and it makes no network requests.",
+    }));
+    container.appendChild(el("p", {
+      text: "It does not demonstrate professional evaluator, localisation-specialist, ML-engineer or production-platform experience, and its conclusions do not extend beyond what ten synthetic tasks can support. See docs/limitations.md for the full list of limits.",
+    }));
+  }
+
+  function renderTasks() {
+    const container = document.getElementById("tasks-list");
+    for (const task of state.tasks) {
+      const card = el("div", { class: "task-card" }, [
+        el("span", { class: "category-tag", text: task.category_label }),
+        el("h4", { text: `${task.task_id} — ${task.business_name}` }),
+        el("p", { text: task.brief }),
+        el("p", { html: "<strong>Facts:</strong>" }),
+        el("ul", {}, task.facts.map((f) => el("li", { text: f }))),
+        el("p", { html: "<strong>Constraints:</strong>" }),
+        el("ul", {}, task.constraints.map((c) => el("li", { text: c }))),
+      ]);
+      container.appendChild(card);
+    }
+  }
+
+  function renderV1Config() {
+    const container = document.getElementById("v1-config-content");
+    const sample = state.v1Results[0];
+    const instruction = sample
+      ? sample.context_packet.system_instruction
+      : "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints.";
+    container.appendChild(el("p", {
+      text: "V1 provides only the task brief, facts, constraints and target-locale name. It receives no locale profile and no terminology or brand glossary.",
+    }));
+    container.appendChild(el("p", { html: `<strong>V1 system instruction (verbatim):</strong>` }));
+    container.appendChild(el("p", { class: "output-text", text: instruction }));
+  }
+
+  function renderRubric() {
+    const container = document.getElementById("rubric-content");
+    const rubric = state.rubric;
+    container.appendChild(el("p", { text: rubric.framing }));
+
+    const dimTable = el("table", { class: "data-table" }, [
+      el("thead", {}, [el("tr", {}, [el("th", { text: "Dimension" }), el("th", { text: "Subtypes" }), el("th", { text: "Description" })])]),
+      el("tbody", {}, rubric.dimensions.map((d) => el("tr", {}, [
+        el("td", { text: d.name }),
+        el("td", { text: d.subtypes.map((s) => s.name).join(", ") }),
+        el("td", { text: d.description }),
+      ]))),
+    ]);
+    container.appendChild(dimTable);
+
+    const sevTable = el("table", { class: "data-table" }, [
+      el("thead", {}, [el("tr", {}, [el("th", { text: "Severity" }), el("th", { text: "Points" }), el("th", { text: "Description" })])]),
+      el("tbody", {}, Object.entries(rubric.severities).map(([name, v]) => el("tr", {}, [
+        el("td", { text: name }),
+        el("td", { text: String(v.points) }),
+        el("td", { text: v.description }),
+      ]))),
+    ]);
+    container.appendChild(sevTable);
+
+    container.appendChild(el("p", { text: rubric.status_policy.description }));
+    const bandTable = el("table", { class: "data-table" }, [
+      el("thead", {}, [el("tr", {}, [el("th", { text: "Status" }), el("th", { text: "Point range" })])]),
+      el("tbody", {}, rubric.status_policy.bands.map((b) => el("tr", {}, [
+        el("td", {}, [statusPill(b.status)]),
+        el("td", { text: b.max_points == null ? `${b.min_points}+` : `${b.min_points}–${b.max_points}` }),
+      ]))),
+    ]);
+    container.appendChild(bandTable);
+    container.appendChild(el("p", {
+      html: "<strong>These dimensions and thresholds are project-specific evaluation choices, not a universal MQM scoring standard.</strong> The design is MQM-informed, not MQM-compliant — see the README references.",
+    }));
+  }
+
+  function renderAssessment(kind, assessment) {
+    const label = kind === "reference" ? "reference" : "judge";
+    const block = el("div", { class: `assessment-block ${label}` }, [
+      el("span", { class: "assessment-label", text: assessment.label }),
+    ]);
+    const pending = kind === "judge" && assessment.import_status === "awaiting_external_run";
+    const draft = kind === "reference" && assessment.review_status === "pending_review";
+
+    if (pending) {
+      block.appendChild(el("p", { class: "meta", text: "Awaiting external judge run — not yet imported." }));
+      return block;
+    }
+
+    block.appendChild(statusPill(assessment.status));
+    block.appendChild(el("span", { text: ` — ${assessment.total_points} error point(s)` }));
+    if (draft) {
+      block.appendChild(el("p", { class: "meta", text: "Draft — pending Giles's explicit review before this counts as the reference assessment." }));
+    }
+
+    if (!assessment.annotations || assessment.annotations.length === 0) {
+      block.appendChild(el("p", { class: "meta", text: "No annotations." }));
+    } else {
+      for (const a of assessment.annotations) {
+        block.appendChild(el("div", { class: "annotation" }, [
+          el("div", { class: "meta", text: `${a.dimension} / ${a.subtype} — ${a.severity}` }),
+          a.span ? el("p", { html: `<em>“${a.span}”</em>` }) : null,
+          el("p", { text: a.rationale }),
+          a.suggested_correction ? el("p", { text: `Suggested correction: ${a.suggested_correction}` }) : null,
+        ]));
+      }
+    }
+    return block;
+  }
+
+  function renderContextPacket(ctx) {
+    const dl = el("dl", { class: "context-packet" }, [
+      el("dt", { text: "System instruction" }),
+      el("dd", { class: "output-text", text: ctx.system_instruction }),
+      el("dt", { text: "Task brief" }),
+      el("dd", { text: ctx.task_brief }),
+      el("dt", { text: "Facts" }),
+      el("dd", {}, [el("ul", {}, ctx.facts.map((f) => el("li", { text: f })))]),
+      el("dt", { text: "Constraints" }),
+      el("dd", {}, [el("ul", {}, ctx.constraints.map((c) => el("li", { text: c })))]),
+    ]);
+    if (ctx.locale_profile) {
+      dl.appendChild(el("dt", { text: "Locale profile (retrieved)" }));
+      dl.appendChild(el("dd", {}, [el("pre", { class: "output-text", text: JSON.stringify(ctx.locale_profile, null, 2) })]));
+    }
+    if (ctx.glossary_entries && ctx.glossary_entries.length) {
+      dl.appendChild(el("dt", { text: `Glossary entries retrieved (${ctx.glossary_entries.length})` }));
+      dl.appendChild(el("dd", {}, [el("ul", {}, ctx.glossary_entries.map((g) =>
+        el("li", { text: `${g.trigger_terms} → ${g.preferred_term} (${g.note})` })))]));
+    }
+    return dl;
+  }
+
+  function renderRecordDetail(taskId) {
+    const container = document.getElementById("record-detail");
+    container.innerHTML = "";
+    const task = findTask(taskId);
+    const v1 = state.v1Results.find((r) => r.task_id === taskId);
+    if (!task || !v1) {
+      container.appendChild(el("p", { class: "empty-state", text: "V1 result data for this task is not yet available." }));
+      return;
+    }
+    container.appendChild(el("h4", { text: "V1 context packet" }));
+    container.appendChild(renderContextPacket(v1.context_packet));
+    container.appendChild(el("h4", { text: "V1 raw output" }));
+    container.appendChild(el("p", { class: "output-text", text: v1.output.text }));
+    container.appendChild(el("p", { class: "meta", text: `Model: ${v1.output.model_name} · Run date: ${v1.output.run_date}` }));
+    container.appendChild(el("h4", { text: "Assessments" }));
+    container.appendChild(renderAssessment("reference", v1.reference_assessment));
+    container.appendChild(renderAssessment("judge", v1.judge_assessment));
+  }
+
+  function renderRecordInspector() {
+    const select = document.getElementById("record-task-select");
+    for (const task of state.tasks) {
+      select.appendChild(el("option", { value: task.task_id, text: `${task.task_id} — ${task.business_name}` }));
+    }
+    select.addEventListener("change", () => renderRecordDetail(select.value));
+    if (state.tasks.length) renderRecordDetail(state.tasks[0].task_id);
+  }
+
+  function renderView1() {
+    renderPurpose();
+    renderTasks();
+    renderV1Config();
+    renderRubric();
+    renderRecordInspector();
+  }
+
+  // ---------- Views 2-4: populated once results/findings data exists ----------
+
+  function renderView2() {
+    const empty = document.getElementById("v2-empty-state");
+    const content = document.getElementById("v2-content");
+    if (state.v1Results.length === 0) {
+      empty.textContent = "V1 result data has not been added yet. This view will summarise Pass/Needs revision/Fail counts, error points by dimension, and reference-vs-judge agreement once it is.";
+      empty.hidden = false;
+      content.hidden = true;
+      return;
+    }
+    empty.hidden = true;
+    content.hidden = false;
+    // Full implementation lands in Phase 3 (evidence-linked V1 pattern analysis).
+  }
+
+  function renderView3() {
+    const empty = document.getElementById("v3-empty-state");
+    const content = document.getElementById("v3-content");
+    if (state.findings.length === 0) {
+      empty.textContent = "No findings recorded yet. This view will show the observation, examples, alternative explanations, hypothesis and proposed V2 intervention derived from the V1 evidence.";
+      empty.hidden = false;
+      content.hidden = true;
+      return;
+    }
+    empty.hidden = true;
+    content.hidden = false;
+    // Full implementation lands in Phase 3 (evidence-linked V1 pattern analysis).
+  }
+
+  function renderView4() {
+    const empty = document.getElementById("v4-empty-state");
+    const content = document.getElementById("v4-content");
+    if (state.v2Results.length === 0) {
+      empty.textContent = "V2 result data has not been added yet. This view will pair each task's V1 and V2 context, output, assessments, and surface any new errors introduced in V2.";
+      empty.hidden = false;
+      content.hidden = true;
+      return;
+    }
+    empty.hidden = true;
+    content.hidden = false;
+    // Full implementation lands in Phase 4 (retrieval-augmented V2 comparison).
+  }
+
+  // ---------- navigation ----------
+
+  function setupNav() {
+    const tabs = document.querySelectorAll(".nav-tab");
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => t.removeAttribute("aria-current"));
+        tab.setAttribute("aria-current", "page");
+        document.querySelectorAll("[data-view-panel]").forEach((panel) => {
+          panel.hidden = panel.id !== tab.dataset.view;
+        });
+      });
+    });
+  }
+
+  // ---------- boot ----------
+
+  async function boot() {
+    setupNav();
+    try {
+      await loadAll();
+    } catch (e) {
+      const box = document.getElementById("v1-load-error");
+      box.hidden = false;
+      box.textContent = `Could not load bundled data: ${e.message}. If you opened index.html directly from disk, browsers block local file fetches — run "python3 -m http.server 8080" from the repository root and open http://localhost:8080 instead.`;
+      return;
+    }
+    renderView1();
+    renderView2();
+    renderView3();
+    renderView4();
+  }
+
+  document.addEventListener("DOMContentLoaded", boot);
+})();

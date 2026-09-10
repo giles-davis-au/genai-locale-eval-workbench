@@ -1,0 +1,69 @@
+{
+  "version": "1.0",
+  "framing": "These dimensions, severities and status thresholds are project-specific evaluation choices for this MVP, informed by the MQM framework's general concepts of selecting an error taxonomy and assigning severity. This project evaluates same-language locale-conditioned generation, not translation, so results are described as MQM-informed, not MQM-compliant.",
+  "dimensions": [
+    {
+      "id": "factual_accuracy",
+      "name": "Factual accuracy",
+      "description": "The output preserves the facts supplied in the task brief (prices, dates, offer conditions, product details) without inventing, altering or dropping them.",
+      "subtypes": [
+        { "id": "invented_fact", "name": "Invented or unsupported fact" },
+        { "id": "altered_fact", "name": "Altered supplied fact" },
+        { "id": "omitted_fact", "name": "Omitted required fact" }
+      ]
+    },
+    {
+      "id": "constraint_compliance",
+      "name": "Instruction & constraint compliance",
+      "description": "The output satisfies the task's explicit constraints, such as required mentions, length limits or format.",
+      "subtypes": [
+        { "id": "length_violation", "name": "Length constraint violated" },
+        { "id": "missing_required_element", "name": "Missing required element" },
+        { "id": "format_violation", "name": "Format constraint violated" }
+      ]
+    },
+    {
+      "id": "locale_conventions",
+      "name": "Locale conventions",
+      "description": "The output follows the spelling, date, currency and measurement conventions expected for the target locale.",
+      "subtypes": [
+        { "id": "spelling", "name": "Non-locale spelling" },
+        { "id": "date_format", "name": "Non-locale date format" },
+        { "id": "currency_format", "name": "Non-locale currency format" },
+        { "id": "measurement_units", "name": "Non-locale measurement units" }
+      ]
+    },
+    {
+      "id": "terminology",
+      "name": "Terminology & approved brand wording",
+      "description": "The output uses everyday terminology consistent with the locale and, where a brand glossary entry applies, the approved brand wording.",
+      "subtypes": [
+        { "id": "non_locale_term", "name": "Non-locale everyday term" },
+        { "id": "brand_wording", "name": "Incorrect or missing approved brand wording" }
+      ]
+    },
+    {
+      "id": "style_voice",
+      "name": "Style & brand voice",
+      "description": "The tone and register are consistent with concise marketing copy and are not jarring, inconsistent or unnatural for the locale.",
+      "subtypes": [
+        { "id": "register_mismatch", "name": "Register or tone mismatch" },
+        { "id": "awkward_phrasing", "name": "Awkward or unnatural phrasing" }
+      ]
+    }
+  ],
+  "severities": {
+    "minor": { "points": 1, "description": "A small deviation that a reader would likely overlook or that does not materially affect the copy's usefulness." },
+    "major": { "points": 5, "description": "A deviation a locale-aware reader or brand reviewer would likely flag and want corrected before publication." },
+    "critical": { "points": 25, "description": "A deviation serious enough on its own to block publication, such as a factual error or a violated hard constraint." }
+  },
+  "status_policy": {
+    "description": "Status is derived from the sum of annotation points for a single assessment. If any annotation in that assessment is critical severity, status is Fail regardless of total points. Otherwise the total falls into one band below.",
+    "critical_forces_fail": true,
+    "bands": [
+      { "status": "Pass", "min_points": 0, "max_points": 1 },
+      { "status": "Needs revision", "min_points": 2, "max_points": 4 },
+      { "status": "Fail", "min_points": 5, "max_points": null }
+    ]
+  }
+}
