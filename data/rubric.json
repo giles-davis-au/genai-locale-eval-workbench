@@ -1,61 +1,95 @@
 {
-  "version": "1.0",
-  "framing": "These dimensions, severities and status thresholds are project-specific evaluation choices for this MVP, informed by the MQM framework's general concepts of selecting an error taxonomy and assigning severity. This project evaluates same-language locale-conditioned generation, not translation, so results are described as MQM-informed, not MQM-compliant.",
+  "version": "2.0",
+  "framing": "Dimensions and subtypes marked source: \"mqm_core\" are adopted, with their exact names, from the MQM Council's MQM Core error typology (https://www.themqm.org/mqm-pillars/the-mqm-core-typology/), verified live rather than from memory. MQM Core defines seven top-level dimensions; this project adopts six and omits Design and markup entirely, since the generated output is always a single plain-text paragraph with no headings, layout, or markup for that dimension to ever apply to. Within adopted dimensions, only the subtypes plausible for locale-conditioned marketing-copy generation are included -- translation-only subtypes (e.g. Accuracy's Mistranslation/Overtranslation/Undertranslation/Untranslated/Do not translate, which are all source-language/target-language bitext concepts) are dropped rather than renamed, because this project evaluates monolingual generation against a task brief, not translation against a source text. Dimensions and subtypes marked source: \"project_addition\" have no MQM equivalent and are this project's own additions, most notably the whole Instruction & constraint compliance dimension -- MQM has no concept of an arbitrary user-supplied constraint like a word-count ceiling, because translation tasks don't have that. Severities and status thresholds below are project-specific evaluation choices, not taken from MQM's own scoring model. All seven dimensions are weighted equally -- a minor annotation costs the same 1 point regardless of which dimension it is filed under, with no per-dimension multiplier; dimension-level weighting is a reasonable extension this project deliberately does not attempt. Overall this rubric is MQM-informed, not MQM-compliant.",
   "dimensions": [
     {
-      "id": "factual_accuracy",
-      "name": "Factual accuracy",
-      "description": "The output preserves the facts supplied in the task brief (prices, dates, offer conditions, product details) without inventing, altering or dropping them.",
+      "id": "terminology",
+      "name": "Terminology",
+      "source": "mqm_core",
+      "description": "Errors arising when a term does not conform to the supplied brand/terminology glossary, or when an everyday word choice is not the correct regional equivalent.",
       "subtypes": [
-        { "id": "invented_fact", "name": "Invented or unsupported fact" },
-        { "id": "altered_fact", "name": "Altered supplied fact" },
-        { "id": "omitted_fact", "name": "Omitted required fact" }
+        { "id": "inconsistent_with_terminology_resource", "name": "Inconsistent with terminology resource", "source": "mqm_core" },
+        { "id": "wrong_term", "name": "Wrong term", "source": "mqm_core" }
       ]
     },
     {
-      "id": "constraint_compliance",
-      "name": "Instruction & constraint compliance",
-      "description": "The output satisfies the task's explicit constraints, such as required mentions, length limits or format.",
+      "id": "accuracy",
+      "name": "Accuracy",
+      "source": "mqm_core",
+      "description": "Errors occurring when the output does not accurately correspond to the facts and claims supplied in the task brief, through distortion, omission, or addition.",
       "subtypes": [
-        { "id": "length_violation", "name": "Length constraint violated" },
-        { "id": "missing_required_element", "name": "Missing required element" },
-        { "id": "format_violation", "name": "Format constraint violated" }
+        { "id": "addition", "name": "Addition", "source": "mqm_core" },
+        { "id": "omission", "name": "Omission", "source": "mqm_core" },
+        { "id": "altered_fact", "name": "Altered fact", "source": "project_addition", "source_note": "MQM's closest concept, Mistranslation, is specifically about source-text/target-text divergence in translation and has no monolingual-generation equivalent, so this subtype is this project's own addition rather than an MQM rename." }
+      ]
+    },
+    {
+      "id": "linguistic_conventions",
+      "name": "Linguistic conventions",
+      "source": "mqm_core",
+      "source_note": "Named \"Fluency\" in MQM v1; renamed \"Linguistic conventions\" in MQM v2.",
+      "description": "Errors related to the linguistic well-formedness of the text, including problems with grammaticality, spelling, and mechanical correctness.",
+      "subtypes": [
+        { "id": "grammar", "name": "Grammar", "source": "mqm_core" },
+        { "id": "punctuation", "name": "Punctuation", "source": "mqm_core" },
+        { "id": "spelling", "name": "Spelling", "source": "mqm_core" }
+      ]
+    },
+    {
+      "id": "style",
+      "name": "Style",
+      "source": "mqm_core",
+      "description": "Errors occurring in text that is grammatically acceptable but inappropriate because it deviates from supplied brand-voice guidance, or exhibits inappropriate register or awkward, non-idiomatic phrasing.",
+      "subtypes": [
+        { "id": "organization_style", "name": "Organization style", "source": "mqm_core", "source_note": "Applied here to deviation from the brand-voice guidance supplied as part of V2's retrieved context." },
+        { "id": "language_register", "name": "Language register", "source": "mqm_core" },
+        { "id": "awkward_style", "name": "Awkward style", "source": "mqm_core" },
+        { "id": "unidiomatic_style", "name": "Unidiomatic style", "source": "mqm_core" }
       ]
     },
     {
       "id": "locale_conventions",
       "name": "Locale conventions",
-      "description": "The output follows the spelling, date, currency and measurement conventions expected for the target locale.",
+      "source": "mqm_core",
+      "description": "Errors occurring when the output violates locale-specific content or formatting requirements for data elements.",
       "subtypes": [
-        { "id": "spelling", "name": "Non-locale spelling" },
-        { "id": "date_format", "name": "Non-locale date format" },
-        { "id": "currency_format", "name": "Non-locale currency format" },
-        { "id": "measurement_units", "name": "Non-locale measurement units" }
+        { "id": "currency_format", "name": "Currency format", "source": "mqm_core" },
+        { "id": "date_format", "name": "Date format", "source": "mqm_core" },
+        { "id": "measurement_format", "name": "Measurement format", "source": "mqm_core" },
+        { "id": "number_format", "name": "Number format", "source": "mqm_core" },
+        { "id": "time_format", "name": "Time format", "source": "mqm_core", "source_note": "Defined for completeness; none of the 10 tasks involve a time-of-day, so unlikely to be used." },
+        { "id": "address_format", "name": "Address format", "source": "mqm_core", "source_note": "Defined for completeness; none of the 10 tasks involve a postal address, so unlikely to be used." },
+        { "id": "telephone_format", "name": "Telephone format", "source": "mqm_core", "source_note": "Defined for completeness; none of the 10 tasks involve a phone number, so unlikely to be used." },
+        { "id": "shortcut_key", "name": "Shortcut key", "source": "mqm_core", "source_note": "Defined for completeness; not applicable to marketing copy, so unlikely to be used." }
       ]
     },
     {
-      "id": "terminology",
-      "name": "Terminology & approved brand wording",
-      "description": "The output uses everyday terminology consistent with the locale and, where a brand glossary entry applies, the approved brand wording.",
+      "id": "audience_appropriateness",
+      "name": "Audience appropriateness",
+      "source": "mqm_core",
+      "source_note": "Named \"Verity\" in MQM v1; renamed \"Audience appropriateness\" in MQM v2. MQM Core also defines an \"Offensive\" subtype here, which this project omits as out of scope -- content-safety/offense evaluation is not this project's purpose, and none of the 10 synthetic, low-risk-domain tasks were ever likely to produce it.",
+      "description": "Errors where content uses a culture-specific reference that would not be understood by, or would land oddly for, the target-locale audience.",
       "subtypes": [
-        { "id": "non_locale_term", "name": "Non-locale everyday term" },
-        { "id": "brand_wording", "name": "Incorrect or missing approved brand wording" }
+        { "id": "culture_specific_reference", "name": "Culture-specific reference", "source": "mqm_core" }
       ]
     },
     {
-      "id": "style_voice",
-      "name": "Style & brand voice",
-      "description": "The tone and register are consistent with concise marketing copy and are not jarring, inconsistent or unnatural for the locale.",
+      "id": "constraint_compliance",
+      "name": "Instruction & constraint compliance",
+      "source": "project_addition",
+      "source_note": "No MQM dimension covers this. MQM assumes a source-text/target-text correspondence task; it has no concept of an arbitrary user-supplied constraint (a word-count range, a required mention) because translation tasks don't have that. This project's tasks do, so this dimension is this project's own addition, not adapted from MQM.",
+      "description": "The output satisfies the task's explicit constraints, such as required mentions, length limits or format.",
       "subtypes": [
-        { "id": "register_mismatch", "name": "Register or tone mismatch" },
-        { "id": "awkward_phrasing", "name": "Awkward or unnatural phrasing" }
+        { "id": "length_violation", "name": "Length constraint violated", "source": "project_addition" },
+        { "id": "missing_required_element", "name": "Missing required element", "source": "project_addition" },
+        { "id": "format_violation", "name": "Format constraint violated", "source": "project_addition" }
       ]
     }
   ],
   "severities": {
     "minor": { "points": 1, "description": "A small deviation that a reader would likely overlook or that does not materially affect the copy's usefulness." },
     "major": { "points": 5, "description": "A deviation a locale-aware reader or brand reviewer would likely flag and want corrected before publication." },
-    "critical": { "points": 25, "description": "A deviation serious enough on its own to block publication, such as a factual error or a violated hard constraint." }
+    "critical": { "points": 10, "description": "A deviation serious enough on its own to block publication, such as a factual error or a violated hard constraint." }
   },
   "status_policy": {
     "description": "Status is derived from the sum of annotation points for a single assessment. If any annotation in that assessment is critical severity, status is Fail regardless of total points. Otherwise the total falls into one band below.",

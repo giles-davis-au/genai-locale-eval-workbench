@@ -130,22 +130,21 @@ def main():
                 err(f"{label}: output.{field} is missing or empty")
 
         ctx = record.get("context_packet", {})
-        for field in ("system_instruction", "task_brief", "facts", "constraints"):
-            if ctx.get(field) in (None, "", []):
+        for field in ("system_instruction", "user_prompt"):
+            if not ctx.get(field):
                 err(f"{label}: context_packet.{field} is missing or empty")
         if version == "v1":
-            if ctx.get("locale_profile") is not None:
-                err(f"{label}: V1 context_packet.locale_profile should be null")
-            if ctx.get("glossary_entries"):
-                err(f"{label}: V1 context_packet.glossary_entries should be empty")
+            if ctx.get("retrieved_context") is not None:
+                err(f"{label}: V1 context_packet.retrieved_context should be null")
         else:
-            if not ctx.get("locale_profile"):
-                err(f"{label}: V2 context_packet.locale_profile is missing")
+            rc = ctx.get("retrieved_context") or {}
+            if not rc.get("locale_profile"):
+                err(f"{label}: V2 context_packet.retrieved_context.locale_profile is missing")
             expected_ids = expected_glossary_ids(tid)
-            actual_ids = {g.get("term_id") for g in ctx.get("glossary_entries", [])}
+            actual_ids = {g.get("term_id") for g in rc.get("glossary_entries", [])}
             if expected_ids != actual_ids:
                 err(
-                    f"{label}: V2 glossary_entries {sorted(actual_ids)} do not match "
+                    f"{label}: V2 retrieved_context.glossary_entries {sorted(actual_ids)} do not match "
                     f"deterministic retrieval {sorted(expected_ids)}"
                 )
 

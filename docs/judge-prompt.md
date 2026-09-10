@@ -9,40 +9,35 @@ The reference assessment, the app, and this documentation were all produced with
 The judge is also kept blind to two things, by construction of what it is given:
 
 - **Blind to the reference assessment** — it is never shown Giles's annotations, status, or points.
-- **Blind, where practical, to whether the output is V1 or V2** — the judge is given only the task brief, facts, constraints, target locale, the rubric, and the output text. It is never given the V2 locale profile or glossary context packet, and the prompt shape is identical for V1 and V2 outputs. This is "where practical" because a careful reader could sometimes infer version from writing style, but nothing in the input labels it.
+- **Blind, where practical, to whether the output is V1 or V2** — the judge is given only the user's own prompt, the target locale, the rubric, and the output text. It is never given the V2 locale profile or glossary context packet, and the prompt shape is identical for V1 and V2 outputs. This is "where practical" because a careful reader could sometimes infer version from writing style, but nothing in the input labels it.
 
 ## The exact prompt (one call per output, 20 calls total: 10 V1 + 10 V2)
 
-Fill in the bracketed fields from `data/tasks.json` (brief, facts, constraints, target_locale) and the relevant `output.text` from `data/v1-results.json` or `data/v2-results.json`. Do not include anything else — no version label, no reference assessment, no other outputs.
+Fill in the bracketed fields from `data/tasks.json` (`user_prompt`, `target_locale`) and the relevant `output.text` from `data/v1-results.json` or `data/v2-results.json`. Do not include anything else — no version label, no retrieved context, no reference assessment, no other outputs.
 
 ```text
 You are an independent quality reviewer for locale-conditioned marketing copy. You are assessing ONE piece of generated marketing copy against the rubric below. You have not seen and must not ask for any other assessment of this output. Base your judgement only on the material provided in this prompt.
 
-TASK BRIEF:
-[brief]
+USER REQUEST (what the customer typed):
+[user_prompt]
 
 TARGET LOCALE: [target_locale]
-
-FACTS THE COPY MUST PRESERVE:
-[facts, one per line]
-
-CONSTRAINTS THE COPY MUST SATISFY:
-[constraints, one per line]
 
 GENERATED COPY TO ASSESS:
 """
 [output.text]
 """
 
-RUBRIC:
-Dimensions and subtypes:
-- factual_accuracy: invented_fact, altered_fact, omitted_fact
+RUBRIC (dimension: subtype list; adapted from the MQM Core error typology -- https://www.themqm.org/mqm-pillars/the-mqm-core-typology/ -- plus one project-specific dimension MQM has no equivalent for):
+- terminology: inconsistent_with_terminology_resource, wrong_term
+- accuracy: addition, omission, altered_fact
+- linguistic_conventions: grammar, punctuation, spelling
+- style: organization_style, language_register, awkward_style, unidiomatic_style
+- locale_conventions: currency_format, date_format, measurement_format, number_format, time_format, address_format, telephone_format, shortcut_key
+- audience_appropriateness: culture_specific_reference
 - constraint_compliance: length_violation, missing_required_element, format_violation
-- locale_conventions: spelling, date_format, currency_format, measurement_units
-- terminology: non_locale_term, brand_wording
-- style_voice: register_mismatch, awkward_phrasing
 
-Severities and points: minor = 1, major = 5, critical = 25.
+Severities and points: minor = 1, major = 5, critical = 10.
 
 Status bands (computed from total points across all your annotations for this output; any critical annotation forces Fail regardless of total):
 - 0-1 points: Pass

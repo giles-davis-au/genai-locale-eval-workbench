@@ -14,7 +14,7 @@ A static, offline, read-only web app that walks an interviewer through one evalu
 
 ## Data flow
 
-1. `data/tasks.json` — the ten fixed tasks (brief, facts, constraints), identical in V1 and V2.
+1. `data/tasks.json` — the ten fixed tasks (a short brief plus the actual free-text `user_prompt`), identical in V1 and V2. Deliberately has no separate structured facts/constraints breakdown — see [docs/data-schema.md](docs/data-schema.md) for why that was tried and removed.
 2. `data/rubric.json` — dimensions, subtypes, severities, and the status-threshold policy. This is the single source of truth for scoring logic; both `assets/app.js` and `scripts/validate_data.py` read it rather than hardcoding thresholds.
 3. `data/locale-profiles.json` + `data/terminology.csv` — the material V2's retrieval draws from. Retrieval is deterministic: for a task, select every glossary row scoped to its `content_category` or `task_id` (see [docs/data-schema.md](docs/data-schema.md) for the exact rule). No embeddings or external retrieval service.
 4. `data/v1-results.json` / `data/v2-results.json` — one record per task per version: the exact context packet supplied to the model, the raw frozen output, a reference assessment, and a provisional LLM-judge assessment. This is the core data contract; see [docs/data-schema.md](docs/data-schema.md) before changing its shape.
@@ -24,7 +24,7 @@ A static, offline, read-only web app that walks an interviewer through one evalu
 
 | File | Role |
 |---|---|
-| `assets/app.js` | All rendering and derived-metric logic. Views 2–4 currently have stub renderers gated on data presence (see comments in file) pending Phase 3/4. |
+| `assets/app.js` | All rendering and derived-metric logic. View 1 (setup and record inspection) is fully implemented. Views 2–4 currently render an explicit "not implemented yet" empty state pending Phase 3/4 — View 2's is gated on that status directly, not on data presence, since `data/v1-results.json` is already populated; Views 3/4 are still correctly gated on `data/findings.json`/`data/v2-results.json` being empty. |
 | `data/rubric.json` | Scoring source of truth. |
 | `scripts/validate_data.py` | Independent structural + arithmetic check over everything in `data/`. Run after any data edit. |
 | `scripts/import_judge_results.py` | Merges externally-run judge JSON from `data/judge-intake/` into the results files. |
@@ -55,4 +55,4 @@ See [docs/limitations.md](docs/limitations.md) for the full, current list. In br
 
 ## Current build status
 
-Phase 1 (repository skeleton and contracts) only — see the "Project status" section at the top of [README.md](README.md) for what is and isn't populated yet. Update that section, this file, and `docs/` together as later phases land; do not let them drift out of sync with the actual data files.
+Phase 2 (traceable V1 evaluation records) complete — see the "Project status" section at the top of [README.md](README.md) for what is and isn't populated yet. Update that section, this file, and `docs/` together as later phases land; do not let them drift out of sync with the actual data files.

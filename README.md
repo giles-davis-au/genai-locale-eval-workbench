@@ -4,7 +4,7 @@
 
 ## Project status
 
-**Phase 1 of 5 (repository skeleton and contracts).** The app shell, data schemas and rubric are in place, but the ten evaluation records are not yet populated: `data/v1-results.json`, `data/v2-results.json` and `data/findings.json` are currently empty. Do not treat anything in this repository as a finished evaluation until this section says otherwise. See [Implementation phases](#implementation-phases) below for what each subsequent phase adds.
+**Phase 2 of 5 complete (traceable V1 evaluation records).** All 10 V1 tasks have a frozen raw output and a reviewed, approved reference assessment (`data/v1-results.json`). The provisional LLM-judge assessments are still pending an external run (see [docs/judge-prompt.md](docs/judge-prompt.md)) — `data/v2-results.json` and `data/findings.json` are still empty pending Phases 3 and 4. Views 2–4 of the app are not yet implemented (View 1, setup and record inspection, is). Do not treat anything in this repository as a finished evaluation until this section says otherwise. See [Implementation phases](#implementation-phases) below for what each subsequent phase adds.
 
 ## 1. What does this demonstrate?
 
@@ -19,7 +19,7 @@ It is a **preloaded, reproducible case study** built to help its author understa
 
 ## 2. What can an interviewer inspect?
 
-- The ten task briefs, facts and constraints (`data/tasks.json`), identical across V1 and V2.
+- The ten task briefs and the exact free-text prompt each synthetic user typed (`data/tasks.json`), identical across V1 and V2.
 - The exact V1 and V2 system instructions, and the exact retrieved context supplied to the model for every V2 task (`data/v1-results.json`, `data/v2-results.json`).
 - The raw, frozen model outputs for every task and version.
 - A **reference assessment** for every output — labelled *"Reference assessment — created by the MVP author for demonstration"* — and a separately produced **provisional LLM-judge assessment**, kept visibly distinct throughout the UI.
@@ -61,11 +61,11 @@ The only dependency is Python's standard library (`http.server`) to serve static
 - **LLM judge kept separate and provisional** — the judge is a different model, run independently by the author outside this build session, and never shown the reference assessment or (where practical) told which generation version it is judging. See [docs/judge-prompt.md](docs/judge-prompt.md) for the exact process.
 - **V1 → V2** — the V2 intervention follows from a specific V1 observation, not a predetermined "V2 is better" narrative. See [docs/methodology.md](docs/methodology.md) and the in-app pattern-investigation view once populated.
 - **Lightweight glossary lookup** — deliberately basic (deterministic keyword/alias matching over CSV), described honestly as lightweight retrieval-augmented context, not semantic RAG.
-- **Scoring thresholds** — a simple, disclosed points-based policy (minor=1, major=5, critical=25; 0–1 Pass, 2–4 Needs revision, 5+ or any critical Fail), stored in `data/rubric.json` rather than scattered through code, and explicitly labelled as a project-specific choice rather than a universal standard.
+- **Scoring thresholds** — a simple, disclosed points-based policy (minor=1, major=5, critical=10; 0–1 Pass, 2–4 Needs revision, 5+ or any critical Fail), stored in `data/rubric.json` rather than scattered through code, and explicitly labelled as a project-specific choice rather than a universal standard.
 
 ## References
 
-- MQM Council — error typology, selectable subsets, severity and scoring concepts: <https://www.themqm.org/mqm-pillars/>
+- MQM Council — error typology, selectable subsets, severity and scoring concepts: <https://www.themqm.org/mqm-pillars/>. This project's rubric specifically maps to the **MQM Core** typology (verified live, not from memory — see `docs/methodology.md`): <https://www.themqm.org/mqm-pillars/the-mqm-core-typology/>
 - Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena* — known LLM-judge biases and the need for human comparison: <https://arxiv.org/abs/2306.05685>
 
 These sources inform this project's design; they are not cited as validating its specific results.
@@ -104,8 +104,8 @@ genai-locale-eval-workbench/
 
 ## Implementation phases
 
-1. **Repository skeleton and contracts** *(current)* — app shell, data schemas, rubric, empty result files.
-2. **V1 evidence and inspection** — ten V1 outputs, draft reference assessments (reviewed and approved by Giles before commit), setup and record-detail views.
+1. **Repository skeleton and contracts** *(done)* — app shell, data schemas, rubric, empty result files.
+2. **V1 evidence and inspection** *(done)* — ten V1 outputs, reference assessments reviewed and approved by Giles, setup and record-detail views.
 3. **V1 exploration and pattern investigation** — calculated summaries, filters, drilldown, evidence-linked findings.
 4. **V2 context and paired comparison** — transparent glossary retrieval, V2 outputs and assessments, paired comparison view.
 5. **Hardening and handoff** — completed documentation, full validation, offline/no-network confirmation.
@@ -118,4 +118,4 @@ Each phase is one Git commit; history is not squashed, so the project's own cons
 python3 scripts/validate_data.py
 ```
 
-Checks structural integrity: exactly ten unique task IDs, one V1 and one V2 result per task, valid rubric references, recomputed points/status matching stored values, findings referencing real records, required provenance fields present, and no duplicate IDs. It currently reports the ten-task/result mismatch expected at this phase (see status note above).
+Checks structural integrity: exactly ten unique task IDs, one V1 and one V2 result per task, valid rubric references, recomputed points/status matching stored values, findings referencing real records, required provenance fields present, and no duplicate IDs. At this phase it correctly reports 10 missing V2 records (Phase 4 not yet started) and 10 judge assessments awaiting their external run (see status note above) — both expected, not errors in the V1 data itself.

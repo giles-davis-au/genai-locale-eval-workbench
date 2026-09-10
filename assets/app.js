@@ -114,10 +114,8 @@
         el("span", { class: "category-tag", text: task.category_label }),
         el("h4", { text: `${task.task_id} — ${task.business_name}` }),
         el("p", { text: task.brief }),
-        el("p", { html: "<strong>Facts:</strong>" }),
-        el("ul", {}, task.facts.map((f) => el("li", { text: f }))),
-        el("p", { html: "<strong>Constraints:</strong>" }),
-        el("ul", {}, task.constraints.map((c) => el("li", { text: c }))),
+        el("p", { html: "<strong>User prompt (what was actually sent):</strong>" }),
+        el("p", { class: "output-text", text: task.user_prompt }),
       ]);
       container.appendChild(card);
     }
@@ -130,7 +128,7 @@
       ? sample.context_packet.system_instruction
       : "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints.";
     container.appendChild(el("p", {
-      text: "V1 provides only the task brief, facts, constraints and target-locale name. It receives no locale profile and no terminology or brand glossary.",
+      text: "V1 provides only the platform-level system instruction plus the user's own prompt (which names the target locale). It receives no locale profile and no terminology or brand glossary.",
     }));
     container.appendChild(el("p", { html: `<strong>V1 system instruction (verbatim):</strong>` }));
     container.appendChild(el("p", { class: "output-text", text: instruction }));
@@ -210,24 +208,27 @@
   }
 
   function renderContextPacket(ctx) {
+    const rc = ctx.retrieved_context;
     const dl = el("dl", { class: "context-packet" }, [
-      el("dt", { text: "System instruction" }),
+      el("dt", { text: "System instruction (platform-level, hidden from the user)" }),
       el("dd", { class: "output-text", text: ctx.system_instruction }),
-      el("dt", { text: "Task brief" }),
-      el("dd", { text: ctx.task_brief }),
-      el("dt", { text: "Facts" }),
-      el("dd", {}, [el("ul", {}, ctx.facts.map((f) => el("li", { text: f })))]),
-      el("dt", { text: "Constraints" }),
-      el("dd", {}, [el("ul", {}, ctx.constraints.map((c) => el("li", { text: c })))]),
+      el("dt", { text: "User prompt (what the synthetic user actually typed)" }),
+      el("dd", { class: "output-text", text: ctx.user_prompt }),
     ]);
-    if (ctx.locale_profile) {
-      dl.appendChild(el("dt", { text: "Locale profile (retrieved)" }));
-      dl.appendChild(el("dd", {}, [el("pre", { class: "output-text", text: JSON.stringify(ctx.locale_profile, null, 2) })]));
-    }
-    if (ctx.glossary_entries && ctx.glossary_entries.length) {
-      dl.appendChild(el("dt", { text: `Glossary entries retrieved (${ctx.glossary_entries.length})` }));
-      dl.appendChild(el("dd", {}, [el("ul", {}, ctx.glossary_entries.map((g) =>
-        el("li", { text: `${g.trigger_terms} → ${g.preferred_term} (${g.note})` })))]));
+    if (rc) {
+      const rcBody = el("div", {}, [
+        el("p", { html: "<strong>Locale profile:</strong>" }),
+        el("pre", { class: "output-text", text: JSON.stringify(rc.locale_profile, null, 2) }),
+      ]);
+      if (rc.glossary_entries && rc.glossary_entries.length) {
+        rcBody.appendChild(el("p", { html: `<strong>Glossary entries retrieved (${rc.glossary_entries.length}):</strong>` }));
+        rcBody.appendChild(el("ul", {}, rc.glossary_entries.map((g) =>
+          el("li", { text: `${g.trigger_terms} → ${g.preferred_term} (${g.note})` }))));
+      } else {
+        rcBody.appendChild(el("p", { text: "No glossary entries matched this task." }));
+      }
+      dl.appendChild(el("dt", { text: "Retrieved context (platform-injected, hidden from the user)" }));
+      dl.appendChild(el("dd", {}, [rcBody]));
     }
     return dl;
   }
@@ -273,15 +274,13 @@
   function renderView2() {
     const empty = document.getElementById("v2-empty-state");
     const content = document.getElementById("v2-content");
-    if (state.v1Results.length === 0) {
-      empty.textContent = "V1 result data has not been added yet. This view will summarise Pass/Needs revision/Fail counts, error points by dimension, and reference-vs-judge agreement once it is.";
-      empty.hidden = false;
-      content.hidden = true;
-      return;
-    }
-    empty.hidden = true;
-    content.hidden = false;
-    // Full implementation lands in Phase 3 (evidence-linked V1 pattern analysis).
+    // V1 result data exists (see View 1), but this view's summaries, filters and
+    // drilldowns are not implemented yet -- that lands in Phase 3. Gate on that,
+    // not on data presence, so this doesn't silently render an empty panel once
+    // data/v1-results.json is populated.
+    empty.textContent = "V1 result data is loaded (see View 1 for the 10 records), but this view's Pass/Needs revision/Fail summary, error-point breakdown by dimension, and reference-vs-judge comparison have not been implemented yet.";
+    empty.hidden = false;
+    content.hidden = true;
   }
 
   function renderView3() {

@@ -25,7 +25,7 @@ One row per glossary entry. Columns:
 | `match_key` | the `content_category` or `task_id` value this entry is retrieved for |
 | `trigger_terms` | pipe-separated everyday/generic terms this entry corrects, shown for transparency |
 | `preferred_term` | the AU-locale or brand-approved wording |
-| `dimension_subtype` | `non_locale_term` or `brand_wording` (must match a `terminology` subtype in `rubric.json`) |
+| `dimension_subtype` | `wrong_term` or `inconsistent_with_terminology_resource` (must match a `terminology` subtype in `rubric.json`) |
 | `note` | short human-readable explanation |
 
 **Retrieval rule (V2 only, deterministic, no embeddings):** for a given task, select every row where (`scope == "category"` and `match_key == task.content_category`) or (`scope == "task"` and `match_key == task.task_id`). This is the entire retrieval mechanism — see [methodology.md](methodology.md) for why this counts as lightweight retrieval-augmented context rather than semantic RAG.
@@ -41,13 +41,16 @@ Array of exactly 10 task objects:
   "category_label": "Clothing",
   "target_locale": "en-AU",
   "business_name": "Rowan & Ash",
-  "brief": "one-sentence framing of who wants the copy and why",
-  "facts": ["fact 1", "fact 2", "..."],
-  "constraints": ["constraint 1", "constraint 2", "..."]
+  "brief": "one-sentence third-person framing of who wants the copy and why, shown in the task-list UI",
+  "user_prompt": "first-person free text, the way a real small-business owner would type a request into a marketing-copy prompt box"
 }
 ```
 
-`facts` and `constraints` are supplied to the model in **both** V1 and V2 — the only thing that changes between versions is the addition of the locale profile and glossary entries. This keeps the V1→V2 comparison isolated to the retrieval-augmented context, not to a change in what the task asks for.
+`user_prompt` is the model's actual input (combined with the system instruction, and for V2 the retrieved context — see below), and the sole specification of what each task asks for. It is identical across V1 and V2 for a given task, because a real user's own prompt does not change when the platform's retrieval behaviour changes behind the scenes.
+
+There is deliberately no separate structured `facts`/`constraints` breakdown. An earlier draft of this schema had one, reasoned as a "grading checklist" the reference assessor and judge could consult — but on reflection that doesn't correspond to any real evaluation mechanism: a real evaluator, human or LLM-as-judge, only ever receives prompt, response, and rubric, and derives what matters from the prompt themselves. A pre-extracted checklist was never given to the judge (see [judge-prompt.md](judge-prompt.md), which has always used only `user_prompt`) and has been removed everywhere else too, rather than kept as an unused artifact that could be mistaken for a real pipeline step. Each annotation's own `rationale` field cites the specific requirement it's checking, in context, exactly as a real evaluator would.
+
+**Disclosed build note:** V1 generation was originally performed against a structured breakdown of this same request (a brief, a facts list, a constraints list) rather than by typing the `user_prompt` text shown above. That breakdown has since been deleted from this repository's data model for the reason above; the generated output was not regenerated to match its removal. Both forms carried identical informational content, and the frozen output was never edited, regenerated, or cherry-picked to fit either — see [provenance.md](provenance.md) for the full disclosure.
 
 ## `data/v1-results.json` and `data/v2-results.json`
 
@@ -58,12 +61,9 @@ Array of exactly 10 records each (one per task), same task IDs in both files.
   "task_id": "T01",
   "version": "v1",
   "context_packet": {
-    "system_instruction": "exact system instruction text used for this version",
-    "locale_profile": null,
-    "glossary_entries": [],
-    "task_brief": "copied from tasks.json for a self-contained record",
-    "facts": ["..."],
-    "constraints": ["..."]
+    "system_instruction": "exact platform-level system instruction for this version -- hidden from the user, never typed by them",
+    "user_prompt": "copied verbatim from tasks.json -- identical in v1 and v2",
+    "retrieved_context": null
   },
   "output": {
     "text": "raw, unedited generated marketing copy",
@@ -78,7 +78,7 @@ Array of exactly 10 records each (one per task), same task IDs in both files.
     "annotations": [
       {
         "annotation_id": "T01-V1-REF-1",
-        "dimension": "locale_conventions",
+        "dimension": "linguistic_conventions",
         "subtype": "spelling",
         "severity": "minor",
         "span": "the exact quoted text this annotation is about, or null",
@@ -105,7 +105,7 @@ Array of exactly 10 records each (one per task), same task IDs in both files.
 }
 ```
 
-For V2 records, `context_packet.locale_profile` is the full object from `locale-profiles.json` for the task's `target_locale`, and `context_packet.glossary_entries` is the array of matched rows from `terminology.csv` (see retrieval rule above), stored as objects, so an interviewer can see exactly what was retrieved and supplied.
+For V2 records, `context_packet.retrieved_context` is `{ "locale_profile": ..., "glossary_entries": [...] }` — `locale_profile` is the full object from `locale-profiles.json` for the task's `target_locale`, and `glossary_entries` is the array of matched rows from `terminology.csv` (see retrieval rule above), stored as objects. This block is injected by the platform alongside the system instruction — the user never sees or types it — so an interviewer can see exactly what was retrieved and supplied without mistaking it for something the user asked for.
 
 `review_status` is `"pending_review"` until Giles has explicitly reviewed and approved that specific annotation set, at which point it becomes `"approved"` and `review_date` is filled in. **No record may be described in the UI or docs as a finished reference assessment while `review_status` is `"pending_review"`.**
 
