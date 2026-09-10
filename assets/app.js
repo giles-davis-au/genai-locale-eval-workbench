@@ -361,6 +361,7 @@
         document.querySelectorAll("[data-view-panel]").forEach((panel) => {
           panel.hidden = panel.id !== tab.dataset.view;
         });
+        window.scrollTo(0, 0);
       });
     });
   }
