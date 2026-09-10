@@ -1,0 +1,14 @@
+{
+  "annotations": [
+    {
+      "dimension": "accuracy",
+      "subtype": "addition",
+      "severity": "major",
+      "span": "Just tap your order in the app to start collecting stamps.",
+      "rationale": "The brief establishes an in-app stamp card but does not say that customers order through the app or that tapping an order starts stamp collection.",
+      "suggested_correction": "Use the loyalty stamp card in our app to start collecting stamps."
+    }
+  ],
+  "total_points": 5,
+  "status": "Fail"
+}

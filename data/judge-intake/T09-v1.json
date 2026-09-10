@@ -1,0 +1,30 @@
+{
+  "annotations": [
+    {
+      "dimension": "linguistic_conventions",
+      "subtype": "spelling",
+      "severity": "minor",
+      "span": "moisturizer",
+      "rationale": "Australian English uses the spelling “moisturiser”, which also matches the customer's wording.",
+      "suggested_correction": "moisturiser"
+    },
+    {
+      "dimension": "accuracy",
+      "subtype": "addition",
+      "severity": "major",
+      "span": "gentle, effective, and dermatologist-tested for even the most sensitive skin",
+      "rationale": "Only “dermatologist-tested” is supported. The claims of gentleness, effectiveness and suitability for highly sensitive skin were not supplied.",
+      "suggested_correction": "fragrance-free and dermatologist-tested"
+    },
+    {
+      "dimension": "constraint_compliance",
+      "subtype": "length_violation",
+      "severity": "critical",
+      "span": null,
+      "rationale": "The copy is substantially shorter than the requested 40–60 words.",
+      "suggested_correction": "Expand the copy to 40–60 words without adding unsupported product claims."
+    }
+  ],
+  "total_points": 16,
+  "status": "Fail"
+}

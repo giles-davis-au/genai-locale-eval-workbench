@@ -1,0 +1,14 @@
+{
+  "annotations": [
+    {
+      "dimension": "accuracy",
+      "subtype": "addition",
+      "severity": "major",
+      "span": "Soft, breathable, and made to last",
+      "rationale": "These product-performance claims were not supplied in the brief.",
+      "suggested_correction": "Refresh your bedroom with timeless linen style"
+    }
+  ],
+  "total_points": 5,
+  "status": "Fail"
+}

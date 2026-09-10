@@ -1,0 +1,14 @@
+{
+  "annotations": [
+    {
+      "dimension": "accuracy",
+      "subtype": "addition",
+      "severity": "major",
+      "span": "expert trainers, and a community that keeps you motivated. Your first class is on us.",
+      "rationale": "The brief does not substantiate the trainer expertise or community claim, and “Your first class is on us” introduces an offer beyond the stated 7-day free trial.",
+      "suggested_correction": "Flexible memberships and seven days to experience Pulse Studio for yourself."
+    }
+  ],
+  "total_points": 5,
+  "status": "Fail"
+}

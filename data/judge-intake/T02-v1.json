@@ -1,0 +1,14 @@
+{
+  "annotations": [
+    {
+      "dimension": "linguistic_conventions",
+      "subtype": "spelling",
+      "severity": "minor",
+      "span": "favorite",
+      "rationale": "Australian English uses the spelling “favourite”.",
+      "suggested_correction": "favourite"
+    }
+  ],
+  "total_points": 1,
+  "status": "Pass"
+}

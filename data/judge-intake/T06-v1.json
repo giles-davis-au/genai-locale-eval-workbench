@@ -1,0 +1,22 @@
+{
+  "annotations": [
+    {
+      "dimension": "linguistic_conventions",
+      "subtype": "spelling",
+      "severity": "minor",
+      "span": "traveler",
+      "rationale": "Australian English uses the spelling “traveller”.",
+      "suggested_correction": "traveller"
+    },
+    {
+      "dimension": "accuracy",
+      "subtype": "addition",
+      "severity": "major",
+      "span": "off your first purchase",
+      "rationale": "The brief says newsletter subscribers receive 10% off but does not restrict the discount to their first purchase.",
+      "suggested_correction": "off when you sign up"
+    }
+  ],
+  "total_points": 6,
+  "status": "Fail"
+}

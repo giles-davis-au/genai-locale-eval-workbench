@@ -1,0 +1,22 @@
+{
+  "annotations": [
+    {
+      "dimension": "locale_conventions",
+      "subtype": "date_format",
+      "severity": "major",
+      "span": "March 20",
+      "rationale": "The month-first date format is not appropriate for en-AU and reverses the explicitly supplied wording.",
+      "suggested_correction": "20 March"
+    },
+    {
+      "dimension": "linguistic_conventions",
+      "subtype": "spelling",
+      "severity": "minor",
+      "span": "Enroll",
+      "rationale": "Australian English normally uses the spelling “Enrol”.",
+      "suggested_correction": "Enrol"
+    }
+  ],
+  "total_points": 6,
+  "status": "Fail"
+}

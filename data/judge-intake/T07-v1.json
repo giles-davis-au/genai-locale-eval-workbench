@@ -1,0 +1,14 @@
+{
+  "annotations": [
+    {
+      "dimension": "accuracy",
+      "subtype": "addition",
+      "severity": "major",
+      "span": "this month",
+      "rationale": "The brief says the series is launching but supplies no launch month.",
+      "suggested_correction": null
+    }
+  ],
+  "total_points": 5,
+  "status": "Fail"
+}

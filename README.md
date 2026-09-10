@@ -4,7 +4,7 @@
 
 ## Project status
 
-**Phase 2 of 5 complete (traceable V1 evaluation records).** All 10 V1 tasks have a frozen raw output and a reviewed, approved reference assessment (`data/v1-results.json`). The provisional LLM-judge assessments are still pending an external run (see [docs/judge-prompt.md](docs/judge-prompt.md)) — `data/v2-results.json` and `data/findings.json` are still empty pending Phases 3 and 4. The app has five views: **View 1** (setup) and **View 2** (V1 evaluation — inspect any one of the 10 records) are implemented; **View 3** (V1 dashboard), **View 4** (investigate the pattern) and **View 5** (compare V1 vs V2) are not yet. Do not treat anything in this repository as a finished evaluation until this section says otherwise. See [Implementation phases](#implementation-phases) below for what each subsequent phase adds.
+**Phase 2 of 5 complete (traceable V1 evaluation records).** All 10 V1 tasks have a frozen raw output, a reviewed and approved reference assessment, and an imported provisional LLM-judge assessment (`data/v1-results.json`) — see [docs/provenance.md](docs/provenance.md) for the reference-vs-judge disagreement rate. `data/v2-results.json` and `data/findings.json` are still empty pending Phases 3 and 4. The app has five views: **View 1** (setup) and **View 2** (V1 evaluation — inspect any one of the 10 records) are implemented; **View 3** (V1 dashboard), **View 4** (investigate the pattern) and **View 5** (compare V1 vs V2) are not yet. Do not treat anything in this repository as a finished evaluation until this section says otherwise. See [Implementation phases](#implementation-phases) below for what each subsequent phase adds.
 
 ## 1. What does this demonstrate?
 

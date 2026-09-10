@@ -1,0 +1,22 @@
+{
+  "annotations": [
+    {
+      "dimension": "accuracy",
+      "subtype": "addition",
+      "severity": "major",
+      "span": "our best-selling outerwear",
+      "rationale": "The brief does not state that the puffer jackets are best-selling.",
+      "suggested_correction": "our puffer jackets"
+    },
+    {
+      "dimension": "accuracy",
+      "subtype": "addition",
+      "severity": "critical",
+      "span": "made to keep you warm",
+      "rationale": "This is an unsupported fabric or performance claim, which the customer explicitly prohibited.",
+      "suggested_correction": "designed with effortless style"
+    }
+  ],
+  "total_points": 15,
+  "status": "Fail"
+}

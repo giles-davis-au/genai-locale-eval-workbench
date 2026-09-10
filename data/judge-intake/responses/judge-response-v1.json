@@ -1,0 +1,173 @@
+{
+  "T01": {
+    "annotations": [
+      {
+        "dimension": "accuracy",
+        "subtype": "addition",
+        "severity": "major",
+        "span": "our best-selling outerwear",
+        "rationale": "The brief does not state that the puffer jackets are best-selling.",
+        "suggested_correction": "our puffer jackets"
+      },
+      {
+        "dimension": "accuracy",
+        "subtype": "addition",
+        "severity": "critical",
+        "span": "made to keep you warm",
+        "rationale": "This is an unsupported fabric or performance claim, which the customer explicitly prohibited.",
+        "suggested_correction": "designed with effortless style"
+      }
+    ],
+    "total_points": 15,
+    "status": "Fail"
+  },
+  "T02": {
+    "annotations": [
+      {
+        "dimension": "linguistic_conventions",
+        "subtype": "spelling",
+        "severity": "minor",
+        "span": "favorite",
+        "rationale": "Australian English uses the spelling “favourite”.",
+        "suggested_correction": "favourite"
+      }
+    ],
+    "total_points": 1,
+    "status": "Pass"
+  },
+  "T03": {
+    "annotations": [
+      {
+        "dimension": "accuracy",
+        "subtype": "addition",
+        "severity": "major",
+        "span": "expert trainers, and a community that keeps you motivated. Your first class is on us.",
+        "rationale": "The brief does not substantiate the trainer expertise or community claim, and “Your first class is on us” introduces an offer beyond the stated 7-day free trial.",
+        "suggested_correction": "Flexible memberships and seven days to experience Pulse Studio for yourself."
+      }
+    ],
+    "total_points": 5,
+    "status": "Fail"
+  },
+  "T04": {
+    "annotations": [],
+    "total_points": 0,
+    "status": "Pass"
+  },
+  "T05": {
+    "annotations": [
+      {
+        "dimension": "accuracy",
+        "subtype": "addition",
+        "severity": "major",
+        "span": "Soft, breathable, and made to last",
+        "rationale": "These product-performance claims were not supplied in the brief.",
+        "suggested_correction": "Refresh your bedroom with timeless linen style"
+      }
+    ],
+    "total_points": 5,
+    "status": "Fail"
+  },
+  "T06": {
+    "annotations": [
+      {
+        "dimension": "linguistic_conventions",
+        "subtype": "spelling",
+        "severity": "minor",
+        "span": "traveler",
+        "rationale": "Australian English uses the spelling “traveller”.",
+        "suggested_correction": "traveller"
+      },
+      {
+        "dimension": "accuracy",
+        "subtype": "addition",
+        "severity": "major",
+        "span": "off your first purchase",
+        "rationale": "The brief says newsletter subscribers receive 10% off but does not restrict the discount to their first purchase.",
+        "suggested_correction": "off when you sign up"
+      }
+    ],
+    "total_points": 6,
+    "status": "Fail"
+  },
+  "T07": {
+    "annotations": [
+      {
+        "dimension": "accuracy",
+        "subtype": "addition",
+        "severity": "major",
+        "span": "this month",
+        "rationale": "The brief says the series is launching but supplies no launch month.",
+        "suggested_correction": null
+      }
+    ],
+    "total_points": 5,
+    "status": "Fail"
+  },
+  "T08": {
+    "annotations": [
+      {
+        "dimension": "accuracy",
+        "subtype": "addition",
+        "severity": "major",
+        "span": "Just tap your order in the app to start collecting stamps.",
+        "rationale": "The brief establishes an in-app stamp card but does not say that customers order through the app or that tapping an order starts stamp collection.",
+        "suggested_correction": "Use the loyalty stamp card in our app to start collecting stamps."
+      }
+    ],
+    "total_points": 5,
+    "status": "Fail"
+  },
+  "T09": {
+    "annotations": [
+      {
+        "dimension": "linguistic_conventions",
+        "subtype": "spelling",
+        "severity": "minor",
+        "span": "moisturizer",
+        "rationale": "Australian English uses the spelling “moisturiser”, which also matches the customer's wording.",
+        "suggested_correction": "moisturiser"
+      },
+      {
+        "dimension": "accuracy",
+        "subtype": "addition",
+        "severity": "major",
+        "span": "gentle, effective, and dermatologist-tested for even the most sensitive skin",
+        "rationale": "Only “dermatologist-tested” is supported. The claims of gentleness, effectiveness and suitability for highly sensitive skin were not supplied.",
+        "suggested_correction": "fragrance-free and dermatologist-tested"
+      },
+      {
+        "dimension": "constraint_compliance",
+        "subtype": "length_violation",
+        "severity": "critical",
+        "span": null,
+        "rationale": "The copy is substantially shorter than the requested 40–60 words.",
+        "suggested_correction": "Expand the copy to 40–60 words without adding unsupported product claims."
+      }
+    ],
+    "total_points": 16,
+    "status": "Fail"
+  },
+  "T10": {
+    "annotations": [
+      {
+        "dimension": "locale_conventions",
+        "subtype": "date_format",
+        "severity": "major",
+        "span": "March 20",
+        "rationale": "The month-first date format is not appropriate for en-AU and reverses the explicitly supplied wording.",
+        "suggested_correction": "20 March"
+      },
+      {
+        "dimension": "linguistic_conventions",
+        "subtype": "spelling",
+        "severity": "minor",
+        "span": "Enroll",
+        "rationale": "Australian English normally uses the spelling “Enrol”.",
+        "suggested_correction": "Enrol"
+      }
+    ],
+    "total_points": 6,
+    "status": "Fail"
+  }
+}
