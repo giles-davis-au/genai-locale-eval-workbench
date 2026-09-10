@@ -7,6 +7,8 @@ This document is the source of truth for the shape of every JSON file in `data/`
 See the file directly — it is small and self-describing. Key fields consumed elsewhere:
 
 - `dimensions[].id`, `dimensions[].subtypes[].id` — the only valid values for `annotation.dimension` / `annotation.subtype` in results files.
+- `dimensions[].source` / `dimensions[].subtypes[].source` — `"mqm_core"` or `"project_addition"`, rendered as the app's Source column (with an asterisk when a subtype's source differs from its dimension's). Optional `source_note` fields on either give the reason and render as a hover tooltip.
+- `framing` — an array of paragraph strings (not a single block), rendered as separate `<p>` elements so it stays readable; any `http(s)://` URL inside a paragraph is auto-linked.
 - `severities.<minor|major|critical>.points` — the only valid severities and their point values.
 - `status_policy.critical_forces_fail` and `status_policy.bands` — the only source of status-threshold logic. Nothing else in the repository should hardcode `0-1 = Pass` etc.
 

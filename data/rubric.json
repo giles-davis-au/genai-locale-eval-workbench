@@ -1,6 +1,11 @@
 {
   "version": "2.0",
-  "framing": "Dimensions and subtypes marked source: \"mqm_core\" are adopted, with their exact names, from the MQM Council's MQM Core error typology (https://www.themqm.org/mqm-pillars/the-mqm-core-typology/), verified live rather than from memory. MQM Core defines seven top-level dimensions; this project adopts six and omits Design and markup entirely, since the generated output is always a single plain-text paragraph with no headings, layout, or markup for that dimension to ever apply to. Within adopted dimensions, only the subtypes plausible for locale-conditioned marketing-copy generation are included -- translation-only subtypes (e.g. Accuracy's Mistranslation/Overtranslation/Undertranslation/Untranslated/Do not translate, which are all source-language/target-language bitext concepts) are dropped rather than renamed, because this project evaluates monolingual generation against a task brief, not translation against a source text. Dimensions and subtypes marked source: \"project_addition\" have no MQM equivalent and are this project's own additions, most notably the whole Instruction & constraint compliance dimension -- MQM has no concept of an arbitrary user-supplied constraint like a word-count ceiling, because translation tasks don't have that. Severities and status thresholds below are project-specific evaluation choices, not taken from MQM's own scoring model. All seven dimensions are weighted equally -- a minor annotation costs the same 1 point regardless of which dimension it is filed under, with no per-dimension multiplier; dimension-level weighting is a reasonable extension this project deliberately does not attempt. Overall this rubric is MQM-informed, not MQM-compliant.",
+  "framing": [
+    "This rubric adapts the MQM Council's MQM Core error typology (verified live, not recalled from memory) rather than starting from scratch. The Source column below shows which dimensions are adopted from MQM Core and which are this project's own additions; an asterisk (*) on a subtype means that one subtype breaks from its dimension's source, with a tooltip explaining why.",
+    "MQM Core defines seven top-level dimensions. This project adopts six and omits Design and markup entirely, since the generated output is always a single plain-text paragraph with no headings, layout, or markup for that dimension to ever apply to. Within each adopted dimension, only the subtypes plausible for locale-conditioned marketing-copy generation are kept -- translation-only subtypes (e.g. Accuracy's Mistranslation, Overtranslation, Undertranslation, Untranslated and Do not translate, all source-language/target-language bitext concepts) are dropped rather than renamed, since this project evaluates monolingual generation against a task brief, not translation against a source text.",
+    "Severities and status thresholds are project-specific evaluation choices, not taken from MQM's own scoring model. All seven dimensions are weighted equally -- a minor annotation costs the same 1 point regardless of which dimension it is filed under, with no per-dimension multiplier.",
+    "Overall this rubric is MQM-informed, not MQM-compliant. Source: MQM Core typology, https://www.themqm.org/mqm-pillars/the-mqm-core-typology/"
+  ],
   "dimensions": [
     {
       "id": "terminology",
@@ -78,7 +83,7 @@
       "name": "Instruction & constraint compliance",
       "source": "project_addition",
       "source_note": "No MQM dimension covers this. MQM assumes a source-text/target-text correspondence task; it has no concept of an arbitrary user-supplied constraint (a word-count range, a required mention) because translation tasks don't have that. This project's tasks do, so this dimension is this project's own addition, not adapted from MQM.",
-      "description": "The output satisfies the task's explicit constraints, such as required mentions, length limits or format.",
+      "description": "The output satisfies the task's explicit constraints, such as required mentions, length limits or format. This dimension is not part of MQM's typology -- MQM assumes a translation task with no concept of an arbitrary user-supplied constraint like a word count, so it is this project's own addition.",
       "subtypes": [
         { "id": "length_violation", "name": "Length constraint violated", "source": "project_addition" },
         { "id": "missing_required_element", "name": "Missing required element", "source": "project_addition" },
@@ -87,9 +92,9 @@
     }
   ],
   "severities": {
-    "minor": { "points": 1, "description": "A small deviation that a reader would likely overlook or that does not materially affect the copy's usefulness." },
-    "major": { "points": 5, "description": "A deviation a locale-aware reader or brand reviewer would likely flag and want corrected before publication." },
-    "critical": { "points": 10, "description": "A deviation serious enough on its own to block publication, such as a factual error or a violated hard constraint." }
+    "minor": { "points": 1, "description": "A small deviation that a reviewer would likely note but that would not, on its own, move an assessment out of Pass." },
+    "major": { "points": 5, "description": "A deviation a locale-aware reviewer would flag as needing correction. One major-severity annotation on its own already reaches this project's Fail threshold (5+ points)." },
+    "critical": { "points": 10, "description": "A deviation serious enough to fail this assessment outright regardless of point total (see critical_forces_fail below), such as a factual error or a violated hard constraint. This describes how the assessment is scored, not a real-time publishing gate -- this project's review happens after generation, not while a live user is being served the output." }
   },
   "status_policy": {
     "description": "Status is derived from the sum of annotation points for a single assessment. If any annotation in that assessment is critical severity, status is Fail regardless of total points. Otherwise the total falls into one band below.",

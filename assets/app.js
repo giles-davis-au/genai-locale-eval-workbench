@@ -134,20 +134,54 @@
     container.appendChild(el("p", { class: "output-text", text: instruction }));
   }
 
+  const SOURCE_LABELS = { mqm_core: "MQM Core", project_addition: "Project addition" };
+
+  function linkifyParagraph(text) {
+    const escaped = text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    return escaped.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>');
+  }
+
   function renderRubric() {
     const container = document.getElementById("rubric-content");
     const rubric = state.rubric;
-    container.appendChild(el("p", { text: rubric.framing }));
+    const framingParagraphs = Array.isArray(rubric.framing) ? rubric.framing : [rubric.framing];
+    for (const para of framingParagraphs) {
+      container.appendChild(el("p", { html: linkifyParagraph(para) }));
+    }
 
     const dimTable = el("table", { class: "data-table" }, [
-      el("thead", {}, [el("tr", {}, [el("th", { text: "Dimension" }), el("th", { text: "Subtypes" }), el("th", { text: "Description" })])]),
-      el("tbody", {}, rubric.dimensions.map((d) => el("tr", {}, [
-        el("td", { text: d.name }),
-        el("td", { text: d.subtypes.map((s) => s.name).join(", ") }),
-        el("td", { text: d.description }),
-      ]))),
+      el("thead", {}, [el("tr", {}, [
+        el("th", { text: "Dimension" }),
+        el("th", { text: "Source" }),
+        el("th", { text: "Subtypes" }),
+        el("th", { text: "Description" }),
+      ])]),
+      el("tbody", {}, rubric.dimensions.map((d) => {
+        const subtypeNodes = [];
+        d.subtypes.forEach((s, i) => {
+          if (i > 0) subtypeNodes.push(document.createTextNode(", "));
+          if (s.source !== d.source) {
+            subtypeNodes.push(el("span", {
+              title: s.source_note || `${SOURCE_LABELS[s.source] || s.source}, unlike the rest of this dimension.`,
+              text: `${s.name}*`,
+            }));
+          } else {
+            subtypeNodes.push(document.createTextNode(s.name));
+          }
+        });
+        return el("tr", {}, [
+          el("td", { text: d.name }),
+          el("td", d.source_note ? { title: d.source_note, text: SOURCE_LABELS[d.source] || d.source } : { text: SOURCE_LABELS[d.source] || d.source }),
+          el("td", {}, subtypeNodes),
+          el("td", { text: d.description }),
+        ]);
+      })),
     ]);
     container.appendChild(dimTable);
+    container.appendChild(el("p", { class: "meta", text: "* this one subtype's source differs from the rest of its dimension -- hover it, or the Source cell, for why." }));
 
     const sevTable = el("table", { class: "data-table" }, [
       el("thead", {}, [el("tr", {}, [el("th", { text: "Severity" }), el("th", { text: "Points" }), el("th", { text: "Description" })])]),
