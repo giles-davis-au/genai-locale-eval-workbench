@@ -81,8 +81,8 @@
           <div class="filter-field">
             <label for="v3-source-select">Assessment source</label>
             <select id="v3-source-select">
-              <option value="reference" selected>Reference (default)</option>
-              <option value="judge">Provisional judge</option>
+              <option value="reference" selected>Human evaluator</option>
+              <option value="judge">LLM-as-a-judge</option>
               <option value="both">Compare both</option>
             </select>
           </div>
@@ -121,8 +121,8 @@
       </section>
 
       <section aria-labelledby="v3-disagreement-heading">
-        <h3 id="v3-disagreement-heading">Reference vs. judge status disagreements</h3>
-        <p class="prose">Every task where the reference assessment and the provisional judge assessment reached a different status (respects the content-category filter above; not affected by the status/dimension/source filters, since a disagreement inherently compares both).</p>
+        <h3 id="v3-disagreement-heading">Human evaluator vs. LLM-as-a-judge status disagreements</h3>
+        <p class="prose">Every task where the human evaluator's assessment and the LLM-as-a-judge assessment reached a different status (respects the content-category filter above; not affected by the status/dimension/source filters, since a disagreement inherently compares both).</p>
         <div id="v3-disagreement"></div>
       </section>
 

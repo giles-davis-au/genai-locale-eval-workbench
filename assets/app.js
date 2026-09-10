@@ -232,7 +232,7 @@
     block.appendChild(statusPill(assessment.status));
     block.appendChild(el("span", { text: ` — ${assessment.total_points} error point(s)` }));
     if (draft) {
-      block.appendChild(el("p", { class: "meta", text: "Draft — pending Giles's explicit review before this counts as the reference assessment." }));
+      block.appendChild(el("p", { class: "meta", text: "Draft — pending Giles's explicit review before this counts as the human evaluator's assessment." }));
     }
 
     if (!assessment.annotations || assessment.annotations.length === 0) {
@@ -453,7 +453,7 @@
   }
 
   function sourceLabel(source) {
-    return source === "reference" ? "Reference assessment" : "Provisional judge assessment";
+    return source === "reference" ? "Human evaluator" : "LLM-as-a-judge";
   }
 
   function renderStatusCounts(records) {

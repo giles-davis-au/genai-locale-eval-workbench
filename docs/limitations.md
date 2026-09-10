@@ -9,16 +9,16 @@ This project is a small, deliberately bounded learning and interview artefact. T
 - **Ordinary, low-risk domains only.** The task set deliberately avoids regulated or safety-sensitive domains (insurance, credit, healthcare, gambling, legal). Findings here say nothing about locale-conditioned generation in higher-stakes domains.
 - **V1's frozen output was originally generated against a structured breakdown of each task (a brief, a facts list, a constraints list), not literally by typing the free-text `user_prompt` now shown as the model's input.** That structured breakdown has since been removed from this repository entirely (it didn't correspond to any real product or evaluation mechanism — see `docs/provenance.md`), but the already-generated V1 outputs were not regenerated to match its removal. Both forms carried identical informational content, and the output itself was never edited, regenerated, or cherry-picked either time. V2 generation, once it exists, is performed directly against `user_prompt`, so this specific gap is V1-only.
 
-## The reference assessment
+## The human evaluator assessment
 
-- **Not expert judgement or gold-standard data.** It is explicitly labelled *"Reference assessment — created by the MVP author for demonstration"* and represents the shape of a structured human evaluation record, not a validated ground truth.
+- **Not expert judgement or gold-standard data.** It is explicitly labelled *"Human evaluator assessment — created by the MVP author for demonstration"* and represents the shape of a structured human evaluation record, not a validated ground truth.
 - **Single reviewer, single pass.** There is no second reviewer, no adjudication, and no inter-annotator agreement measurement (no Cohen's kappa, no Fleiss' kappa) — this project deliberately does not simulate an evaluator workforce.
-- **Assistant-drafted, human-approved.** Candidate annotations were drafted with assistant help; only annotations Giles has explicitly reviewed and approved are described as finished reference assessments (see [provenance.md](provenance.md) for exactly which records and when).
+- **Assistant-drafted, human-approved.** Candidate annotations were drafted with assistant help; only annotations Giles has explicitly reviewed and approved are described as finished human evaluator assessments (see [provenance.md](provenance.md) for exactly which records and when).
 
-## The provisional LLM judge
+## The provisional LLM-as-a-judge
 
-- **Provisional by design, not a validated automated evaluator.** Ten examples cannot calibrate or validate an LLM judge. Known judge biases (self-preference, verbosity bias, position bias, limited consistency) are documented in Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena* (<https://arxiv.org/abs/2306.05685>) and are not ruled out here.
-- **Blind, where practical, to version and to the reference assessment** — but "where practical" is a real caveat: a careful reader could sometimes infer V1 vs V2 from writing style even though the prompt never labels it, and a single independent judge pass cannot fully rule out systematic judge blind spots.
+- **Provisional by design, not a validated automated evaluator.** Ten examples cannot calibrate or validate an LLM-as-a-judge. Known biases (self-preference, verbosity bias, position bias, limited consistency) are documented in Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena* (<https://arxiv.org/abs/2306.05685>) and are not ruled out here.
+- **Blind, where practical, to version and to the human evaluator's assessment** — but "where practical" is a real caveat: a careful reader could sometimes infer V1 vs V2 from writing style even though the prompt never labels it, and a single independent pass cannot fully rule out systematic blind spots.
 
 ## The V2 intervention and comparison
 
@@ -28,7 +28,7 @@ This project is a small, deliberately bounded learning and interview artefact. T
 
 ## Generation process
 
-- **The model under test and the LLM judge are not from the same evaluation-independence chain as a production setup would require**, since this MVP is authored end-to-end in a short build window. The generation model (Claude Sonnet 5) and the reference-assessment drafting both happened within the same build session; the judge model (GPT-5.6 Sol) was deliberately kept separate and run independently to reduce, though not eliminate, that conflict of interest. See [provenance.md](provenance.md).
+- **The model under test and the LLM-as-a-judge are not from the same evaluation-independence chain as a production setup would require**, since this MVP is authored end-to-end in a short build window. The generation model (Claude Sonnet 5) and the human-evaluator-assessment drafting both happened within the same build session; the LLM-as-a-judge model (GPT-5.6 Sol) was deliberately kept separate and run independently to reduce, though not eliminate, that conflict of interest. See [provenance.md](provenance.md).
 - **Outputs were generated once and frozen.** They were not regenerated, cherry-picked, or edited after the fact to manufacture a convenient error or improvement. If an early exploratory pass had produced no useful variation, the task set itself would have been revised before baselining — not the outputs.
 
 ## What this repository does not claim at all
