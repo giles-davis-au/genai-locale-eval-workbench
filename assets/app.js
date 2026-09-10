@@ -15,6 +15,13 @@
     loadError: null,
   };
 
+  const dashboardState = {
+    source: "reference", // "reference" | "judge" | "both"
+    category: "",
+    status: "",
+    dimension: "",
+  };
+
   const DATA_FILES = [
     ["rubric", "data/rubric.json", "json"],
     ["localeProfiles", "data/locale-profiles.json", "json"],
@@ -308,18 +315,286 @@
     renderRecordInspector();
   }
 
-  // ---------- Views 3-5: populated once results/findings data exists ----------
+  // ---------- View 3: V1 dashboard (calculated summaries, filters, drilldown) ----------
+
+  const STATUSES = ["Pass", "Needs revision", "Fail"];
+
+  function assessmentFor(record, source) {
+    return source === "judge" ? record.judge_assessment : record.reference_assessment;
+  }
+
+  function judgeIsUsable(record) {
+    return record.judge_assessment.import_status === "imported";
+  }
+
+  function activeSources() {
+    return dashboardState.source === "both" ? ["reference", "judge"] : [dashboardState.source];
+  }
+
+  function recordMatchesFilters(r) {
+    const task = findTask(r.task_id);
+    if (dashboardState.category && (!task || task.content_category !== dashboardState.category)) return false;
+    const sources = activeSources().filter((s) => s !== "judge" || judgeIsUsable(r));
+    if (sources.length === 0) return false;
+    const assessments = sources.map((s) => assessmentFor(r, s));
+    if (dashboardState.status && !assessments.some((a) => a.status === dashboardState.status)) return false;
+    if (dashboardState.dimension) {
+      const hasDim = assessments.some((a) => (a.annotations || []).some((ann) => ann.dimension === dashboardState.dimension));
+      if (!hasDim) return false;
+    }
+    return true;
+  }
+
+  function filteredV1Records() {
+    return state.v1Results.filter(recordMatchesFilters);
+  }
+
+  function computeStatusCounts(records, source) {
+    const counts = { Pass: [], "Needs revision": [], Fail: [] };
+    for (const r of records) {
+      if (source === "judge" && !judgeIsUsable(r)) continue;
+      const a = assessmentFor(r, source);
+      counts[a.status].push(r.task_id);
+    }
+    return counts;
+  }
+
+  function computeDimensionStats(records, source) {
+    const stats = {};
+    for (const d of state.rubric.dimensions) {
+      stats[d.id] = { name: d.name, affected: new Set(), points: 0, entries: [] };
+    }
+    for (const r of records) {
+      if (source === "judge" && !judgeIsUsable(r)) continue;
+      const a = assessmentFor(r, source);
+      for (const ann of a.annotations || []) {
+        const s = stats[ann.dimension];
+        if (!s) continue;
+        s.affected.add(r.task_id);
+        s.points += state.rubric.severities[ann.severity].points;
+        s.entries.push({ task_id: r.task_id, subtype: ann.subtype, severity: ann.severity, rationale: ann.rationale });
+      }
+    }
+    return stats;
+  }
+
+  function computeDisagreements() {
+    const out = [];
+    for (const r of state.v1Results) {
+      const task = findTask(r.task_id);
+      if (dashboardState.category && (!task || task.content_category !== dashboardState.category)) continue;
+      if (!judgeIsUsable(r)) continue;
+      const ref = r.reference_assessment.status;
+      const judge = r.judge_assessment.status;
+      if (ref !== judge) out.push({ task_id: r.task_id, ref, judge });
+    }
+    return out;
+  }
+
+  function jumpToRecord(taskId) {
+    document.querySelectorAll(".nav-tab")[1].click();
+    const select = document.getElementById("record-task-select");
+    if (select) {
+      select.value = taskId;
+      select.dispatchEvent(new Event("change"));
+    }
+  }
+
+  function taskDrilldownList(taskIds) {
+    return el("ul", { class: "drilldown-list" }, taskIds.map((tid) => {
+      const task = findTask(tid);
+      const btn = el("button", { type: "button", class: "link-button", text: `${tid} — ${task ? task.business_name : ""}` });
+      btn.addEventListener("click", () => jumpToRecord(tid));
+      return el("li", {}, [btn]);
+    }));
+  }
+
+  function annotationDrilldownList(entries) {
+    return el("ul", { class: "drilldown-list" }, entries.map((e) => {
+      const task = findTask(e.task_id);
+      const btn = el("button", {
+        type: "button",
+        class: "link-button",
+        text: `${e.task_id} — ${task ? task.business_name : ""}: ${e.subtype} (${e.severity})`,
+      });
+      btn.addEventListener("click", () => jumpToRecord(e.task_id));
+      return el("li", {}, [btn, el("div", { class: "meta", text: e.rationale })]);
+    }));
+  }
+
+  function makeClickableStat(node, getDrilldownContent) {
+    node.classList.add("stat-clickable");
+    node.tabIndex = 0;
+    node.setAttribute("role", "button");
+    const isRow = node.tagName === "TR";
+    const activate = () => {
+      const existing = node.nextElementSibling;
+      if (existing && existing.classList.contains("drilldown-row")) {
+        existing.remove();
+        return;
+      }
+      const content = getDrilldownContent();
+      if (isRow) {
+        // A <ul> can't legally sit directly inside <tbody> as a <tr> sibling --
+        // wrap it in its own row so the table stays valid HTML.
+        const colCount = node.children.length;
+        node.insertAdjacentElement("afterend", el("tr", { class: "drilldown-row" }, [
+          el("td", { colspan: String(colCount) }, [content]),
+        ]));
+      } else {
+        content.classList.add("drilldown-row");
+        node.insertAdjacentElement("afterend", content);
+      }
+    };
+    node.addEventListener("click", activate);
+    node.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activate(); }
+    });
+  }
+
+  function sourceLabel(source) {
+    return source === "reference" ? "Reference assessment" : "Provisional judge assessment";
+  }
+
+  function renderStatusCounts(records) {
+    const container = document.getElementById("v3-status-counts");
+    container.innerHTML = "";
+    for (const source of activeSources()) {
+      if (activeSources().length > 1) {
+        container.appendChild(el("h4", { class: "source-group-heading", text: sourceLabel(source) }));
+      }
+      const counts = computeStatusCounts(records, source);
+      const grid = el("div", { class: "card-grid" });
+      for (const status of STATUSES) {
+        const ids = counts[status];
+        const card = el("div", { class: "metric-card" }, [
+          el("div", { class: "metric-value", text: String(ids.length) }),
+          el("div", { class: "metric-label" }, [statusPill(status)]),
+        ]);
+        makeClickableStat(card, () => taskDrilldownList(ids));
+        grid.appendChild(card);
+      }
+      container.appendChild(grid);
+    }
+  }
+
+  function renderDimensionBreakdown(records) {
+    const container = document.getElementById("v3-dimension-breakdown");
+    container.innerHTML = "";
+    for (const source of activeSources()) {
+      if (activeSources().length > 1) {
+        container.appendChild(el("h4", { class: "source-group-heading", text: sourceLabel(source) }));
+      }
+      const stats = computeDimensionStats(records, source);
+      const maxPoints = Math.max(1, ...state.rubric.dimensions.map((d) => stats[d.id].points));
+      const table = el("table", { class: "data-table" }, [
+        el("thead", {}, [el("tr", {}, [
+          el("th", { text: "Dimension" }),
+          el("th", { text: "Affected outputs" }),
+          el("th", { text: "Error points" }),
+        ])]),
+      ]);
+      const tbody = el("tbody");
+      for (const d of state.rubric.dimensions) {
+        const s = stats[d.id];
+        const pointsCell = el("td", {}, [
+          el("div", { class: "bar-row bar-row-compact" }, [
+            el("div", { class: "bar-track" }, [
+              el("div", { class: "bar-fill", style: `width:${(s.points / maxPoints) * 100}%` }),
+            ]),
+            el("span", { text: String(s.points) }),
+          ]),
+        ]);
+        const row = el("tr", {}, [
+          el("td", { text: d.name }),
+          el("td", { text: String(s.affected.size) }),
+          pointsCell,
+        ]);
+        makeClickableStat(row, () => annotationDrilldownList(s.entries));
+        tbody.appendChild(row);
+      }
+      table.appendChild(tbody);
+      container.appendChild(table);
+    }
+  }
+
+  function renderDisagreements() {
+    const container = document.getElementById("v3-disagreement");
+    container.innerHTML = "";
+    const disagreements = computeDisagreements();
+    if (disagreements.length === 0) {
+      container.appendChild(el("p", { class: "empty-state", text: "No reference-vs-judge status disagreements match the current category filter." }));
+      return;
+    }
+    for (const d of disagreements) {
+      const task = findTask(d.task_id);
+      const btn = el("button", { type: "button", class: "link-button", text: `${d.task_id} — ${task ? task.business_name : ""}` });
+      btn.addEventListener("click", () => jumpToRecord(d.task_id));
+      container.appendChild(el("div", { class: "disagreement-row" }, [
+        btn,
+        statusPill(d.ref),
+        el("span", { class: "disagreement-arrow", text: "→ judge:" }),
+        statusPill(d.judge),
+      ]));
+    }
+  }
+
+  function populateDashboardFilters() {
+    const categorySelect = document.getElementById("v3-category-select");
+    const seen = new Set();
+    for (const task of state.tasks) {
+      if (seen.has(task.content_category)) continue;
+      seen.add(task.content_category);
+      categorySelect.appendChild(el("option", { value: task.content_category, text: task.category_label }));
+    }
+    const dimensionSelect = document.getElementById("v3-dimension-select");
+    for (const d of state.rubric.dimensions) {
+      dimensionSelect.appendChild(el("option", { value: d.id, text: d.name }));
+    }
+
+    const sourceSelect = document.getElementById("v3-source-select");
+    const statusSelect = document.getElementById("v3-status-select");
+    const resetBtn = document.getElementById("v3-reset-filters");
+
+    sourceSelect.addEventListener("change", () => { dashboardState.source = sourceSelect.value; renderDashboardContent(); });
+    categorySelect.addEventListener("change", () => { dashboardState.category = categorySelect.value; renderDashboardContent(); });
+    statusSelect.addEventListener("change", () => { dashboardState.status = statusSelect.value; renderDashboardContent(); });
+    dimensionSelect.addEventListener("change", () => { dashboardState.dimension = dimensionSelect.value; renderDashboardContent(); });
+    resetBtn.addEventListener("click", () => {
+      dashboardState.source = "reference";
+      dashboardState.category = "";
+      dashboardState.status = "";
+      dashboardState.dimension = "";
+      sourceSelect.value = "reference";
+      categorySelect.value = "";
+      statusSelect.value = "";
+      dimensionSelect.value = "";
+      renderDashboardContent();
+    });
+  }
+
+  function renderDashboardContent() {
+    const records = filteredV1Records();
+    const summary = document.getElementById("v3-filter-summary");
+    summary.textContent = `Showing ${records.length} of ${state.v1Results.length} V1 tasks matching the current filters.`;
+    renderStatusCounts(records);
+    renderDimensionBreakdown(records);
+    renderDisagreements();
+  }
 
   function renderView3() {
     const empty = document.getElementById("v3-empty-state");
     const content = document.getElementById("v3-content");
-    // V1 result data exists (see View 2), but this view's summaries, filters and
-    // drilldowns are not implemented yet -- that lands in Phase 3. Gate on that,
-    // not on data presence, so this doesn't silently render an empty panel once
-    // data/v1-results.json is populated.
-    empty.textContent = "V1 result data is loaded (see View 2 for individual records), but this view's Pass/Needs revision/Fail summary, error-point breakdown by dimension, and reference-vs-judge comparison have not been implemented yet.";
-    empty.hidden = false;
-    content.hidden = true;
+    if (state.v1Results.length === 0) {
+      empty.textContent = "V1 result data has not been added yet.";
+      empty.hidden = false;
+      content.hidden = true;
+      return;
+    }
+    empty.hidden = true;
+    content.hidden = false;
+    populateDashboardFilters();
+    renderDashboardContent();
   }
 
   function renderView4() {

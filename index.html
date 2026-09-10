@@ -73,7 +73,60 @@
   <section id="view-3" class="view" data-view-panel hidden>
     <h2>V1 dashboard</h2>
     <div id="v3-empty-state" class="empty-state"></div>
-    <div id="v3-content" hidden></div>
+    <div id="v3-content" hidden>
+
+      <section aria-labelledby="v3-filters-heading">
+        <h3 id="v3-filters-heading">Filters</h3>
+        <div class="filter-bar">
+          <div class="filter-field">
+            <label for="v3-source-select">Assessment source</label>
+            <select id="v3-source-select">
+              <option value="reference" selected>Reference (default)</option>
+              <option value="judge">Provisional judge</option>
+              <option value="both">Compare both</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="v3-category-select">Content category</label>
+            <select id="v3-category-select"><option value="">All</option></select>
+          </div>
+          <div class="filter-field">
+            <label for="v3-status-select">Status</label>
+            <select id="v3-status-select">
+              <option value="">All</option>
+              <option value="Pass">Pass</option>
+              <option value="Needs revision">Needs revision</option>
+              <option value="Fail">Fail</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="v3-dimension-select">Error dimension</label>
+            <select id="v3-dimension-select"><option value="">All</option></select>
+          </div>
+          <button type="button" id="v3-reset-filters">Reset filters</button>
+        </div>
+        <p id="v3-filter-summary" class="meta"></p>
+      </section>
+
+      <section aria-labelledby="v3-status-heading">
+        <h3 id="v3-status-heading">Status counts</h3>
+        <p class="prose">Click a count to see which tasks contributed to it.</p>
+        <div id="v3-status-counts"></div>
+      </section>
+
+      <section aria-labelledby="v3-dimension-heading">
+        <h3 id="v3-dimension-heading">Affected outputs and error points by dimension</h3>
+        <p class="prose">Click a row to see which tasks and annotations contributed to it.</p>
+        <div id="v3-dimension-breakdown"></div>
+      </section>
+
+      <section aria-labelledby="v3-disagreement-heading">
+        <h3 id="v3-disagreement-heading">Reference vs. judge status disagreements</h3>
+        <p class="prose">Every task where the reference assessment and the provisional judge assessment reached a different status (respects the content-category filter above; not affected by the status/dimension/source filters, since a disagreement inherently compares both).</p>
+        <div id="v3-disagreement"></div>
+      </section>
+
+    </div>
   </section>
 
   <section id="view-4" class="view" data-view-panel hidden>

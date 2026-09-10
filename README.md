@@ -4,7 +4,7 @@
 
 ## Project status
 
-**Phase 2 of 5 complete (traceable V1 evaluation records).** All 10 V1 tasks have a frozen raw output, a reviewed and approved reference assessment, and an imported provisional LLM-judge assessment (`data/v1-results.json`) — see [docs/provenance.md](docs/provenance.md) for the reference-vs-judge disagreement rate. `data/v2-results.json` and `data/findings.json` are still empty pending Phases 3 and 4. The app has five views: **View 1** (setup) and **View 2** (V1 evaluation — inspect any one of the 10 records) are implemented; **View 3** (V1 dashboard), **View 4** (investigate the pattern) and **View 5** (compare V1 vs V2) are not yet. Do not treat anything in this repository as a finished evaluation until this section says otherwise. See [Implementation phases](#implementation-phases) below for what each subsequent phase adds.
+**Phase 2 of 5 complete, Phase 3 underway.** All 10 V1 tasks have a frozen raw output, a reviewed and approved reference assessment, and an imported provisional LLM-judge assessment (`data/v1-results.json`) — see [docs/provenance.md](docs/provenance.md) for the reference-vs-judge disagreement rate. `data/v2-results.json` and `data/findings.json` are still empty pending Phases 3 (pattern investigation) and 4 (V2). The app has five views: **View 1** (setup), **View 2** (V1 evaluation — inspect any one of the 10 records) and **View 3** (V1 dashboard — calculated summaries, filters, drilldown) are implemented; **View 4** (investigate the pattern) and **View 5** (compare V1 vs V2) are not yet. Do not treat anything in this repository as a finished evaluation until this section says otherwise. See [Implementation phases](#implementation-phases) below for what each subsequent phase adds.
 
 ## 1. What does this demonstrate?
 
@@ -109,7 +109,7 @@ genai-locale-eval-workbench/
 
 1. **Repository skeleton and contracts** *(done)* — app shell, data schemas, rubric, empty result files.
 2. **V1 evidence and inspection** *(done)* — ten V1 outputs, reference assessments reviewed and approved by Giles, setup and record-detail views.
-3. **V1 exploration and pattern investigation** — calculated summaries, filters, drilldown, evidence-linked findings.
+3. **V1 exploration and pattern investigation** *(dashboard done, pattern investigation in progress)* — calculated summaries, filters, drilldown (View 3, done); evidence-linked findings (View 4, not yet).
 4. **V2 context and paired comparison** — transparent glossary retrieval, V2 outputs and assessments, paired comparison view.
 5. **Hardening and handoff** — completed documentation, full validation, offline/no-network confirmation.
 

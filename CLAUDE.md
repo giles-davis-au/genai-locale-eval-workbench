@@ -24,7 +24,7 @@ A static, offline, read-only web app that walks an interviewer through one evalu
 
 | File | Role |
 |---|---|
-| `assets/app.js` | All rendering and derived-metric logic. Five views: **View 1** (setup) and **View 2** (V1 evaluation — inspect one complete record) are fully implemented. **View 3** (V1 dashboard), **View 4** (investigate the pattern) and **View 5** (compare V1 vs V2) currently render an explicit "not implemented yet" empty state pending Phase 3/4 — View 3's is gated on that status directly, not on data presence, since `data/v1-results.json` is already populated; Views 4/5 are still correctly gated on `data/findings.json`/`data/v2-results.json` being empty. |
+| `assets/app.js` | All rendering and derived-metric logic. Five views: **View 1** (setup), **View 2** (V1 evaluation — inspect one complete record) and **View 3** (V1 dashboard — status counts, dimension breakdown, reference-vs-judge disagreements, filters, drilldown, all computed at runtime from `data/v1-results.json`) are fully implemented. **View 4** (investigate the pattern) and **View 5** (compare V1 vs V2) still render an explicit "not implemented yet" empty state, correctly gated on `data/findings.json`/`data/v2-results.json` being empty. |
 | `data/rubric.json` | Scoring source of truth. |
 | `scripts/validate_data.py` | Independent structural + arithmetic check over everything in `data/`. Run after any data edit. |
 | `scripts/import_judge_results.py` | Merges externally-run judge JSON from `data/judge-intake/` into the results files. |
@@ -58,4 +58,4 @@ See [docs/limitations.md](docs/limitations.md) for the full, current list. In br
 
 ## Current build status
 
-Phase 2 (traceable V1 evaluation records) complete — see the "Project status" section at the top of [README.md](README.md) for what is and isn't populated yet. Update that section, this file, and `docs/` together as later phases land; do not let them drift out of sync with the actual data files.
+Phase 2 (traceable V1 evaluation records) complete; Phase 3's dashboard (View 3) is done, its pattern-investigation half (View 4, `data/findings.json`) is not yet — see the "Project status" section at the top of [README.md](README.md) for what is and isn't populated yet. Update that section, this file, and `docs/` together as later phases land; do not let them drift out of sync with the actual data files.
