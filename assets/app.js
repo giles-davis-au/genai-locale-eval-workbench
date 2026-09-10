@@ -388,20 +388,6 @@
     return stats;
   }
 
-  function computeCategoryStats(records, source) {
-    const stats = {};
-    for (const r of records) {
-      const task = findTask(r.task_id);
-      const cat = task ? task.content_category : "unknown";
-      const catLabel = task ? task.category_label : "Unknown";
-      if (!stats[cat]) stats[cat] = { label: catLabel, Pass: [], "Needs revision": [], Fail: [] };
-      if (source === "judge" && !judgeIsUsable(r)) continue;
-      const a = assessmentFor(r, source);
-      stats[cat][a.status].push(r.task_id);
-    }
-    return stats;
-  }
-
   function computeDisagreements() {
     const out = [];
     for (const r of state.v1Results) {
@@ -578,43 +564,6 @@
     }
   }
 
-  function renderCategoryBreakdown(records) {
-    const container = document.getElementById("v3-category-breakdown");
-    container.innerHTML = "";
-    for (const source of activeSources()) {
-      if (activeSources().length > 1) {
-        container.appendChild(el("h4", { class: "source-group-heading", text: sourceLabel(source) }));
-      }
-      const stats = computeCategoryStats(records, source);
-      const categories = Object.keys(stats).sort((a, b) => stats[a].label.localeCompare(stats[b].label));
-      if (categories.length === 0) {
-        container.appendChild(el("p", { class: "meta", text: "No tasks match the current filters." }));
-        continue;
-      }
-      const table = el("table", { class: "data-table status-by-category" }, [
-        el("thead", {}, [el("tr", {}, [
-          el("th", { text: "Category" }),
-          ...STATUSES.map((st) => el("th", { text: st })),
-        ])]),
-      ]);
-      const tbody = el("tbody");
-      for (const cat of categories) {
-        const c = stats[cat];
-        const row = el("tr", {});
-        row.appendChild(el("td", { text: c.label }));
-        for (const st of STATUSES) {
-          const ids = c[st];
-          const cell = el("td", { text: String(ids.length) });
-          if (ids.length > 0) makeClickableStat(cell, () => taskDrilldownList(ids));
-          row.appendChild(cell);
-        }
-        tbody.appendChild(row);
-      }
-      table.appendChild(tbody);
-      container.appendChild(table);
-    }
-  }
-
   function renderTaskSummary(records) {
     const container = document.getElementById("v3-task-summary");
     container.innerHTML = "";
@@ -715,7 +664,6 @@
     const summary = document.getElementById("v3-filter-summary");
     summary.textContent = `Showing ${records.length} of ${state.v1Results.length} V1 tasks matching the current filters.`;
     renderStatusCounts(records);
-    renderCategoryBreakdown(records);
     renderDimensionBreakdown(records);
     renderTaskSummary(records);
     renderDisagreements();

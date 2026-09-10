@@ -174,18 +174,6 @@ table.data-table th {
   background: var(--color-bg-alt);
 }
 
-/* Without explicit widths, auto table layout can dump most of the row's
-   width into whichever short numeric column it treats as "flexible" --
-   observed giving one status column ~750px while its neighbours got ~50px
-   in an ~1000px table. table-layout:fixed was tried first but collapsed
-   this table's container to 0 width in this environment, so instead just
-   pin the narrow numeric columns to a fixed width and let auto layout
-   give the rest to Category, which it does reliably. */
-table.data-table.status-by-category th:not(:first-child),
-table.data-table.status-by-category td:not(:first-child) {
-  width: 6rem;
-}
-
 .status-pill {
   display: inline-block;
   border-radius: 999px;
