@@ -362,7 +362,11 @@
   function computeDimensionStats(records, source) {
     const stats = {};
     for (const d of state.rubric.dimensions) {
-      stats[d.id] = { name: d.name, affected: new Set(), points: 0, entries: [] };
+      const subtypes = {};
+      for (const s of d.subtypes) {
+        subtypes[s.id] = { name: s.name, affected: new Set(), points: 0, entries: [] };
+      }
+      stats[d.id] = { name: d.name, affected: new Set(), points: 0, subtypes };
     }
     for (const r of records) {
       if (source === "judge" && !judgeIsUsable(r)) continue;
@@ -370,10 +374,30 @@
       for (const ann of a.annotations || []) {
         const s = stats[ann.dimension];
         if (!s) continue;
+        const points = state.rubric.severities[ann.severity].points;
         s.affected.add(r.task_id);
-        s.points += state.rubric.severities[ann.severity].points;
-        s.entries.push({ task_id: r.task_id, subtype: ann.subtype, severity: ann.severity, rationale: ann.rationale });
+        s.points += points;
+        const sub = s.subtypes[ann.subtype];
+        if (sub) {
+          sub.affected.add(r.task_id);
+          sub.points += points;
+          sub.entries.push({ task_id: r.task_id, severity: ann.severity, rationale: ann.rationale });
+        }
       }
+    }
+    return stats;
+  }
+
+  function computeCategoryStats(records, source) {
+    const stats = {};
+    for (const r of records) {
+      const task = findTask(r.task_id);
+      const cat = task ? task.content_category : "unknown";
+      const catLabel = task ? task.category_label : "Unknown";
+      if (!stats[cat]) stats[cat] = { label: catLabel, Pass: [], "Needs revision": [], Fail: [] };
+      if (source === "judge" && !judgeIsUsable(r)) continue;
+      const a = assessmentFor(r, source);
+      stats[cat][a.status].push(r.task_id);
     }
     return stats;
   }
@@ -415,7 +439,7 @@
       const btn = el("button", {
         type: "button",
         class: "link-button",
-        text: `${e.task_id} — ${task ? task.business_name : ""}: ${e.subtype} (${e.severity})`,
+        text: `${e.task_id} — ${task ? task.business_name : ""} (${e.severity})`,
       });
       btn.addEventListener("click", () => jumpToRecord(e.task_id));
       return el("li", {}, [btn, el("div", { class: "meta", text: e.rationale })]);
@@ -427,18 +451,28 @@
     node.tabIndex = 0;
     node.setAttribute("role", "button");
     const isRow = node.tagName === "TR";
+    // A <td>/<th> (e.g. one status cell in a row that has other, non-clickable
+    // cells) can't have a <ul> inserted as its next sibling either -- that
+    // sibling would sit directly inside <tr>, which is just as invalid as a
+    // <ul> sitting inside <tbody>. Anchor on the containing <tr> instead so
+    // the drilldown row goes after the *row*, not after one cell of it.
+    // Resolved lazily inside activate() (not here) because callers commonly
+    // build the cell before appending it to its row, so .closest("tr") would
+    // find nothing yet if evaluated at makeClickableStat() call time.
+    const isCell = node.tagName === "TD" || node.tagName === "TH";
     const activate = () => {
-      const existing = node.nextElementSibling;
+      const anchorRow = isCell ? node.closest("tr") : node;
+      const existing = anchorRow.nextElementSibling;
       if (existing && existing.classList.contains("drilldown-row")) {
         existing.remove();
         return;
       }
       const content = getDrilldownContent();
-      if (isRow) {
+      if (isRow || isCell) {
         // A <ul> can't legally sit directly inside <tbody> as a <tr> sibling --
         // wrap it in its own row so the table stays valid HTML.
-        const colCount = node.children.length;
-        node.insertAdjacentElement("afterend", el("tr", { class: "drilldown-row" }, [
+        const colCount = anchorRow.children.length;
+        anchorRow.insertAdjacentElement("afterend", el("tr", { class: "drilldown-row" }, [
           el("td", { colspan: String(colCount) }, [content]),
         ]));
       } else {
@@ -478,6 +512,32 @@
     }
   }
 
+  function subtypeDrilldownTable(dimStat) {
+    const rows = Object.values(dimStat.subtypes).filter((sub) => sub.affected.size > 0);
+    if (rows.length === 0) {
+      return el("p", { class: "meta", text: "No subtype detail (this dimension currently has no annotations)." });
+    }
+    const table = el("table", { class: "data-table" }, [
+      el("thead", {}, [el("tr", {}, [
+        el("th", { text: "Subtype" }),
+        el("th", { text: "Affected outputs" }),
+        el("th", { text: "Error points" }),
+      ])]),
+    ]);
+    const tbody = el("tbody");
+    for (const sub of rows) {
+      const row = el("tr", {}, [
+        el("td", { text: sub.name }),
+        el("td", { text: String(sub.affected.size) }),
+        el("td", { text: String(sub.points) }),
+      ]);
+      makeClickableStat(row, () => annotationDrilldownList(sub.entries));
+      tbody.appendChild(row);
+    }
+    table.appendChild(tbody);
+    return table;
+  }
+
   function renderDimensionBreakdown(records) {
     const container = document.getElementById("v3-dimension-breakdown");
     container.innerHTML = "";
@@ -510,12 +570,89 @@
           el("td", { text: String(s.affected.size) }),
           pointsCell,
         ]);
-        makeClickableStat(row, () => annotationDrilldownList(s.entries));
+        makeClickableStat(row, () => subtypeDrilldownTable(s));
         tbody.appendChild(row);
       }
       table.appendChild(tbody);
       container.appendChild(table);
     }
+  }
+
+  function renderCategoryBreakdown(records) {
+    const container = document.getElementById("v3-category-breakdown");
+    container.innerHTML = "";
+    for (const source of activeSources()) {
+      if (activeSources().length > 1) {
+        container.appendChild(el("h4", { class: "source-group-heading", text: sourceLabel(source) }));
+      }
+      const stats = computeCategoryStats(records, source);
+      const categories = Object.keys(stats).sort((a, b) => stats[a].label.localeCompare(stats[b].label));
+      if (categories.length === 0) {
+        container.appendChild(el("p", { class: "meta", text: "No tasks match the current filters." }));
+        continue;
+      }
+      const table = el("table", { class: "data-table" }, [
+        el("thead", {}, [el("tr", {}, [
+          el("th", { text: "Category" }),
+          ...STATUSES.map((st) => el("th", { text: st })),
+        ])]),
+      ]);
+      const tbody = el("tbody");
+      for (const cat of categories) {
+        const c = stats[cat];
+        const row = el("tr", {});
+        row.appendChild(el("td", { text: c.label }));
+        for (const st of STATUSES) {
+          const ids = c[st];
+          const cell = el("td", { text: String(ids.length) });
+          if (ids.length > 0) makeClickableStat(cell, () => taskDrilldownList(ids));
+          row.appendChild(cell);
+        }
+        tbody.appendChild(row);
+      }
+      table.appendChild(tbody);
+      container.appendChild(table);
+    }
+  }
+
+  function renderTaskSummary(records) {
+    const container = document.getElementById("v3-task-summary");
+    container.innerHTML = "";
+    const sorted = [...records].sort((a, b) => a.task_id.localeCompare(b.task_id));
+    const table = el("table", { class: "data-table" }, [
+      el("thead", {}, [el("tr", {}, [
+        el("th", { text: "Task" }),
+        el("th", { text: "Category" }),
+        el("th", { text: "Human evaluator" }),
+        el("th", { text: "LLM-as-a-judge" }),
+        el("th", { text: "Agree?" }),
+      ])]),
+    ]);
+    const tbody = el("tbody");
+    for (const r of sorted) {
+      const task = findTask(r.task_id);
+      const ref = r.reference_assessment;
+      const judgeUsable = judgeIsUsable(r);
+      const judge = r.judge_assessment;
+      const taskBtn = el("button", { type: "button", class: "link-button", text: `${r.task_id} — ${task ? task.business_name : ""}` });
+      taskBtn.addEventListener("click", () => jumpToRecord(r.task_id));
+      const refCell = el("td", {}, [statusPill(ref.status), el("span", { text: ` (${ref.total_points})` })]);
+      const judgeCell = judgeUsable
+        ? el("td", {}, [statusPill(judge.status), el("span", { text: ` (${judge.total_points})` })])
+        : el("td", { class: "meta", text: "Pending" });
+      const agreeCell = judgeUsable
+        ? el("td", { text: ref.status === judge.status ? "Yes" : "No" })
+        : el("td", { text: "—" });
+      tbody.appendChild(el("tr", {}, [
+        el("td", {}, [taskBtn]),
+        el("td", { text: task ? task.category_label : "" }),
+        refCell,
+        judgeCell,
+        agreeCell,
+      ]));
+    }
+    table.appendChild(tbody);
+    container.appendChild(table);
   }
 
   function renderDisagreements() {
@@ -578,7 +715,9 @@
     const summary = document.getElementById("v3-filter-summary");
     summary.textContent = `Showing ${records.length} of ${state.v1Results.length} V1 tasks matching the current filters.`;
     renderStatusCounts(records);
+    renderCategoryBreakdown(records);
     renderDimensionBreakdown(records);
+    renderTaskSummary(records);
     renderDisagreements();
   }
 

@@ -114,10 +114,22 @@
         <div id="v3-status-counts"></div>
       </section>
 
+      <section aria-labelledby="v3-category-heading">
+        <h3 id="v3-category-heading">Status by content category</h3>
+        <p class="prose">Checks whether one content category accounts for most errors, rather than errors being spread evenly. Respects all filters above, including content category (so this table naturally collapses to one row if you've already filtered to a single category).</p>
+        <div id="v3-category-breakdown"></div>
+      </section>
+
       <section aria-labelledby="v3-dimension-heading">
         <h3 id="v3-dimension-heading">Affected outputs and error points by dimension</h3>
-        <p class="prose">Click a row to see which tasks and annotations contributed to it.</p>
+        <p class="prose">Click a row to see the subtype breakdown for that dimension, then click a subtype to see the specific tasks and annotations.</p>
         <div id="v3-dimension-breakdown"></div>
+      </section>
+
+      <section aria-labelledby="v3-task-summary-heading">
+        <h3 id="v3-task-summary-heading">All tasks, one row each</h3>
+        <p class="prose">Every task matching the current filters, with both assessments side by side. Click a task ID to open its full record in View 2.</p>
+        <div id="v3-task-summary"></div>
       </section>
 
       <section aria-labelledby="v3-disagreement-heading">
