@@ -225,7 +225,7 @@
     const draft = kind === "reference" && assessment.review_status === "pending_review";
 
     if (pending) {
-      block.appendChild(el("p", { class: "meta", text: "Awaiting external judge run — not yet imported." }));
+      block.appendChild(el("p", { class: "meta", text: "Awaiting external LLM-as-a-judge run — not yet imported." }));
       return block;
     }
 
@@ -523,7 +523,7 @@
     container.innerHTML = "";
     const disagreements = computeDisagreements();
     if (disagreements.length === 0) {
-      container.appendChild(el("p", { class: "empty-state", text: "No reference-vs-judge status disagreements match the current category filter." }));
+      container.appendChild(el("p", { class: "empty-state", text: "No human evaluator vs. LLM-as-a-judge status disagreements match the current category filter." }));
       return;
     }
     for (const d of disagreements) {
@@ -533,7 +533,7 @@
       container.appendChild(el("div", { class: "disagreement-row" }, [
         btn,
         statusPill(d.ref),
-        el("span", { class: "disagreement-arrow", text: "→ judge:" }),
+        el("span", { class: "disagreement-arrow", text: "→ LLM-as-a-judge:" }),
         statusPill(d.judge),
       ]));
     }

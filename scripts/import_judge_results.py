@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Merge externally-run LLM-judge JSON files from data/judge-intake/ into
+"""Merge externally-run LLM-as-a-judge JSON files from data/judge-intake/ into
 data/v1-results.json and data/v2-results.json.
 
 Standard library only. See docs/judge-prompt.md for the process this
-supports: the judge is run by Giles against a separate model, outside this
-repository, and its raw JSON output is dropped into data/judge-intake/ named
-<task_id>-<version>.json (e.g. T01-v1.json).
+supports: the LLM-as-a-judge is run by Giles against a separate model,
+outside this repository, and its raw JSON output is dropped into
+data/judge-intake/ named <task_id>-<version>.json (e.g. T01-v1.json).
 
 Usage:
     python3 scripts/import_judge_results.py
@@ -95,11 +95,11 @@ def main():
 
     missing = sorted(expected - found)
     if missing:
-        print(f"\nStill awaiting {len(missing)} of {len(expected)} judge files:")
+        print(f"\nStill awaiting {len(missing)} of {len(expected)} LLM-as-a-judge files:")
         for m in missing:
             print(f"  {m}.json")
     else:
-        print("\nAll 20 judge files present and imported.")
+        print("\nAll 20 LLM-as-a-judge files present and imported.")
 
     return 0
 

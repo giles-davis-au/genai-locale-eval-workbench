@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Generate docs/judge-run-<version>.md: the exact, complete artefact to
-upload to an external model for an independent LLM-judge pass over one
-version's 10 outputs. Standard library only.
+upload to an external model for an independent LLM-as-a-judge pass over
+one version's 10 outputs. Standard library only.
 
 The generated file contains no version-identifying text (no "V1"/"V2"
 anywhere in its content) so that uploading the whole file -- not just an
-excerpt -- still keeps the judge blind to which generation version it is
-assessing. See docs/judge-prompt.md for the full process this supports.
+excerpt -- still keeps the LLM-as-a-judge blind to which generation
+version it is assessing. See docs/judge-prompt.md for the full process
+this supports.
 
 Usage:
     python3 scripts/build_judge_run.py v1
@@ -110,7 +111,7 @@ def main():
     # Deliberately not including record["context_packet"]["system_instruction"] here: V1's and
     # V2's system instructions differ in wording (V2's names "locale profile, brand guidance and
     # terminology entries", which V1 has none of), so including it would reveal version on its own.
-    # It adds nothing the judge needs anyway -- user_prompt + the rubric already cover it -- and
+    # It adds nothing the LLM-as-a-judge needs anyway -- user_prompt + the rubric already cover it -- and
     # omitting it matches system_instruction being "platform-level, hidden from the user" elsewhere.
     for tid in task_ids:
         task = tasks_by_id[tid]

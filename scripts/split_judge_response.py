@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Split a single combined judge response (one JSON object keyed by task ID,
-the shape produced by pasting docs/judge-run-<version>.md into a judge model)
-into the individual data/judge-intake/<task_id>-<version>.json files that
+"""Split a single combined LLM-as-a-judge response (one JSON object keyed by
+task ID, the shape produced by pasting docs/judge-run-<version>.md into an
+LLM-as-a-judge model) into the individual
+data/judge-intake/<task_id>-<version>.json files that
 scripts/import_judge_results.py expects. Standard library only.
 
 Usage:

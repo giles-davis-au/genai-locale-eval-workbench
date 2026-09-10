@@ -148,7 +148,7 @@ def main():
                     f"deterministic retrieval {sorted(expected_ids)}"
                 )
 
-        # reference assessment
+        # human evaluator assessment
         ref = record.get("reference_assessment")
         if ref is None:
             err(f"{label}: missing reference_assessment")
@@ -157,11 +157,11 @@ def main():
             if ref.get("review_status") not in ("pending_review", "approved"):
                 err(f"{label}: reference_assessment.review_status invalid: {ref.get('review_status')!r}")
             if ref.get("review_status") == "pending_review":
-                warn(f"{label}: reference assessment still pending_review (not yet approved by Giles)")
+                warn(f"{label}: human evaluator assessment still pending_review (not yet approved by Giles)")
             if not ref.get("reviewed_by"):
                 err(f"{label}: reference_assessment.reviewed_by is missing")
 
-        # judge assessment
+        # LLM-as-a-judge assessment
         judge = record.get("judge_assessment")
         if judge is None:
             err(f"{label}: missing judge_assessment")
@@ -170,7 +170,7 @@ def main():
                 if not judge.get(field):
                     err(f"{label}: judge_assessment.{field} is missing")
             if judge.get("import_status") == "awaiting_external_run":
-                warn(f"{label}: judge assessment awaiting external run (not yet imported)")
+                warn(f"{label}: LLM-as-a-judge assessment awaiting external run (not yet imported)")
             elif judge.get("import_status") == "imported":
                 check_assessment(label, "judge", judge, all_annotation_ids, require_complete=True)
             else:
