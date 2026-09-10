@@ -94,10 +94,10 @@
   "severities": {
     "minor": { "points": 1, "description": "A small deviation that a reviewer would likely note but that would not, on its own, move an assessment out of Pass." },
     "major": { "points": 5, "description": "A deviation a locale-aware reviewer would flag as needing correction. One major-severity annotation on its own already reaches this project's Fail threshold (5+ points)." },
-    "critical": { "points": 10, "description": "A deviation serious enough to fail this assessment outright regardless of point total (see critical_forces_fail below), such as a factual error or a violated hard constraint. This describes how the assessment is scored, not a real-time publishing gate -- this project's review happens after generation, not while a live user is being served the output." }
+    "critical": { "points": 10, "description": "A deviation serious enough to fail this assessment outright, such as a factual error or a violated hard constraint. This describes how the assessment is scored, not a real-time publishing gate -- this project's review happens after generation, not while a live user is being served the output." }
   },
   "status_policy": {
-    "description": "Status is derived from the sum of annotation points for a single assessment. If any annotation in that assessment is critical severity, status is Fail regardless of total points. Otherwise the total falls into one band below.",
+    "description": "Status is derived from the sum of annotation points for a single assessment, using the bands below.",
     "critical_forces_fail": true,
     "bands": [
       { "status": "Pass", "min_points": 0, "max_points": 1 },
