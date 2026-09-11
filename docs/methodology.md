@@ -2,7 +2,7 @@
 
 ## Why locale-conditioned generation, not translation
 
-The goal of this project is to practise evaluating a common real generative-AI task: producing same-language marketing copy conditioned on a target locale (spelling, date/currency conventions, terminology, brand voice). This is a different problem from translation quality, which is what the MQM framework was originally built to assess. This project borrows MQM's *concepts* (selecting a bounded error taxonomy, assigning severities, deriving a status from points) without claiming to be a translation-quality evaluation. Results here are described as **MQM-informed**, never "MQM-compliant."
+The goal of this project is to practise evaluating a common real generative-AI task: producing same-language marketing copy conditioned on a target locale (spelling, date/currency conventions, terminology, brand voice). This is a different problem from translation quality, which is what the MQM framework was originally built to assess. Standard MT metrics don't apply here for the same reason: BLEU scores n-gram overlap between a machine translation and a reference translation of the same source text, and COMET is a neural model scoring a source/translation/reference triple; both need a source-language input and a reference translation to compare against, and this project has neither, since it's the same language in and out, with no bitext at any point. This project borrows MQM's *concepts* (selecting a bounded error taxonomy, assigning severities, deriving a status from points) without claiming to be a translation-quality evaluation. Results here are described as **MQM-informed**, never "MQM-compliant."
 
 ## Why `en-AU`
 
