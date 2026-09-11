@@ -18,19 +18,20 @@ Keyed by locale code (only `en-AU` is used). Each profile is free-text guidance 
 
 ## `data/terminology.csv`
 
-One row per glossary entry. Columns:
+One row per glossary entry: a flat, universally-applicable list of everyday AU-English word choices, not tied to any business, category or task. Columns:
 
 | column | meaning |
 |---|---|
-| `term_id` | unique ID, `G##` for category-level entries, `B##` for brand-specific entries |
-| `scope` | `category` (matches on `content_category`) or `task` (matches on `task_id`) |
-| `match_key` | the `content_category` or `task_id` value this entry is retrieved for |
+| `term_id` | unique row ID (a plain sequential number) |
 | `trigger_terms` | pipe-separated everyday/generic terms this entry corrects, shown for transparency |
-| `preferred_term` | the AU-locale or brand-approved wording |
-| `dimension_subtype` | `wrong_term` or `inconsistent_with_terminology_resource` (must match a `terminology` subtype in `rubric.json`) |
+| `preferred_term` | the AU-locale wording |
 | `note` | short human-readable explanation |
 
-**Retrieval rule (V2 only, deterministic, no embeddings):** for a given task, select every row where (`scope == "category"` and `match_key == task.content_category`) or (`scope == "task"` and `match_key == task.task_id`). This is the entire retrieval mechanism; see [methodology.md](methodology.md) for why this counts as lightweight retrieval-augmented context rather than semantic RAG.
+There is deliberately no `dimension_subtype` column: every row in this file corrects the same kind of issue (an everyday word used where AU English has a different one), which the `terminology`/`wrong_term` rubric subtype always covers; a real generation platform also has no way to know in advance which business categories it will ever be asked to generate copy for, so a row can't be scoped to one either. `scripts/build_v2_context.py` and any code annotating a `wrong_term` issue can treat that subtype as a constant rather than reading it from the file.
+
+**Retrieval rule (V2 only, deterministic, no embeddings):** every V2 task's `retrieved_context.glossary_entries` is the entire contents of `terminology.csv`, unfiltered. This is universal context, supplied alongside the locale profile regardless of the task's category: a real platform would not know ahead of time which of its glossary terms a given customer's brief will end up needing, so it isn't retrieval in the sense of selecting a subset, it's simply always-on reference material the model is free to draw on where its trigger concept genuinely arises (see [provenance.md](provenance.md) for the disclosed rule that a glossary entry is only ever applied in generated text where its trigger concept naturally arose; none are forced in). See [methodology.md](methodology.md) for why this counts as lightweight retrieval-augmented context rather than semantic RAG.
+
+An earlier version of this file also carried brand-specific rows (a named loyalty program, membership tier, etc.), scoped to an individual `task_id` via now-removed `scope`/`match_key` columns. Those rows were removed entirely, not just relabelled: keying brand-specific terminology to a `task_id` was an artifact of this demo's 1:1 task-to-business structure with no real platform analog, and a brand's own product/program naming is a fundamentally different kind of content from an AU-vs-US vocabulary pair, not something that belongs in this glossary at all.
 
 ## `data/tasks.json`
 
@@ -107,7 +108,7 @@ Array of exactly 10 records each (one per task), same task IDs in both files.
 }
 ```
 
-For V2 records, `context_packet.retrieved_context` is `{ "locale_profile": ..., "glossary_entries": [...] }`: `locale_profile` is the full object from `locale-profiles.json` for the task's `target_locale`, and `glossary_entries` is the array of matched rows from `terminology.csv` (see retrieval rule above), stored as objects. This block is injected by the platform alongside the system instruction (the user never sees or types it), so an interviewer can see exactly what was retrieved and supplied without mistaking it for something the user asked for.
+For V2 records, `context_packet.retrieved_context` is `{ "locale_profile": ..., "glossary_entries": [...] }`: `locale_profile` is the full object from `locale-profiles.json` for the task's `target_locale`, and `glossary_entries` is the entire, unfiltered array of rows from `terminology.csv` (see retrieval rule above), stored as objects. This block is injected by the platform alongside the system instruction (the user never sees or types it), so an interviewer can see exactly what was retrieved and supplied without mistaking it for something the user asked for.
 
 `review_status` is `"pending_review"` until Giles has explicitly reviewed and approved that specific annotation set, at which point it becomes `"approved"` and `review_date` is filled in. **No record may be described in the UI or docs as a finished human evaluator assessment while `review_status` is `"pending_review"`.**
 

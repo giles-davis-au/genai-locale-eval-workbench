@@ -1,20 +1,12 @@
 {
   "annotations": [
     {
-      "dimension": "accuracy",
-      "subtype": "addition",
-      "severity": "major",
-      "span": "Native Bloom Essentials range",
-      "rationale": "The name \"Essentials\" was not provided and invents a product-range name.",
-      "suggested_correction": "Refer to it as \"Native Bloom's fragrance-free moisturiser range\"."
-    },
-    {
       "dimension": "constraint_compliance",
       "subtype": "length_violation",
-      "severity": "major",
+      "severity": "critical",
       "span": null,
-      "rationale": "The copy is approximately 22 words, substantially below the requested 40–60-word range.",
-      "suggested_correction": "Expand the copy to at least 40 words without adding unsupported product claims."
+      "rationale": "The copy contains 19 words, which violates the required length of 40–60 words.",
+      "suggested_correction": "Expand the copy to between 40 and 60 words while retaining the exact wording “dermatologist-tested” and the code “NEW20”."
     }
   ],
   "total_points": 10,

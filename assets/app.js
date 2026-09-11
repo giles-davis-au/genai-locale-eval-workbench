@@ -266,11 +266,11 @@
         el("pre", { class: "output-text", text: JSON.stringify(rc.locale_profile, null, 2) }),
       ]);
       if (rc.glossary_entries && rc.glossary_entries.length) {
-        rcBody.appendChild(el("p", { html: `<strong>Glossary entries retrieved (${rc.glossary_entries.length}):</strong>` }));
+        rcBody.appendChild(el("p", { html: `<strong>Terminology glossary supplied (${rc.glossary_entries.length} entries, universal — not filtered to this task):</strong>` }));
         rcBody.appendChild(el("ul", {}, rc.glossary_entries.map((g) =>
           el("li", { text: `${g.trigger_terms} → ${g.preferred_term} (${g.note})` }))));
       } else {
-        rcBody.appendChild(el("p", { text: "No glossary entries matched this task." }));
+        rcBody.appendChild(el("p", { text: "No glossary entries supplied." }));
       }
       dl.appendChild(el("dt", { text: "Retrieved context (platform-injected, hidden from the user)" }));
       dl.appendChild(el("dd", {}, [rcBody]));

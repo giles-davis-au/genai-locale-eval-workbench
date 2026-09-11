@@ -1,23 +1,15 @@
-term_id,scope,match_key,trigger_terms,preferred_term,dimension_subtype,note
-G01,category,clothing,sweater,jumper,wrong_term,Everyday AU clothing term
-G02,category,food_delivery,cilantro,coriander,wrong_term,Everyday AU grocery term
-G03,category,food_delivery,to go|takeout,takeaway,wrong_term,Everyday AU food-service term
-G04,category,homewares,comforter|duvet cover,doona cover,wrong_term,Everyday AU homewares term
-G05,category,homewares,trash can|garbage can,bin,wrong_term,Everyday AU household term
-G06,category,travel_accessories,purse,handbag,wrong_term,Everyday AU term for a small bag
-G07,category,travel_accessories,vacation,holiday,wrong_term,Everyday AU term for leisure travel
-G08,category,streaming_subscription,movie theater,cinema,wrong_term,Everyday AU term
-G09,category,cafe_promotion,coffee to go,takeaway coffee,wrong_term,Everyday AU cafe term
-G10,category,cafe_promotion,line (queue),queue,wrong_term,Everyday AU term for waiting in line
-G11,category,personal_care,drug store,chemist,wrong_term,Everyday AU term for a pharmacy retailer
-G12,category,community_event,parking lot,car park,wrong_term,Everyday AU term
-G13,category,community_event,vendors,stallholders,wrong_term,Everyday AU market term
-B01,task,T01,VIP club|rewards program|loyalty program,Ash Rewards,inconsistent_with_terminology_resource,Rowan & Ash's named loyalty program
-B02,task,T02,cart|shopping cart|basket,trolley,inconsistent_with_terminology_resource,Cartly's in-app term for the order basket
-B03,task,T03,premium membership|membership tier|VIP membership,Pulse Access,inconsistent_with_terminology_resource,Pulse Studio's named membership tier
-B04,task,T05,newsletter signup|loyalty program,Feld Insiders,inconsistent_with_terminology_resource,Feld & Co's named subscriber program
-B05,task,T06,loyalty program|travel community,Wanderlow Collective,inconsistent_with_terminology_resource,Wanderlow's named customer community
-B06,task,T07,watchlist|saved shows|my list,My List,inconsistent_with_terminology_resource,ReelHouse's named saved-shows feature (exact capitalisation)
-B07,task,T08,loyalty card|stamp card|rewards card,Bean Card,inconsistent_with_terminology_resource,Milk & Bean's named stamp-card program
-B08,task,T09,skincare line|product range,Native Bloom Essentials range,inconsistent_with_terminology_resource,Native Bloom's named product range
-B09,task,T10,completion certificate|certificate,Brightpath Certificate of Completion,inconsistent_with_terminology_resource,Brightpath's named certificate
+term_id,trigger_terms,preferred_term,note
+1,sweater,jumper,Everyday AU clothing term
+2,cilantro,coriander,Everyday AU grocery term
+3,to go|takeout,takeaway,Everyday AU food-service term
+4,comforter|duvet cover,doona cover,Everyday AU homewares term
+5,trash can|garbage can,bin,Everyday AU household term
+6,purse,handbag,Everyday AU term for a small bag
+7,vacation,holiday,Everyday AU term for leisure travel
+8,movie theater,cinema,Everyday AU term
+9,coffee to go,takeaway coffee,Everyday AU cafe term
+10,line (queue),queue,Everyday AU term for waiting in line
+11,drug store,chemist,Everyday AU term for a pharmacy retailer
+12,parking lot,car park,Everyday AU term
+13,vendors,stallholders,Everyday AU market term
+14,cart|shopping cart,trolley,Everyday AU term for a shopping cart

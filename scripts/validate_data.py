@@ -215,17 +215,12 @@ def main():
                 f"computed {computed_status!r} from rubric status_policy"
             )
 
+    all_glossary_ids = {row["term_id"] for row in terminology_rows}
+
     def expected_glossary_ids(task_id):
-        task = next((t for t in tasks if t["task_id"] == task_id), None)
-        if task is None:
-            return set()
-        ids = set()
-        for row in terminology_rows:
-            if row["scope"] == "category" and row["match_key"] == task["content_category"]:
-                ids.add(row["term_id"])
-            elif row["scope"] == "task" and row["match_key"] == task_id:
-                ids.add(row["term_id"])
-        return ids
+        # Retrieval is universal, not conditioned on task or category: every
+        # V2 record is expected to carry the entire glossary.
+        return all_glossary_ids
 
     for r in v1_results:
         check_result_record(r, "v1")

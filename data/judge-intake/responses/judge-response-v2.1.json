@@ -1,0 +1,21 @@
+{
+  "T09": {
+    "annotations": [
+      {
+        "dimension": "constraint_compliance",
+        "subtype": "length_violation",
+        "severity": "critical",
+        "span": null,
+        "rationale": "The copy contains 19 words, which violates the required length of 40–60 words.",
+        "suggested_correction": "Expand the copy to between 40 and 60 words while retaining the exact wording “dermatologist-tested” and the code “NEW20”."
+      }
+    ],
+    "total_points": 10,
+    "status": "Fail"
+  },
+  "T10": {
+    "annotations": [],
+    "total_points": 0,
+    "status": "Pass"
+  }
+}
