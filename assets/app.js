@@ -1034,6 +1034,14 @@
       class: "prose",
       text: "Every task re-evaluated on the same rubric, under both assessors, before and after the changes recommended in View 4. This is a rudimentary regression check on ten reused tasks, not an independent validation set: it reports whatever the stored evidence shows, including any new issues V2 introduced, not just what it fixed. Click a row for the full before/after detail, including any issue new to V2.",
     }));
+    content.appendChild(el("p", {
+      class: "prose",
+      text: "The human evaluator's V2 assessment shows both system changes fully resolving the specific defect they were built to fix: none of the 5 tasks originally flagged for a non-AU spelling, date-format or terminology convention shows that issue in V2, and none of the 6 tasks originally flagged for an unsupported added claim shows one in V2 either. Total error points fell from 16 to 8 under the human evaluator and from 64 to 27 under the LLM-as-a-judge, and no task was rated worse under either assessor.",
+    }));
+    content.appendChild(el("p", {
+      class: "prose",
+      text: "This comparison reveals a pattern Monitoring note 1 had flagged as too thin to act on: a recurring tendency to miss the requested word count, not a one-off. What was a single V1 instance (T09) is now three in V2 (T06, T08, T09), the kind of recurrence Monitoring note 1 said would clear the bar for a full finding, and subsequent recommendation.",
+    }));
     content.appendChild(renderComparisonSummary(state.tasks.map((t) => computeComparisonRow(t.task_id))));
     content.appendChild(el("h3", { text: "Every task, before and after" }));
     content.appendChild(renderComparisonTable(state.tasks.map((t) => computeComparisonRow(t.task_id))));
