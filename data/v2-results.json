@@ -53,20 +53,20 @@
       "total_points": 0,
       "annotations": [],
       "reviewed_by": "Giles Davis",
-      "review_status": "pending_review",
-      "review_date": null
+      "review_status": "approved",
+      "review_date": "2026-09-11"
     },
     "judge_assessment": {
       "label": "Provisional LLM-as-a-judge assessment",
-      "status": "pending",
-      "total_points": null,
+      "status": "Pass",
+      "total_points": 0,
       "annotations": [],
       "judge_model_name": "GPT-5.6 Sol",
       "judge_prompt_ref": "docs/judge-prompt.md",
-      "run_date": null,
+      "run_date": "2026-09-11",
       "blind_to_reference": true,
       "blind_to_version_label": true,
-      "import_status": "awaiting_external_run"
+      "import_status": "imported"
     }
   },
   {
@@ -132,20 +132,20 @@
       "total_points": 0,
       "annotations": [],
       "reviewed_by": "Giles Davis",
-      "review_status": "pending_review",
-      "review_date": null
+      "review_status": "approved",
+      "review_date": "2026-09-11"
     },
     "judge_assessment": {
       "label": "Provisional LLM-as-a-judge assessment",
-      "status": "pending",
-      "total_points": null,
+      "status": "Pass",
+      "total_points": 0,
       "annotations": [],
       "judge_model_name": "GPT-5.6 Sol",
       "judge_prompt_ref": "docs/judge-prompt.md",
-      "run_date": null,
+      "run_date": "2026-09-11",
       "blind_to_reference": true,
       "blind_to_version_label": true,
-      "import_status": "awaiting_external_run"
+      "import_status": "imported"
     }
   },
   {
@@ -193,20 +193,20 @@
       "total_points": 0,
       "annotations": [],
       "reviewed_by": "Giles Davis",
-      "review_status": "pending_review",
-      "review_date": null
+      "review_status": "approved",
+      "review_date": "2026-09-11"
     },
     "judge_assessment": {
       "label": "Provisional LLM-as-a-judge assessment",
-      "status": "pending",
-      "total_points": null,
+      "status": "Pass",
+      "total_points": 0,
       "annotations": [],
       "judge_model_name": "GPT-5.6 Sol",
       "judge_prompt_ref": "docs/judge-prompt.md",
-      "run_date": null,
+      "run_date": "2026-09-11",
       "blind_to_reference": true,
       "blind_to_version_label": true,
-      "import_status": "awaiting_external_run"
+      "import_status": "imported"
     }
   },
   {
@@ -260,23 +260,42 @@
     "reference_assessment": {
       "label": "Human evaluator assessment: created by the MVP author for demonstration",
       "status": "Pass",
-      "total_points": 0,
-      "annotations": [],
+      "total_points": 1,
+      "annotations": [
+        {
+          "annotation_id": "T04-V2-REF-1",
+          "dimension": "accuracy",
+          "subtype": "omission",
+          "severity": "minor",
+          "span": null,
+          "rationale": "The brief specifies the market is 'run by the local council', but this fact never appears in the output, despite ample word budget remaining (31 of a 50-word ceiling used).",
+          "suggested_correction": "Add a brief mention that Riverside Markets is run by the local council, e.g. 'Riverside Markets, run by your local council'."
+        }
+      ],
       "reviewed_by": "Giles Davis",
-      "review_status": "pending_review",
-      "review_date": null
+      "review_status": "approved",
+      "review_date": "2026-09-11"
     },
     "judge_assessment": {
       "label": "Provisional LLM-as-a-judge assessment",
-      "status": "pending",
-      "total_points": null,
-      "annotations": [],
+      "status": "Pass",
+      "total_points": 1,
+      "annotations": [
+        {
+          "dimension": "accuracy",
+          "subtype": "omission",
+          "severity": "minor",
+          "span": "Car park available on site.",
+          "rationale": "The copy mentions on-site parking but omits that it is available to both stallholders and visitors.",
+          "suggested_correction": "On-site parking available for stallholders and visitors."
+        }
+      ],
       "judge_model_name": "GPT-5.6 Sol",
       "judge_prompt_ref": "docs/judge-prompt.md",
-      "run_date": null,
+      "run_date": "2026-09-11",
       "blind_to_reference": true,
       "blind_to_version_label": true,
-      "import_status": "awaiting_external_run"
+      "import_status": "imported"
     }
   },
   {
@@ -342,20 +361,29 @@
       "total_points": 0,
       "annotations": [],
       "reviewed_by": "Giles Davis",
-      "review_status": "pending_review",
-      "review_date": null
+      "review_status": "approved",
+      "review_date": "2026-09-11"
     },
     "judge_assessment": {
       "label": "Provisional LLM-as-a-judge assessment",
-      "status": "pending",
-      "total_points": null,
-      "annotations": [],
+      "status": "Fail",
+      "total_points": 5,
+      "annotations": [
+        {
+          "dimension": "accuracy",
+          "subtype": "addition",
+          "severity": "major",
+          "span": "Soft, breathable, and made to last",
+          "rationale": "These product-quality and durability claims were not supplied in the brief.",
+          "suggested_correction": "Replace the unsupported claims with neutral promotional wording, such as \"Refresh your bedroom with timeless linen style.\""
+        }
+      ],
       "judge_model_name": "GPT-5.6 Sol",
       "judge_prompt_ref": "docs/judge-prompt.md",
-      "run_date": null,
+      "run_date": "2026-09-11",
       "blind_to_reference": true,
       "blind_to_version_label": true,
-      "import_status": "awaiting_external_run"
+      "import_status": "imported"
     }
   },
   {
@@ -418,23 +446,42 @@
     "reference_assessment": {
       "label": "Human evaluator assessment: created by the MVP author for demonstration",
       "status": "Pass",
-      "total_points": 0,
-      "annotations": [],
+      "total_points": 1,
+      "annotations": [
+        {
+          "annotation_id": "T06-V2-REF-1",
+          "dimension": "constraint_compliance",
+          "subtype": "length_violation",
+          "severity": "minor",
+          "span": null,
+          "rationale": "Output is 38 words; the task requires 40-60 words. Only 2 words short of the floor, a small deviation rather than a clear miss.",
+          "suggested_correction": null
+        }
+      ],
       "reviewed_by": "Giles Davis",
-      "review_status": "pending_review",
-      "review_date": null
+      "review_status": "approved",
+      "review_date": "2026-09-11"
     },
     "judge_assessment": {
       "label": "Provisional LLM-as-a-judge assessment",
-      "status": "pending",
-      "total_points": null,
-      "annotations": [],
+      "status": "Pass",
+      "total_points": 1,
+      "annotations": [
+        {
+          "dimension": "constraint_compliance",
+          "subtype": "length_violation",
+          "severity": "minor",
+          "span": null,
+          "rationale": "The copy is approximately 37 words, slightly below the requested 40–60-word range.",
+          "suggested_correction": "Add a few relevant words while retaining all three required promotional points."
+        }
+      ],
       "judge_model_name": "GPT-5.6 Sol",
       "judge_prompt_ref": "docs/judge-prompt.md",
-      "run_date": null,
+      "run_date": "2026-09-11",
       "blind_to_reference": true,
       "blind_to_version_label": true,
-      "import_status": "awaiting_external_run"
+      "import_status": "imported"
     }
   },
   {
@@ -491,20 +538,20 @@
       "total_points": 0,
       "annotations": [],
       "reviewed_by": "Giles Davis",
-      "review_status": "pending_review",
-      "review_date": null
+      "review_status": "approved",
+      "review_date": "2026-09-11"
     },
     "judge_assessment": {
       "label": "Provisional LLM-as-a-judge assessment",
-      "status": "pending",
-      "total_points": null,
+      "status": "Pass",
+      "total_points": 0,
       "annotations": [],
       "judge_model_name": "GPT-5.6 Sol",
       "judge_prompt_ref": "docs/judge-prompt.md",
-      "run_date": null,
+      "run_date": "2026-09-11",
       "blind_to_reference": true,
       "blind_to_version_label": true,
-      "import_status": "awaiting_external_run"
+      "import_status": "imported"
     }
   },
   {
@@ -567,23 +614,50 @@
     "reference_assessment": {
       "label": "Human evaluator assessment: created by the MVP author for demonstration",
       "status": "Pass",
-      "total_points": 0,
-      "annotations": [],
+      "total_points": 1,
+      "annotations": [
+        {
+          "annotation_id": "T08-V2-REF-1",
+          "dimension": "constraint_compliance",
+          "subtype": "length_violation",
+          "severity": "minor",
+          "span": null,
+          "rationale": "Output is 34 words; the task requires 40-60 words. Removing the invented app-interaction sentence (an unrelated accuracy fix) left this output short of the floor; a moderate rather than severe miss.",
+          "suggested_correction": null
+        }
+      ],
       "reviewed_by": "Giles Davis",
-      "review_status": "pending_review",
-      "review_date": null
+      "review_status": "approved",
+      "review_date": "2026-09-11"
     },
     "judge_assessment": {
       "label": "Provisional LLM-as-a-judge assessment",
-      "status": "pending",
-      "total_points": null,
-      "annotations": [],
+      "status": "Fail",
+      "total_points": 10,
+      "annotations": [
+        {
+          "dimension": "accuracy",
+          "subtype": "omission",
+          "severity": "major",
+          "span": "Grab your takeaway coffee and start earning today.",
+          "rationale": "The copy does not explain that the loyalty stamp card is located in the Milk & Bean app, which is material to how customers access the offer.",
+          "suggested_correction": "Open the Milk & Bean app and start collecting stamps today."
+        },
+        {
+          "dimension": "constraint_compliance",
+          "subtype": "length_violation",
+          "severity": "major",
+          "span": null,
+          "rationale": "The copy is approximately 33 words, notably below the requested 40–60-word range.",
+          "suggested_correction": "Expand the copy to at least 40 words, including the omitted app-based stamp-card detail."
+        }
+      ],
       "judge_model_name": "GPT-5.6 Sol",
       "judge_prompt_ref": "docs/judge-prompt.md",
-      "run_date": null,
+      "run_date": "2026-09-11",
       "blind_to_reference": true,
       "blind_to_version_label": true,
-      "import_status": "awaiting_external_run"
+      "import_status": "imported"
     }
   },
   {
@@ -636,24 +710,51 @@
     },
     "reference_assessment": {
       "label": "Human evaluator assessment: created by the MVP author for demonstration",
-      "status": "Pass",
-      "total_points": 0,
-      "annotations": [],
+      "status": "Fail",
+      "total_points": 5,
+      "annotations": [
+        {
+          "annotation_id": "T09-V2-REF-1",
+          "dimension": "constraint_compliance",
+          "subtype": "length_violation",
+          "severity": "major",
+          "span": null,
+          "rationale": "Output is 23 words; the task requires 40-60 words, a clear miss and proportionally worse than V1's own length violation on this same task (29 words). Removing the unsupported claims that had been padding V1's version (an unrelated accuracy fix) left no substitute content to reach the required length.",
+          "suggested_correction": "Expand using only facts already given in the prompt (e.g. restate the brand name or the offer mechanics) rather than reintroducing unsupported claims."
+        }
+      ],
       "reviewed_by": "Giles Davis",
-      "review_status": "pending_review",
-      "review_date": null
+      "review_status": "approved",
+      "review_date": "2026-09-11"
     },
     "judge_assessment": {
       "label": "Provisional LLM-as-a-judge assessment",
-      "status": "pending",
-      "total_points": null,
-      "annotations": [],
+      "status": "Fail",
+      "total_points": 10,
+      "annotations": [
+        {
+          "dimension": "accuracy",
+          "subtype": "addition",
+          "severity": "major",
+          "span": "Native Bloom Essentials range",
+          "rationale": "The name \"Essentials\" was not provided and invents a product-range name.",
+          "suggested_correction": "Refer to it as \"Native Bloom's fragrance-free moisturiser range\"."
+        },
+        {
+          "dimension": "constraint_compliance",
+          "subtype": "length_violation",
+          "severity": "major",
+          "span": null,
+          "rationale": "The copy is approximately 22 words, substantially below the requested 40–60-word range.",
+          "suggested_correction": "Expand the copy to at least 40 words without adding unsupported product claims."
+        }
+      ],
       "judge_model_name": "GPT-5.6 Sol",
       "judge_prompt_ref": "docs/judge-prompt.md",
-      "run_date": null,
+      "run_date": "2026-09-11",
       "blind_to_reference": true,
       "blind_to_version_label": true,
-      "import_status": "awaiting_external_run"
+      "import_status": "imported"
     }
   },
   {
@@ -701,20 +802,20 @@
       "total_points": 0,
       "annotations": [],
       "reviewed_by": "Giles Davis",
-      "review_status": "pending_review",
-      "review_date": null
+      "review_status": "approved",
+      "review_date": "2026-09-11"
     },
     "judge_assessment": {
       "label": "Provisional LLM-as-a-judge assessment",
-      "status": "pending",
-      "total_points": null,
+      "status": "Pass",
+      "total_points": 0,
       "annotations": [],
       "judge_model_name": "GPT-5.6 Sol",
       "judge_prompt_ref": "docs/judge-prompt.md",
-      "run_date": null,
+      "run_date": "2026-09-11",
       "blind_to_reference": true,
       "blind_to_version_label": true,
-      "import_status": "awaiting_external_run"
+      "import_status": "imported"
     }
   }
 ]

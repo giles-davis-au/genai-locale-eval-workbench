@@ -187,6 +187,18 @@ table.data-table th {
 .status-fail { background: var(--color-fail-bg); color: var(--color-fail); }
 .status-pending { background: var(--color-bg-alt); color: var(--color-text-muted); border-color: var(--color-border); }
 
+.delta-pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-left: 0.35rem;
+}
+.delta-improved { background: var(--color-pass-bg); color: var(--color-pass); }
+.delta-worsened { background: var(--color-fail-bg); color: var(--color-fail); }
+.delta-same { background: var(--color-bg-alt); color: var(--color-text-muted); }
+
 .assessment-block {
   border-radius: var(--radius);
   border: 1px solid var(--color-border);

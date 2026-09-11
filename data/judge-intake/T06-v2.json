@@ -1,0 +1,14 @@
+{
+  "annotations": [
+    {
+      "dimension": "constraint_compliance",
+      "subtype": "length_violation",
+      "severity": "minor",
+      "span": null,
+      "rationale": "The copy is approximately 37 words, slightly below the requested 40–60-word range.",
+      "suggested_correction": "Add a few relevant words while retaining all three required promotional points."
+    }
+  ],
+  "total_points": 1,
+  "status": "Pass"
+}

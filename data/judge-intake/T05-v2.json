@@ -1,0 +1,14 @@
+{
+  "annotations": [
+    {
+      "dimension": "accuracy",
+      "subtype": "addition",
+      "severity": "major",
+      "span": "Soft, breathable, and made to last",
+      "rationale": "These product-quality and durability claims were not supplied in the brief.",
+      "suggested_correction": "Replace the unsupported claims with neutral promotional wording, such as \"Refresh your bedroom with timeless linen style.\""
+    }
+  ],
+  "total_points": 5,
+  "status": "Fail"
+}

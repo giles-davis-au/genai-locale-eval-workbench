@@ -1,0 +1,22 @@
+{
+  "annotations": [
+    {
+      "dimension": "accuracy",
+      "subtype": "omission",
+      "severity": "major",
+      "span": "Grab your takeaway coffee and start earning today.",
+      "rationale": "The copy does not explain that the loyalty stamp card is located in the Milk & Bean app, which is material to how customers access the offer.",
+      "suggested_correction": "Open the Milk & Bean app and start collecting stamps today."
+    },
+    {
+      "dimension": "constraint_compliance",
+      "subtype": "length_violation",
+      "severity": "major",
+      "span": null,
+      "rationale": "The copy is approximately 33 words, notably below the requested 40–60-word range.",
+      "suggested_correction": "Expand the copy to at least 40 words, including the omitted app-based stamp-card detail."
+    }
+  ],
+  "total_points": 10,
+  "status": "Fail"
+}

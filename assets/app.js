@@ -832,6 +832,188 @@
     renderMonitoringNotes();
   }
 
+  // ---------- View 5: compare V1 vs V2 ----------
+
+  const STATUS_RANK = { "Pass": 0, "Needs revision": 1, "Fail": 2 };
+
+  function dimensionName(dimId) {
+    const d = state.rubric.dimensions.find((x) => x.id === dimId);
+    return d ? d.name : dimId;
+  }
+
+  function subtypeName(dimId, subId) {
+    const d = state.rubric.dimensions.find((x) => x.id === dimId);
+    const s = d && d.subtypes.find((x) => x.id === subId);
+    return s ? s.name : subId;
+  }
+
+  function deltaPill(delta) {
+    const label = delta === "improved" ? "Improved" : delta === "worsened" ? "Worsened" : "Same";
+    return el("span", { class: `delta-pill delta-${delta}`, text: label });
+  }
+
+  function annotationKey(a) {
+    return `${a.dimension}::${a.subtype}`;
+  }
+
+  function computeAssessorDelta(a1, a2) {
+    const set1 = new Set((a1.annotations || []).map(annotationKey));
+    const set2 = new Set((a2.annotations || []).map(annotationKey));
+    const fixed = [...set1].filter((k) => !set2.has(k));
+    const introduced = [...set2].filter((k) => !set1.has(k));
+    const persisting = [...set1].filter((k) => set2.has(k));
+    let statusDelta = "same";
+    if (STATUS_RANK[a2.status] < STATUS_RANK[a1.status]) statusDelta = "improved";
+    else if (STATUS_RANK[a2.status] > STATUS_RANK[a1.status]) statusDelta = "worsened";
+    return {
+      v1Status: a1.status, v2Status: a2.status,
+      v1Points: a1.total_points, v2Points: a2.total_points,
+      statusDelta, pointsDelta: a2.total_points - a1.total_points,
+      fixed, introduced, persisting,
+      v1Annotations: a1.annotations || [], v2Annotations: a2.annotations || [],
+    };
+  }
+
+  function computeComparisonRow(taskId) {
+    const v1 = state.v1Results.find((r) => r.task_id === taskId);
+    const v2 = state.v2Results.find((r) => r.task_id === taskId);
+    const judgeUsable = judgeIsUsable(v1) && judgeIsUsable(v2);
+    return {
+      taskId,
+      v1,
+      v2,
+      reference: computeAssessorDelta(v1.reference_assessment, v2.reference_assessment),
+      judge: judgeUsable ? computeAssessorDelta(v1.judge_assessment, v2.judge_assessment) : null,
+    };
+  }
+
+  function renderComparisonSummary(rows) {
+    const container = el("div");
+    for (const key of ["reference", "judge"]) {
+      const usableRows = rows.filter((r) => r[key]);
+      if (usableRows.length === 0) continue;
+      const counts = { improved: 0, same: 0, worsened: 0 };
+      let pointsBefore = 0, pointsAfter = 0;
+      for (const r of usableRows) {
+        counts[r[key].statusDelta]++;
+        pointsBefore += r[key].v1Points;
+        pointsAfter += r[key].v2Points;
+      }
+      container.appendChild(el("h4", { class: "source-group-heading", text: sourceLabel(key) }));
+      container.appendChild(el("div", { class: "card-grid" }, [
+        el("div", { class: "metric-card" }, [
+          el("div", { class: "metric-value", text: String(counts.improved) }),
+          el("div", { class: "metric-label", text: "of 10 tasks improved" }),
+        ]),
+        el("div", { class: "metric-card" }, [
+          el("div", { class: "metric-value", text: String(counts.same) }),
+          el("div", { class: "metric-label", text: "of 10 tasks unchanged" }),
+        ]),
+        el("div", { class: "metric-card" }, [
+          el("div", { class: "metric-value", text: String(counts.worsened) }),
+          el("div", { class: "metric-label", text: "of 10 tasks worsened" }),
+        ]),
+        el("div", { class: "metric-card" }, [
+          el("div", { class: "metric-value", text: `${pointsBefore} → ${pointsAfter}` }),
+          el("div", { class: "metric-label", text: "total error points, V1 to V2" }),
+        ]),
+      ]));
+    }
+    return container;
+  }
+
+  function annotationsMatchingKeys(annotations, keys) {
+    const keySet = new Set(keys);
+    return annotations.filter((a) => keySet.has(annotationKey(a)));
+  }
+
+  function annotationDetailList(annotations) {
+    return el("ul", {}, annotations.map((a) => el("li", {}, [
+      el("span", { text: `${dimensionName(a.dimension)} / ${subtypeName(a.dimension, a.subtype)} (${a.severity})` }),
+      a.rationale ? el("div", { class: "meta", text: a.rationale }) : null,
+    ])));
+  }
+
+  function comparisonAssessorSection(key, delta) {
+    const section = el("div", { class: "reasoning-step" }, [
+      el("h4", { text: `${sourceLabel(key)}: ${delta.v1Status} (${delta.v1Points}) → ${delta.v2Status} (${delta.v2Points})` }),
+    ]);
+    if (delta.introduced.length) {
+      section.appendChild(el("p", { class: "meta", text: "New in V2:" }));
+      section.appendChild(annotationDetailList(annotationsMatchingKeys(delta.v2Annotations, delta.introduced)));
+    }
+    if (delta.persisting.length) {
+      section.appendChild(el("p", { class: "meta", text: "Persisting in both V1 and V2 (not fixed by either recommendation):" }));
+      section.appendChild(annotationDetailList(annotationsMatchingKeys(delta.v2Annotations, delta.persisting)));
+    }
+    if (delta.fixed.length) {
+      section.appendChild(el("p", { class: "meta", text: "Fixed in V2 (present in V1, gone in V2):" }));
+      section.appendChild(annotationDetailList(annotationsMatchingKeys(delta.v1Annotations, delta.fixed)));
+    }
+    if (!delta.introduced.length && !delta.fixed.length && !delta.persisting.length) {
+      section.appendChild(el("p", { class: "meta", text: "No issues found in either version." }));
+    }
+    return section;
+  }
+
+  function comparisonDrilldown(row) {
+    const container = el("div", {}, [
+      el("h4", { text: "V1 output" }),
+      el("p", { class: "output-text", text: row.v1.output.text }),
+      el("h4", { text: "V2 output" }),
+      el("p", { class: "output-text", text: row.v2.output.text }),
+      comparisonAssessorSection("reference", row.reference),
+    ]);
+    if (row.judge) {
+      container.appendChild(comparisonAssessorSection("judge", row.judge));
+    } else {
+      container.appendChild(el("p", { class: "meta", text: "LLM-as-a-judge assessment not available for both versions." }));
+    }
+    const btn = el("button", { type: "button", class: "link-button", text: "View full V1 record in View 2" });
+    btn.addEventListener("click", () => jumpToRecord(row.taskId));
+    container.appendChild(btn);
+    return container;
+  }
+
+  function renderComparisonTable(rows) {
+    const table = el("table", { class: "data-table" }, [
+      el("thead", {}, [el("tr", {}, [
+        el("th", { text: "Task" }),
+        el("th", { text: "Human evaluator: V1 → V2" }),
+        el("th", { text: "LLM-as-a-judge: V1 → V2" }),
+      ])]),
+    ]);
+    const tbody = el("tbody");
+    for (const row of rows) {
+      const task = findTask(row.taskId);
+      const refCell = el("td", {}, [
+        statusPill(row.reference.v1Status),
+        el("span", { text: ` (${row.reference.v1Points}) → ` }),
+        statusPill(row.reference.v2Status),
+        el("span", { text: ` (${row.reference.v2Points}) ` }),
+        deltaPill(row.reference.statusDelta),
+      ]);
+      const judgeCell = row.judge
+        ? el("td", {}, [
+          statusPill(row.judge.v1Status),
+          el("span", { text: ` (${row.judge.v1Points}) → ` }),
+          statusPill(row.judge.v2Status),
+          el("span", { text: ` (${row.judge.v2Points}) ` }),
+          deltaPill(row.judge.statusDelta),
+        ])
+        : el("td", { class: "meta", text: "N/A" });
+      const tr = el("tr", {}, [
+        el("td", { text: `${row.taskId}: ${task ? task.business_name : ""}` }),
+        refCell,
+        judgeCell,
+      ]);
+      makeClickableStat(tr, () => comparisonDrilldown(row));
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    return table;
+  }
+
   function renderView5() {
     const empty = document.getElementById("v5-empty-state");
     const content = document.getElementById("v5-content");
@@ -845,9 +1027,12 @@
     content.hidden = false;
     content.innerHTML = "";
     content.appendChild(el("p", {
-      class: "empty-state",
-      text: "V2 output, context and a draft human evaluator assessment now exist for all 10 tasks, but the human evaluator assessment is still pending Giles's review and the LLM-as-a-judge hasn't been run yet. Inspect the raw V2 records directly in data/v2-results.json until the paired V1/V2 comparison view is built.",
+      class: "prose",
+      text: "Every task re-evaluated on the same rubric, under both assessors, before and after the changes recommended in View 4. This is a rudimentary regression check on ten reused tasks, not an independent validation set: it reports whatever the stored evidence shows, including any new issues V2 introduced, not just what it fixed. Click a row for the full before/after detail, including any issue new to V2.",
     }));
+    content.appendChild(renderComparisonSummary(state.tasks.map((t) => computeComparisonRow(t.task_id))));
+    content.appendChild(el("h3", { text: "Every task, before and after" }));
+    content.appendChild(renderComparisonTable(state.tasks.map((t) => computeComparisonRow(t.task_id))));
   }
 
   // ---------- navigation ----------

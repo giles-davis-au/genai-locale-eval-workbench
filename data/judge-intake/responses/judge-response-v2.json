@@ -1,0 +1,113 @@
+{
+  "T01": {
+    "annotations": [],
+    "total_points": 0,
+    "status": "Pass"
+  },
+  "T02": {
+    "annotations": [],
+    "total_points": 0,
+    "status": "Pass"
+  },
+  "T03": {
+    "annotations": [],
+    "total_points": 0,
+    "status": "Pass"
+  },
+  "T04": {
+    "annotations": [
+      {
+        "dimension": "accuracy",
+        "subtype": "omission",
+        "severity": "minor",
+        "span": "Car park available on site.",
+        "rationale": "The copy mentions on-site parking but omits that it is available to both stallholders and visitors.",
+        "suggested_correction": "On-site parking available for stallholders and visitors."
+      }
+    ],
+    "total_points": 1,
+    "status": "Pass"
+  },
+  "T05": {
+    "annotations": [
+      {
+        "dimension": "accuracy",
+        "subtype": "addition",
+        "severity": "major",
+        "span": "Soft, breathable, and made to last",
+        "rationale": "These product-quality and durability claims were not supplied in the brief.",
+        "suggested_correction": "Replace the unsupported claims with neutral promotional wording, such as \"Refresh your bedroom with timeless linen style.\""
+      }
+    ],
+    "total_points": 5,
+    "status": "Fail"
+  },
+  "T06": {
+    "annotations": [
+      {
+        "dimension": "constraint_compliance",
+        "subtype": "length_violation",
+        "severity": "minor",
+        "span": null,
+        "rationale": "The copy is approximately 37 words, slightly below the requested 40–60-word range.",
+        "suggested_correction": "Add a few relevant words while retaining all three required promotional points."
+      }
+    ],
+    "total_points": 1,
+    "status": "Pass"
+  },
+  "T07": {
+    "annotations": [],
+    "total_points": 0,
+    "status": "Pass"
+  },
+  "T08": {
+    "annotations": [
+      {
+        "dimension": "accuracy",
+        "subtype": "omission",
+        "severity": "major",
+        "span": "Grab your takeaway coffee and start earning today.",
+        "rationale": "The copy does not explain that the loyalty stamp card is located in the Milk & Bean app, which is material to how customers access the offer.",
+        "suggested_correction": "Open the Milk & Bean app and start collecting stamps today."
+      },
+      {
+        "dimension": "constraint_compliance",
+        "subtype": "length_violation",
+        "severity": "major",
+        "span": null,
+        "rationale": "The copy is approximately 33 words, notably below the requested 40–60-word range.",
+        "suggested_correction": "Expand the copy to at least 40 words, including the omitted app-based stamp-card detail."
+      }
+    ],
+    "total_points": 10,
+    "status": "Fail"
+  },
+  "T09": {
+    "annotations": [
+      {
+        "dimension": "accuracy",
+        "subtype": "addition",
+        "severity": "major",
+        "span": "Native Bloom Essentials range",
+        "rationale": "The name \"Essentials\" was not provided and invents a product-range name.",
+        "suggested_correction": "Refer to it as \"Native Bloom's fragrance-free moisturiser range\"."
+      },
+      {
+        "dimension": "constraint_compliance",
+        "subtype": "length_violation",
+        "severity": "major",
+        "span": null,
+        "rationale": "The copy is approximately 22 words, substantially below the requested 40–60-word range.",
+        "suggested_correction": "Expand the copy to at least 40 words without adding unsupported product claims."
+      }
+    ],
+    "total_points": 10,
+    "status": "Fail"
+  },
+  "T10": {
+    "annotations": [],
+    "total_points": 0,
+    "status": "Pass"
+  }
+}

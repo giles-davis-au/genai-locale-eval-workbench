@@ -1,0 +1,22 @@
+{
+  "annotations": [
+    {
+      "dimension": "accuracy",
+      "subtype": "addition",
+      "severity": "major",
+      "span": "Native Bloom Essentials range",
+      "rationale": "The name \"Essentials\" was not provided and invents a product-range name.",
+      "suggested_correction": "Refer to it as \"Native Bloom's fragrance-free moisturiser range\"."
+    },
+    {
+      "dimension": "constraint_compliance",
+      "subtype": "length_violation",
+      "severity": "major",
+      "span": null,
+      "rationale": "The copy is approximately 22 words, substantially below the requested 40–60-word range.",
+      "suggested_correction": "Expand the copy to at least 40 words without adding unsupported product claims."
+    }
+  ],
+  "total_points": 10,
+  "status": "Fail"
+}

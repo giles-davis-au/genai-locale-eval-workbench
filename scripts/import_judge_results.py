@@ -75,12 +75,19 @@ def main():
             continue
 
         judge = record["judge_assessment"]
+        unchanged = (
+            judge.get("import_status") == "imported"
+            and judge.get("annotations") == payload["annotations"]
+            and judge.get("total_points") == payload["total_points"]
+            and judge.get("status") == payload["status"]
+        )
         judge["annotations"] = payload["annotations"]
         judge["total_points"] = payload["total_points"]
         judge["status"] = payload["status"]
-        judge["run_date"] = str(date.today())
+        if not unchanged:
+            judge["run_date"] = str(date.today())
         judge["import_status"] = "imported"
-        imported.append(path.name)
+        imported.append(path.name if not unchanged else f"{path.name} (unchanged, run_date preserved)")
 
     for version, path in RESULTS_FILES.items():
         save_json(path, results[version])

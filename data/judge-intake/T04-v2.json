@@ -1,0 +1,14 @@
+{
+  "annotations": [
+    {
+      "dimension": "accuracy",
+      "subtype": "omission",
+      "severity": "minor",
+      "span": "Car park available on site.",
+      "rationale": "The copy mentions on-site parking but omits that it is available to both stallholders and visitors.",
+      "suggested_correction": "On-site parking available for stallholders and visitors."
+    }
+  ],
+  "total_points": 1,
+  "status": "Pass"
+}
