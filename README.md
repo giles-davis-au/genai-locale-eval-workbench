@@ -4,7 +4,20 @@
 
 ## Project status
 
-**Phase 4 of 5 complete.** All 10 V1 tasks and all 10 V2 tasks have a frozen raw output, a reviewed and approved human evaluator assessment, and an imported LLM-as-a-judge assessment (`data/v1-results.json`, `data/v2-results.json`); see [docs/provenance.md](docs/provenance.md) for both versions' human-evaluator-vs-LLM-as-a-judge disagreement rates, including a 2026-09-11 amendment: `data/terminology.csv` was redesigned (its glossary rested on a category/task-scoping mechanism, and contained brand-specific rows, that didn't correspond to any real platform design), which changed T09 and T10's frozen V2 output text; both were regenerated, re-reviewed, and re-judged (see provenance for the full disclosure) and are back to fully approved/imported alongside the other 8. `data/findings.json` holds three evidence-linked findings from the V1 evidence (see [docs/methodology.md](docs/methodology.md)): two proposed a system change, both now built into V2 in a single bundled revision rather than tested as separate versions (see [docs/limitations.md](docs/limitations.md) for that trade-off), and one proposes evaluator training, not yet actioned. `data/monitoring-notes.json` holds one further piece of real signal that stops short of a finding (a single-instance word-count violation, disclosed rather than silently dropped). All five views are implemented, including **View 5** (compare V1 vs V2): every task re-evaluated by both assessors, before and after, with status/point deltas and any new issues V2 introduced surfaced explicitly rather than only what it fixed. Phase 5 (hardening and handoff) is what remains. Do not treat anything in this repository as a finished evaluation until this section says otherwise. See [Implementation phases](#implementation-phases) below for what each subsequent phase adds.
+**Phase 4 of 5 complete; Phase 5 (hardening and handoff) is what remains.** All 10 V1 and all 10 V2 tasks have a frozen output, an approved human evaluator assessment, and an imported LLM-as-a-judge assessment; `scripts/validate_data.py` reports 0 errors, 0 warnings. Do not treat anything in this repository as a finished evaluation until this section says otherwise. Full build history, including a 2026-09-11 amendment that reworked `data/terminology.csv` and regenerated two V2 records, is in [docs/provenance.md](docs/provenance.md); see [Implementation phases](#implementation-phases) below for what each phase adds.
+
+## Suggested walkthrough order
+
+For a reviewer with roughly 15-20 minutes, in order:
+
+1. **This "Project status" section, then [docs/limitations.md](docs/limitations.md) (2-3 min).** Sets honest expectations before looking at any specific number.
+2. **[docs/methodology.md](docs/methodology.md)'s rubric section and Finding 1 and Finding 2 in full (3 min).** This is where the actual reasoning quality lives; skim Finding 3. If you want the engineering-level map of the repository as well, [CLAUDE.md](CLAUDE.md) does that in a few minutes more.
+3. **Run the app** (see "How can it be run safely?" below), then go straight to **View 3** (V1 dashboard) rather than View 1 or 2: fastest way to see the tool compute something real, and it surfaces the human-vs-judge disagreements that motivate everything downstream.
+4. **View 4** (the findings, with evidence links; click one or two), then **View 5** (V1 vs V2 comparison, starting with its Summary section). Look specifically for the T06/T08/T09 word-count regression in the comparison table: concrete proof that "new issues surfaced, not just fixes" is a real claim, not a hedge.
+5. **View 1 and View 2 last, briefly.** Skim one V1 record in View 2 to confirm the data matches [docs/data-schema.md](docs/data-schema.md); no need to read all ten.
+6. **Skip or skim rather than read in full:** the generated `docs/judge-run-*.md` files (glance at one, don't read the whole batched prompt), `docs/data-schema.md` itself (reference only, consult on demand), and the middle of `docs/provenance.md`'s audit trail (read the first entry and the most recent amendment, skip the rest).
+
+This is deliberately not the same order as the five views' own numbering, or the project's five build phases: it's ordered for fastest signal under time pressure, not for narrative completeness.
 
 ## 1. What does this demonstrate?
 
@@ -42,19 +55,7 @@ Then open <http://localhost:8080> in a browser. Press `Ctrl+C` in the terminal t
 
 The only dependency is Python's standard library (`http.server`) to serve static files; no package manager, bundler, or third-party runtime dependency is involved anywhere in this repository.
 
-## 4. Suggested walkthrough order
-
-For a reviewer short on time:
-
-1. Read "Project status" above and skim [docs/limitations.md](docs/limitations.md), so you know what this repository does and doesn't claim before looking at any specific number.
-2. Run the app (see above), then open **View 1** (setup) and **View 2** (one V1 record in full: context, output, both assessments).
-3. Open **View 3** (V1 dashboard, the aggregate pattern) and **View 4** (the evidence-linked findings that pattern led to).
-4. Open **View 5** (compare V1 vs V2), starting with its Summary section, then the full comparison table below it.
-5. For depth beyond the app: [docs/methodology.md](docs/methodology.md) (why the rubric and design choices are what they are) and [docs/provenance.md](docs/provenance.md) (who/what produced each piece of data and when). [CLAUDE.md](CLAUDE.md) orients a reviewing coding agent to the repository, if that's relevant to how you're assessing this.
-
-This follows the same order the five views and the project's own five build phases are already in.
-
-## 5. What does it explicitly not prove?
+## 4. What does it explicitly not prove?
 
 The reasoning behind each of these lives in [docs/limitations.md](docs/limitations.md); this is the short version.
 
