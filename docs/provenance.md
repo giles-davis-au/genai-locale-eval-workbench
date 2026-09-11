@@ -4,6 +4,10 @@ This file is the authoritative record of who/what produced each part of the eval
 
 **V1 baseline: 2026-09-10.** With all 10 human evaluator assessments approved (see the review log below), `data/tasks.json` and `data/v1-results.json` are now the frozen V1 baseline. Any further change to either file past this point should be a deliberate, recorded amendment (a new entry here explaining what changed and why), not a silent edit; this is what the brief calls "preserve it and record subsequent changes."
 
+## Repository framing
+
+- **2026-09-10: disclaimers reworded from company-specific to company-agnostic.** An early pass satisfied the build brief's requirement not to imply Canva affiliation by writing explicit "not a Canva product" disclaimers in five places (`README.md`, `docs/limitations.md`, `index.html`, and a `source_note` in `data/locale-profiles.json`). On reflection that was the wrong fix: repeatedly naming a specific company in denial statements plants an association a reader might not otherwise make, and works against the brief's own choice to keep the build brief itself (which is Canva-specific) out of the shipped repository entirely. All five were reworded to be company-agnostic ("not built from, affiliated with, or representing any specific company's data, tooling, or workflow"), with no loss of claim strength. This history is visible in unsquashed git commit `57c055f`; disclosed here rather than left for a reader of that commit to interpret unexplained.
+
 ## Generation (V1 and V2 outputs)
 
 - **Model under test:** Claude Sonnet 5 (`claude-sonnet-5`), used as the model under test within this build session, in the same Claude Code conversation that authored the surrounding application. This is a disclosed conflict of interest, not a hidden one; see [limitations.md](limitations.md).

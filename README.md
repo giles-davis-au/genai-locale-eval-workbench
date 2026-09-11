@@ -6,7 +6,7 @@ By [Giles Davis](https://www.linkedin.com/in/gilesbdavis/).
 
 ## Project status
 
-**Phase 4 of 5 complete; Phase 5 (hardening and handoff) is what remains.** All 10 V1 and all 10 V2 tasks have a frozen output, an approved human evaluator assessment, and an imported LLM-as-a-judge assessment; `scripts/validate_data.py` reports 0 errors, 0 warnings. Do not treat anything in this repository as a finished evaluation until this section says otherwise. Full build history, including a 2026-09-11 amendment that reworked `data/terminology.csv` and regenerated two V2 records, is in [docs/provenance.md](docs/provenance.md); see [Implementation phases](#implementation-phases) below for what each phase adds.
+**All 5 phases complete.** All 10 V1 and all 10 V2 tasks have a frozen output, an approved human evaluator assessment, and an imported LLM-as-a-judge assessment; `scripts/validate_data.py` reports 0 errors, 0 warnings. Full build history, including a 2026-09-11 amendment that reworked `data/terminology.csv` and regenerated two V2 records, is in [docs/provenance.md](docs/provenance.md). See [Implementation phases](#implementation-phases) below for what each phase added, and section 4 below for what this repository explicitly does not claim.
 
 ## Suggested walkthrough order
 
@@ -133,7 +133,7 @@ genai-locale-eval-workbench/
 2. **V1 evidence and inspection** *(done)*: ten V1 outputs, human evaluator assessments reviewed and approved by Giles, setup and record-detail views.
 3. **V1 exploration and pattern investigation** *(done)*: calculated summaries, filters, drilldown (View 3); evidence-linked findings, each with its own recommendation (View 4).
 4. **V2 context and paired comparison** *(done)*: deterministic glossary retrieval (`scripts/build_v2_context.py`), all 10 V2 outputs generated, human evaluator assessment reviewed and approved, LLM-as-a-judge assessment imported, and the paired comparison view (View 5).
-5. **Hardening and handoff**: completed documentation, full validation, offline/no-network confirmation.
+5. **Hardening and handoff** *(done)*: completed documentation, full validation, offline/no-network confirmation.
 
 Each phase is one Git commit; history is not squashed, so the project's own construction is part of what an interviewer can inspect.
 
