@@ -4,7 +4,7 @@ Orientation for a coding agent reviewing this repository. This describes the *im
 
 ## Purpose
 
-A static, offline, read-only web app that walks an interviewer through one evaluation lifecycle: baseline (V1) locale-conditioned marketing-copy generation → structured evaluation → pattern investigation → a retrieval-augmented V2 recommendation → paired V1/V2 comparison. See [README.md](README.md) for the full framing and [docs/methodology.md](docs/methodology.md) for the evaluation design rationale.
+A static, offline, read-only web app that walks an interviewer through one evaluation lifecycle: baseline (V1) locale-conditioned marketing-copy generation → structured evaluation → pattern investigation → a V2 configuration bundling retrieval-augmented context with a no-fabrication instruction → paired V1/V2 comparison. See [README.md](README.md) for the full framing and [docs/methodology.md](docs/methodology.md) for the evaluation design rationale.
 
 ## Architecture
 

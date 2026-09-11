@@ -2,6 +2,8 @@
 
 > An inspectable case study of evaluating and improving locale-conditioned AI-generated text.
 
+By [Giles Davis](https://www.linkedin.com/in/gilesbdavis/).
+
 ## Project status
 
 **Phase 4 of 5 complete; Phase 5 (hardening and handoff) is what remains.** All 10 V1 and all 10 V2 tasks have a frozen output, an approved human evaluator assessment, and an imported LLM-as-a-judge assessment; `scripts/validate_data.py` reports 0 errors, 0 warnings. Do not treat anything in this repository as a finished evaluation until this section says otherwise. Full build history, including a 2026-09-11 amendment that reworked `data/terminology.csv` and regenerated two V2 records, is in [docs/provenance.md](docs/provenance.md); see [Implementation phases](#implementation-phases) below for what each phase adds.
@@ -26,7 +28,7 @@ One bounded evaluation lifecycle for **locale-conditioned English marketing-copy
 1. A baseline (V1) generation system configuration and ten synthetic marketing-copy tasks.
 2. A structured evaluation of the V1 outputs against a compact, MQM-informed rubric: both a human evaluator assessment and an independent, provisional LLM-as-a-judge assessment.
 3. A short, evidence-linked investigation of one recurring pattern in the V1 results, including a check of alternative explanations.
-4. A targeted V2 recommendation (lightweight, deterministic retrieval of a locale profile and glossary entries) and a paired comparison of the same ten tasks under V1 and V2.
+4. A targeted V2 configuration bundling two evidence-linked fixes (lightweight, deterministic retrieval of a locale profile and glossary entries, plus an explicit no-fabrication instruction) and a paired comparison of the same ten tasks under V1 and V2.
 
 It is a **preloaded, reproducible case study** built to help its author understand how an evaluation specification, structured annotations, aggregation, pattern investigation, a context recommendation and paired re-evaluation fit together, and to give an interviewer inspectable evidence of that learning. It is not a live AI product and does not claim professional evaluator, localisation-specialist, ML-engineer or production-platform experience.
 

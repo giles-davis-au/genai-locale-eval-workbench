@@ -106,7 +106,7 @@
   function renderPurpose() {
     const container = document.getElementById("purpose-content");
     container.appendChild(el("p", {
-      text: "This workbench walks through one bounded evaluation lifecycle for locale-conditioned English marketing-copy generation, worked through Australian English (en-AU): inspect a V1 baseline, explore its results, investigate one recurring pattern, then compare V1 against a V2 generation system configuration that adds lightweight retrieval-augmented context.",
+      text: "This workbench walks through one bounded evaluation lifecycle for locale-conditioned English marketing-copy generation, worked through Australian English (en-AU): inspect a V1 baseline, explore its results, investigate one recurring pattern, then compare V1 against a V2 generation system configuration that bundles two evidence-linked fixes: lightweight retrieval-augmented context (a locale profile and terminology glossary), and an explicit no-fabrication instruction.",
     }));
     container.appendChild(el("p", {
       text: "It is a preloaded, reproducible case study, not a live AI product. It contains no database, build step, package installation or external runtime dependency, and it makes no network requests.",
