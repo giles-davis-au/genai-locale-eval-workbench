@@ -1,0 +1,18 @@
+[
+  {
+    "note_id": "M1",
+    "title": "T09's V1 output missed its required word count",
+    "recommendation_type": "monitor",
+    "observation": {
+      "summary": "T09's V1 output is 29 words against a required 40-60, a clear miss rather than a borderline judgement call. Both the human evaluator assessment (major severity) and the LLM-as-a-judge assessment (critical severity) flag it: the single highest-severity rating either assessor gave anywhere in the V1 batch. No other task shows a constraint_compliance violation of any kind.",
+      "affected_task_ids": ["T09"],
+      "count": 1,
+      "denominator": 10
+    },
+    "evidence_links": [
+      { "task_id": "T09", "version": "v1", "annotation_id": "T09-V1-REF-2" },
+      { "task_id": "T09", "version": "v1", "annotation_id": null }
+    ],
+    "why_not_actioned": "A single instance out of ten tasks cannot be distinguished from ordinary generation variance. Acting on it now, by changing the generation system, risks overfitting to noise from one data point. If a word-count miss like this recurs across a larger, ongoing sample of generations, it would clear the bar for a full finding and a recommendation; on the evidence available here, it does not."
+  }
+]

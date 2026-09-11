@@ -19,14 +19,16 @@ A static, offline, read-only web app that walks an interviewer through one evalu
 3. `data/locale-profiles.json` + `data/terminology.csv`: the material V2's retrieval draws from. Retrieval is deterministic: for a task, select every glossary row scoped to its `content_category` or `task_id` (see [docs/data-schema.md](docs/data-schema.md) for the exact rule). No embeddings or external retrieval service.
 4. `data/v1-results.json` / `data/v2-results.json` (one record per task per version): the exact context packet supplied to the model, the raw frozen output, a human evaluator assessment, and a provisional LLM-as-a-judge assessment. This is the core data contract; see [docs/data-schema.md](docs/data-schema.md) before changing its shape.
 5. `data/findings.json`: the pattern-investigation narrative (observation → examples → alternative explanations → hypothesis → recommendation), with evidence links that must resolve to real task/annotation IDs.
+6. `data/monitoring-notes.json`: real, disclosed signal that stops short of a finding (usually a single instance, not yet a pattern), rendered separately in View 4 rather than folded into a finding it doesn't yet support. Same evidence-link resolution rule as findings.
 
 ## Key files
 
 | File | Role |
 |---|---|
-| `assets/app.js` | All rendering and derived-metric logic. Five views: **View 1** (setup), **View 2** (V1 evaluation: inspect one complete record), **View 3** (V1 dashboard: status counts, dimension breakdown, human-evaluator-vs-LLM-as-a-judge disagreements, filters, drilldown, all computed at runtime from `data/v1-results.json`) and **View 4** (investigate the pattern: evidence-linked findings from `data/findings.json`, each with observation → examples → alternative explanations → hypothesis → recommendation) are fully implemented. **View 5** (compare V1 vs V2) still renders an explicit "not implemented yet" empty state, correctly gated on `data/v2-results.json` being empty. |
+| `assets/app.js` | All rendering and derived-metric logic. Five views: **View 1** (setup), **View 2** (V1 evaluation: inspect one complete record), **View 3** (V1 dashboard: status counts, dimension breakdown, human-evaluator-vs-LLM-as-a-judge disagreements, filters, drilldown, all computed at runtime from `data/v1-results.json`) and **View 4** (investigate the pattern: evidence-linked findings from `data/findings.json`, each with observation → examples → alternative explanations → hypothesis → recommendation, plus a separate "noted, not currently actioned" section from `data/monitoring-notes.json` for signal that doesn't clear the bar for a finding) are fully implemented. **View 5** (compare V1 vs V2) currently renders a plain placeholder once `data/v2-results.json` is non-empty (it is, as of Phase 4's retrieval/generation step); the actual paired comparison isn't built yet. |
 | `data/rubric.json` | Scoring source of truth. |
 | `scripts/validate_data.py` | Independent structural + arithmetic check over everything in `data/`. Run after any data edit. |
+| `scripts/build_v2_context.py` | Computes each task's deterministic V2 `retrieved_context` (locale profile + matched glossary rows) from `data/tasks.json`, `data/terminology.csv` and `data/locale-profiles.json`. Does not generate marketing copy; that's the model under test's own work, hand-assembled into `data/v2-results.json` alongside this script's output. |
 | `scripts/import_judge_results.py` | Merges externally-run LLM-as-a-judge JSON from `data/judge-intake/` into the results files. |
 | `docs/data-schema.md` | Exact JSON shape for every file in `data/`; read this before touching any data file. |
 | `docs/judge-prompt.md` | The LLM-as-a-judge process and the source template `scripts/build_judge_run.py` renders. |
@@ -37,6 +39,7 @@ A static, offline, read-only web app that walks an interviewer through one evalu
 ```bash
 python3 -m http.server 8080          # run the app at http://localhost:8080
 python3 scripts/validate_data.py     # validate all data files
+python3 scripts/build_v2_context.py  # print each task's deterministic V2 retrieved_context
 python3 scripts/build_judge_run.py v1        # (re)generate docs/judge-run-v1.md
 python3 scripts/split_judge_response.py v1 <path>   # split a combined judge response into data/judge-intake/
 python3 scripts/import_judge_results.py   # merge staged judge results
@@ -58,4 +61,4 @@ See [docs/limitations.md](docs/limitations.md) for the full, current list. In br
 
 ## Current build status
 
-Phase 3 (V1 dashboard and pattern investigation, Views 3 and 4) complete; Phase 4 (V2 context, generation, and the paired V1/V2 comparison in View 5) not yet started; see the "Project status" section at the top of [README.md](README.md) for what is and isn't populated yet. Update that section, this file, and `docs/` together as later phases land; do not let them drift out of sync with the actual data files.
+Phase 3 (V1 dashboard and pattern investigation, Views 3 and 4) complete. Phase 4 underway: V2 retrieval and generation done (`data/v2-results.json` holds all 10 records, each with a draft human evaluator assessment still `review_status: "pending_review"`); the LLM-as-a-judge run for V2 and the paired comparison view (View 5) are not yet done. See the "Project status" section at the top of [README.md](README.md) for what is and isn't populated yet. Update that section, this file, and `docs/` together as later phases land; do not let them drift out of sync with the actual data files.

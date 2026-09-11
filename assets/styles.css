@@ -395,6 +395,14 @@ tr.stat-clickable:hover {
   color: var(--color-text);
   border: 1px solid var(--color-border);
 }
+.monitoring-heading {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+.monitoring-note-card {
+  border-style: dashed;
+}
 .reasoning-step {
   margin-bottom: 1.25rem;
 }

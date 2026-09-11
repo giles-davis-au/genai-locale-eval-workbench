@@ -1,1 +1,720 @@
-[]
+[
+  {
+    "task_id": "T01",
+    "version": "v2",
+    "context_packet": {
+      "system_instruction": "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints. Follow the supplied locale profile, brand guidance and relevant terminology entries. Do not state, imply, or add any claim, quality, offer, or mechanic that is not explicitly present in the customer's own request.",
+      "user_prompt": "Hi, I run Rowan & Ash, a sustainable clothing label based in Sydney. Can you write some short marketing copy for this week's promotion? We've got 20% off our puffer jackets, and free shipping on any order over $75 -- plus we just launched a new merino wool range if you want to mention that too. Keep it to one short paragraph, around 40-60 words, no headings. Please don't say anything about organic cotton or fabric claims we haven't given you -- the jackets aren't organic cotton.",
+      "retrieved_context": {
+        "locale_profile": {
+          "label": "Australian English",
+          "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+          "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+          "currency": {
+            "symbol": "$",
+            "code": "AUD",
+            "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+          },
+          "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+          "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+          "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any specific company's internal locale documentation."
+        },
+        "glossary_entries": [
+          {
+            "term_id": "G01",
+            "scope": "category",
+            "match_key": "clothing",
+            "trigger_terms": "sweater",
+            "preferred_term": "jumper",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU clothing term"
+          },
+          {
+            "term_id": "B01",
+            "scope": "task",
+            "match_key": "T01",
+            "trigger_terms": "VIP club|rewards program|loyalty program",
+            "preferred_term": "Ash Rewards",
+            "dimension_subtype": "inconsistent_with_terminology_resource",
+            "note": "Rowan & Ash's named loyalty program"
+          }
+        ]
+      }
+    },
+    "output": {
+      "text": "Layer up for less this week at Sydney-based Rowan & Ash — get 20% off our puffer jackets. Plus, enjoy free shipping on all orders over $75. Don't miss our new merino wool range. Shop now before the sale ends.",
+      "model_name": "claude-sonnet-5",
+      "run_date": "2026-09-11",
+      "generation_notes": "Regenerated as a minimal edit isolating two combined, independently-evidenced fixes (Finding 1 and Finding 2), bundled into this single V2 revision rather than tested as separate versions, a deliberate efficiency trade-off disclosed in docs/limitations.md. For this task: no locale/glossary-relevant content applied (as before). Finding 2's fix removed the unsupported claims \"our best-selling outerwear\" and \"made to keep you warm without compromising on style\", neither given by the customer and the latter directly against the customer's explicit \"no fabric claims\" instruction. \"Sydney-based\" was added back in only because it is a fact the customer's own prompt actually gave (\"a sustainable clothing label based in Sydney\"), to restore word count without inventing anything new."
+    },
+    "reference_assessment": {
+      "label": "Human evaluator assessment: created by the MVP author for demonstration",
+      "status": "Pass",
+      "total_points": 0,
+      "annotations": [],
+      "reviewed_by": "Giles Davis",
+      "review_status": "pending_review",
+      "review_date": null
+    },
+    "judge_assessment": {
+      "label": "Provisional LLM-as-a-judge assessment",
+      "status": "pending",
+      "total_points": null,
+      "annotations": [],
+      "judge_model_name": "GPT-5.6 Sol",
+      "judge_prompt_ref": "docs/judge-prompt.md",
+      "run_date": null,
+      "blind_to_reference": true,
+      "blind_to_version_label": true,
+      "import_status": "awaiting_external_run"
+    }
+  },
+  {
+    "task_id": "T02",
+    "version": "v2",
+    "context_packet": {
+      "system_instruction": "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints. Follow the supplied locale profile, brand guidance and relevant terminology entries. Do not state, imply, or add any claim, quality, offer, or mechanic that is not explicitly present in the customer's own request.",
+      "user_prompt": "Need promo copy for Cartly -- we're a same-day grocery and meal delivery service. We currently only deliver in Melbourne and Brisbane, so please mention both cities. Minimum order is $30, and new customers get $10 credit on their first order only (not every order, just to be clear). Around 40-60 words please.",
+      "retrieved_context": {
+        "locale_profile": {
+          "label": "Australian English",
+          "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+          "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+          "currency": {
+            "symbol": "$",
+            "code": "AUD",
+            "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+          },
+          "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+          "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+          "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any specific company's internal locale documentation."
+        },
+        "glossary_entries": [
+          {
+            "term_id": "G02",
+            "scope": "category",
+            "match_key": "food_delivery",
+            "trigger_terms": "cilantro",
+            "preferred_term": "coriander",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU grocery term"
+          },
+          {
+            "term_id": "G03",
+            "scope": "category",
+            "match_key": "food_delivery",
+            "trigger_terms": "to go|takeout",
+            "preferred_term": "takeaway",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU food-service term"
+          },
+          {
+            "term_id": "B02",
+            "scope": "task",
+            "match_key": "T02",
+            "trigger_terms": "cart|shopping cart|basket",
+            "preferred_term": "trolley",
+            "dimension_subtype": "inconsistent_with_terminology_resource",
+            "note": "Cartly's in-app term for the order basket"
+          }
+        ]
+      }
+    },
+    "output": {
+      "text": "Cartly now delivers same-day in Melbourne and Brisbane, bringing your groceries and favourite meals straight to your door. Place an order of $30 or more and get $10 credit on your first order. Fast, fresh, and hassle-free — download the app and start shopping today!",
+      "model_name": "claude-sonnet-5",
+      "run_date": "2026-09-11",
+      "generation_notes": "Regenerated as a minimal edit from V1's frozen output, to isolate the effect actually attributable to V2's retrieval mechanism: only word- or phrase-level substitutions directly motivated by the retrieved context (a locale-profile spelling/date convention, or a matched glossary entry) were applied. Everything else was left exactly as V1 wrote it, including V1's own accuracy or word-count issues where present: those are not something the locale/glossary mechanism has any bearing on, so a genuine V2 generation would have no reason to also fix them. Where a task's V1 output contained no locale- or glossary-relevant content at all, V2 is identical to V1. This task is not one of the 6 tasks affected by Finding 2, so its text is unaffected by the system instruction's new no-fabrication clause: it never contained an unsupported addition in the first place."
+    },
+    "reference_assessment": {
+      "label": "Human evaluator assessment: created by the MVP author for demonstration",
+      "status": "Pass",
+      "total_points": 0,
+      "annotations": [],
+      "reviewed_by": "Giles Davis",
+      "review_status": "pending_review",
+      "review_date": null
+    },
+    "judge_assessment": {
+      "label": "Provisional LLM-as-a-judge assessment",
+      "status": "pending",
+      "total_points": null,
+      "annotations": [],
+      "judge_model_name": "GPT-5.6 Sol",
+      "judge_prompt_ref": "docs/judge-prompt.md",
+      "run_date": null,
+      "blind_to_reference": true,
+      "blind_to_version_label": true,
+      "import_status": "awaiting_external_run"
+    }
+  },
+  {
+    "task_id": "T03",
+    "version": "v2",
+    "context_packet": {
+      "system_instruction": "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints. Follow the supplied locale profile, brand guidance and relevant terminology entries. Do not state, imply, or add any claim, quality, offer, or mechanic that is not explicitly present in the customer's own request.",
+      "user_prompt": "Writing copy for Pulse Studio, a boutique gym. We're opening a new location in Perth and want to promote memberships. Key points: no lock-in contract, and a 7-day free trial (please say exactly 7 days). Make sure the Perth opening gets a mention. 40-60 words.",
+      "retrieved_context": {
+        "locale_profile": {
+          "label": "Australian English",
+          "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+          "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+          "currency": {
+            "symbol": "$",
+            "code": "AUD",
+            "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+          },
+          "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+          "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+          "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any specific company's internal locale documentation."
+        },
+        "glossary_entries": [
+          {
+            "term_id": "B03",
+            "scope": "task",
+            "match_key": "T03",
+            "trigger_terms": "premium membership|membership tier|VIP membership",
+            "preferred_term": "Pulse Access",
+            "dimension_subtype": "inconsistent_with_terminology_resource",
+            "note": "Pulse Studio's named membership tier"
+          }
+        ]
+      }
+    },
+    "output": {
+      "text": "Pulse Studio, a boutique gym, is opening a brand-new location in Perth, and we want you to be part of it. Enjoy a 7-day free trial with no lock-in contract — just walk in, work out, and see the difference. Flexible memberships.",
+      "model_name": "claude-sonnet-5",
+      "run_date": "2026-09-11",
+      "generation_notes": "Regenerated as a minimal edit isolating two combined, independently-evidenced fixes (Finding 1 and Finding 2), bundled into this single V2 revision rather than tested as separate versions, a deliberate efficiency trade-off disclosed in docs/limitations.md. For this task: no locale/glossary-relevant content applied (as before). Finding 2's fix removed \"expert trainers, and a community that keeps you motivated\" (unsupported) and \"Your first class is on us\" (a different, narrower commitment substituted for the customer's explicit \"7-day free trial, say exactly 7 days\" request). \"a boutique gym\" was added back in only because it is a fact the customer's own prompt actually gave, to restore word count without inventing anything new."
+    },
+    "reference_assessment": {
+      "label": "Human evaluator assessment: created by the MVP author for demonstration",
+      "status": "Pass",
+      "total_points": 0,
+      "annotations": [],
+      "reviewed_by": "Giles Davis",
+      "review_status": "pending_review",
+      "review_date": null
+    },
+    "judge_assessment": {
+      "label": "Provisional LLM-as-a-judge assessment",
+      "status": "pending",
+      "total_points": null,
+      "annotations": [],
+      "judge_model_name": "GPT-5.6 Sol",
+      "judge_prompt_ref": "docs/judge-prompt.md",
+      "run_date": null,
+      "blind_to_reference": true,
+      "blind_to_version_label": true,
+      "import_status": "awaiting_external_run"
+    }
+  },
+  {
+    "task_id": "T04",
+    "version": "v2",
+    "context_packet": {
+      "system_instruction": "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints. Follow the supplied locale profile, brand guidance and relevant terminology entries. Do not state, imply, or add any claim, quality, offer, or mechanic that is not explicitly present in the customer's own request.",
+      "user_prompt": "Can you draft a short flyer-style promo for Riverside Markets? It's a community market run by the local council, on every first Sunday of the month -- not weekly. Entry is free, and there's local produce plus live music, with parking on site for stallholders and visitors. Keep it under 50 words and make it feel like a flyer, not a full paragraph.",
+      "retrieved_context": {
+        "locale_profile": {
+          "label": "Australian English",
+          "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+          "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+          "currency": {
+            "symbol": "$",
+            "code": "AUD",
+            "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+          },
+          "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+          "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+          "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any specific company's internal locale documentation."
+        },
+        "glossary_entries": [
+          {
+            "term_id": "G12",
+            "scope": "category",
+            "match_key": "community_event",
+            "trigger_terms": "parking lot",
+            "preferred_term": "car park",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU term"
+          },
+          {
+            "term_id": "G13",
+            "scope": "category",
+            "match_key": "community_event",
+            "trigger_terms": "vendors",
+            "preferred_term": "stallholders",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU market term"
+          }
+        ]
+      }
+    },
+    "output": {
+      "text": "Join us at Riverside Markets — free entry, first Sunday of every month! Browse local produce, enjoy live music, and support your community. Car park available on site. See you there!",
+      "model_name": "claude-sonnet-5",
+      "run_date": "2026-09-11",
+      "generation_notes": "Regenerated as a minimal edit from V1's frozen output, to isolate the effect actually attributable to V2's retrieval mechanism: only word- or phrase-level substitutions directly motivated by the retrieved context (a locale-profile spelling/date convention, or a matched glossary entry) were applied. Everything else was left exactly as V1 wrote it, including V1's own accuracy or word-count issues where present: those are not something the locale/glossary mechanism has any bearing on, so a genuine V2 generation would have no reason to also fix them. Where a task's V1 output contained no locale- or glossary-relevant content at all, V2 is identical to V1. This task is not one of the 6 tasks affected by Finding 2, so its text is unaffected by the system instruction's new no-fabrication clause: it never contained an unsupported addition in the first place."
+    },
+    "reference_assessment": {
+      "label": "Human evaluator assessment: created by the MVP author for demonstration",
+      "status": "Pass",
+      "total_points": 0,
+      "annotations": [],
+      "reviewed_by": "Giles Davis",
+      "review_status": "pending_review",
+      "review_date": null
+    },
+    "judge_assessment": {
+      "label": "Provisional LLM-as-a-judge assessment",
+      "status": "pending",
+      "total_points": null,
+      "annotations": [],
+      "judge_model_name": "GPT-5.6 Sol",
+      "judge_prompt_ref": "docs/judge-prompt.md",
+      "run_date": null,
+      "blind_to_reference": true,
+      "blind_to_version_label": true,
+      "import_status": "awaiting_external_run"
+    }
+  },
+  {
+    "task_id": "T05",
+    "version": "v2",
+    "context_packet": {
+      "system_instruction": "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints. Follow the supplied locale profile, brand guidance and relevant terminology entries. Do not state, imply, or add any claim, quality, offer, or mechanic that is not explicitly present in the customer's own request.",
+      "user_prompt": "Marketing copy needed for Feld & Co, a homewares brand. This weekend only we've got 15% off doona covers from our linen bedding range, and we ship Australia-wide. 40-60 words.",
+      "retrieved_context": {
+        "locale_profile": {
+          "label": "Australian English",
+          "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+          "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+          "currency": {
+            "symbol": "$",
+            "code": "AUD",
+            "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+          },
+          "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+          "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+          "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any specific company's internal locale documentation."
+        },
+        "glossary_entries": [
+          {
+            "term_id": "G04",
+            "scope": "category",
+            "match_key": "homewares",
+            "trigger_terms": "comforter|duvet cover",
+            "preferred_term": "doona cover",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU homewares term"
+          },
+          {
+            "term_id": "G05",
+            "scope": "category",
+            "match_key": "homewares",
+            "trigger_terms": "trash can|garbage can",
+            "preferred_term": "bin",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU household term"
+          },
+          {
+            "term_id": "B04",
+            "scope": "task",
+            "match_key": "T05",
+            "trigger_terms": "newsletter signup|loyalty program",
+            "preferred_term": "Feld Insiders",
+            "dimension_subtype": "inconsistent_with_terminology_resource",
+            "note": "Feld & Co's named subscriber program"
+          }
+        ]
+      }
+    },
+    "output": {
+      "text": "This weekend only, save 15% on doona covers from our linen bedding range at Feld & Co. Soft, breathable, and made to last — refresh your bedroom with timeless style. Ships Australia-wide, so everyone can enjoy the comfort of quality linen, no matter where you live.",
+      "model_name": "claude-sonnet-5",
+      "run_date": "2026-09-11",
+      "generation_notes": "Regenerated as a minimal edit from V1's frozen output, to isolate the effect actually attributable to V2's retrieval mechanism: only word- or phrase-level substitutions directly motivated by the retrieved context (a locale-profile spelling/date convention, or a matched glossary entry) were applied. Everything else was left exactly as V1 wrote it, including V1's own accuracy or word-count issues where present: those are not something the locale/glossary mechanism has any bearing on, so a genuine V2 generation would have no reason to also fix them. Where a task's V1 output contained no locale- or glossary-relevant content at all, V2 is identical to V1. This task is not one of the 6 tasks affected by Finding 2, so its text is unaffected by the system instruction's new no-fabrication clause: it never contained an unsupported addition in the first place."
+    },
+    "reference_assessment": {
+      "label": "Human evaluator assessment: created by the MVP author for demonstration",
+      "status": "Pass",
+      "total_points": 0,
+      "annotations": [],
+      "reviewed_by": "Giles Davis",
+      "review_status": "pending_review",
+      "review_date": null
+    },
+    "judge_assessment": {
+      "label": "Provisional LLM-as-a-judge assessment",
+      "status": "pending",
+      "total_points": null,
+      "annotations": [],
+      "judge_model_name": "GPT-5.6 Sol",
+      "judge_prompt_ref": "docs/judge-prompt.md",
+      "run_date": null,
+      "blind_to_reference": true,
+      "blind_to_version_label": true,
+      "import_status": "awaiting_external_run"
+    }
+  },
+  {
+    "task_id": "T06",
+    "version": "v2",
+    "context_packet": {
+      "system_instruction": "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints. Follow the supplied locale profile, brand guidance and relevant terminology entries. Do not state, imply, or add any claim, quality, offer, or mechanic that is not explicitly present in the customer's own request.",
+      "user_prompt": "Copy for Wanderlow, we make travel accessories. Want to promote our cabin bags -- they're carry-on compliant, come with a lifetime warranty, and right now people get 10% off if they sign up to our newsletter. Please mention all three of those. 40-60 words.",
+      "retrieved_context": {
+        "locale_profile": {
+          "label": "Australian English",
+          "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+          "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+          "currency": {
+            "symbol": "$",
+            "code": "AUD",
+            "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+          },
+          "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+          "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+          "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any specific company's internal locale documentation."
+        },
+        "glossary_entries": [
+          {
+            "term_id": "G06",
+            "scope": "category",
+            "match_key": "travel_accessories",
+            "trigger_terms": "purse",
+            "preferred_term": "handbag",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU term for a small bag"
+          },
+          {
+            "term_id": "G07",
+            "scope": "category",
+            "match_key": "travel_accessories",
+            "trigger_terms": "vacation",
+            "preferred_term": "holiday",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU term for leisure travel"
+          },
+          {
+            "term_id": "B05",
+            "scope": "task",
+            "match_key": "T06",
+            "trigger_terms": "loyalty program|travel community",
+            "preferred_term": "Wanderlow Collective",
+            "dimension_subtype": "inconsistent_with_terminology_resource",
+            "note": "Wanderlow's named customer community"
+          }
+        ]
+      }
+    },
+    "output": {
+      "text": "Travel smarter with Wanderlow's carry-on compliant cabin bags, built for the modern traveller. Backed by a lifetime warranty, they're designed to go the distance — trip after trip. Sign up for our newsletter today and get 10% off.",
+      "model_name": "claude-sonnet-5",
+      "run_date": "2026-09-11",
+      "generation_notes": "Regenerated as a minimal edit isolating two combined, independently-evidenced fixes (Finding 1 and Finding 2), bundled into this single V2 revision rather than tested as separate versions, a deliberate efficiency trade-off disclosed in docs/limitations.md. For this task: \"traveler\" corrected to \"traveller\" (locale spelling, Finding 1). Finding 2's fix removed \"your first purchase\", which narrowed an offer the customer authorised without that restriction. This output is now 38 words against a required 40-60: removing the unsupported narrowing left no further customer-supplied fact available to restore the difference without inventing new content, so the shortfall is disclosed rather than padded. This is an honest, disclosed interaction between the two fixes, not a new fabrication."
+    },
+    "reference_assessment": {
+      "label": "Human evaluator assessment: created by the MVP author for demonstration",
+      "status": "Pass",
+      "total_points": 0,
+      "annotations": [],
+      "reviewed_by": "Giles Davis",
+      "review_status": "pending_review",
+      "review_date": null
+    },
+    "judge_assessment": {
+      "label": "Provisional LLM-as-a-judge assessment",
+      "status": "pending",
+      "total_points": null,
+      "annotations": [],
+      "judge_model_name": "GPT-5.6 Sol",
+      "judge_prompt_ref": "docs/judge-prompt.md",
+      "run_date": null,
+      "blind_to_reference": true,
+      "blind_to_version_label": true,
+      "import_status": "awaiting_external_run"
+    }
+  },
+  {
+    "task_id": "T07",
+    "version": "v2",
+    "context_packet": {
+      "system_instruction": "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints. Follow the supplied locale profile, brand guidance and relevant terminology entries. Do not state, imply, or add any claim, quality, offer, or mechanic that is not explicitly present in the customer's own request.",
+      "user_prompt": "Need a short promo for ReelHouse, our streaming service. We want to highlight the 30-day free trial, our ad-free tier which is $12.99 a month (please use that exact price), and a new Australian-made drama series that's launching. Keep it under 45 words.",
+      "retrieved_context": {
+        "locale_profile": {
+          "label": "Australian English",
+          "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+          "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+          "currency": {
+            "symbol": "$",
+            "code": "AUD",
+            "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+          },
+          "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+          "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+          "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any specific company's internal locale documentation."
+        },
+        "glossary_entries": [
+          {
+            "term_id": "G08",
+            "scope": "category",
+            "match_key": "streaming_subscription",
+            "trigger_terms": "movie theater",
+            "preferred_term": "cinema",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU term"
+          },
+          {
+            "term_id": "B06",
+            "scope": "task",
+            "match_key": "T07",
+            "trigger_terms": "watchlist|saved shows|my list",
+            "preferred_term": "My List",
+            "dimension_subtype": "inconsistent_with_terminology_resource",
+            "note": "ReelHouse's named saved-shows feature (exact capitalisation)"
+          }
+        ]
+      }
+    },
+    "output": {
+      "text": "Stream more, pay less. Get 30 days free on ReelHouse, then enjoy our ad-free tier for just $12.99/month. Don't miss our brand-new Australian drama series, launching exclusively on ReelHouse.",
+      "model_name": "claude-sonnet-5",
+      "run_date": "2026-09-11",
+      "generation_notes": "Regenerated as a minimal edit isolating two combined, independently-evidenced fixes (Finding 1 and Finding 2), bundled into this single V2 revision rather than tested as separate versions, a deliberate efficiency trade-off disclosed in docs/limitations.md. For this task: no locale/glossary-relevant content applied (as before). Finding 2's fix removed \"this month\", an invented launch timeframe the customer never gave."
+    },
+    "reference_assessment": {
+      "label": "Human evaluator assessment: created by the MVP author for demonstration",
+      "status": "Pass",
+      "total_points": 0,
+      "annotations": [],
+      "reviewed_by": "Giles Davis",
+      "review_status": "pending_review",
+      "review_date": null
+    },
+    "judge_assessment": {
+      "label": "Provisional LLM-as-a-judge assessment",
+      "status": "pending",
+      "total_points": null,
+      "annotations": [],
+      "judge_model_name": "GPT-5.6 Sol",
+      "judge_prompt_ref": "docs/judge-prompt.md",
+      "run_date": null,
+      "blind_to_reference": true,
+      "blind_to_version_label": true,
+      "import_status": "awaiting_external_run"
+    }
+  },
+  {
+    "task_id": "T08",
+    "version": "v2",
+    "context_packet": {
+      "system_instruction": "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints. Follow the supplied locale profile, brand guidance and relevant terminology entries. Do not state, imply, or add any claim, quality, offer, or mechanic that is not explicitly present in the customer's own request.",
+      "user_prompt": "Promo copy for Milk & Bean -- we're a café chain. We've got a coffee loyalty stamp card in our app: buy 5 coffees, get the 6th free. It's only valid at our Melbourne CBD stores, and the offer ends at the end of the month, so please mention both of those restrictions. 40-60 words.",
+      "retrieved_context": {
+        "locale_profile": {
+          "label": "Australian English",
+          "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+          "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+          "currency": {
+            "symbol": "$",
+            "code": "AUD",
+            "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+          },
+          "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+          "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+          "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any specific company's internal locale documentation."
+        },
+        "glossary_entries": [
+          {
+            "term_id": "G09",
+            "scope": "category",
+            "match_key": "cafe_promotion",
+            "trigger_terms": "coffee to go",
+            "preferred_term": "takeaway coffee",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU cafe term"
+          },
+          {
+            "term_id": "G10",
+            "scope": "category",
+            "match_key": "cafe_promotion",
+            "trigger_terms": "line (queue)",
+            "preferred_term": "queue",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU term for waiting in line"
+          },
+          {
+            "term_id": "B07",
+            "scope": "task",
+            "match_key": "T08",
+            "trigger_terms": "loyalty card|stamp card|rewards card",
+            "preferred_term": "Bean Card",
+            "dimension_subtype": "inconsistent_with_terminology_resource",
+            "note": "Milk & Bean's named stamp-card program"
+          }
+        ]
+      }
+    },
+    "output": {
+      "text": "Buy 5 coffees, get your 6th free — only at Milk & Bean, a café chain! Valid at Melbourne CBD stores only, offer ends this month. Grab your takeaway coffee and start earning today.",
+      "model_name": "claude-sonnet-5",
+      "run_date": "2026-09-11",
+      "generation_notes": "Regenerated as a minimal edit isolating two combined, independently-evidenced fixes (Finding 1 and Finding 2), bundled into this single V2 revision rather than tested as separate versions, a deliberate efficiency trade-off disclosed in docs/limitations.md. For this task: \"coffee to go\" corrected to \"takeaway coffee\" (glossary, Finding 1). Finding 2's fix removed \"Just tap your order in the app to start collecting stamps.\", an invented app-interaction mechanic the customer never gave. \"a café chain\" was added back in only because it is a fact the customer's own prompt actually gave, but this output is still 34 words against a required 40-60: no further customer-supplied fact was available to close the remaining gap without inventing new content, so the shortfall is disclosed rather than padded."
+    },
+    "reference_assessment": {
+      "label": "Human evaluator assessment: created by the MVP author for demonstration",
+      "status": "Pass",
+      "total_points": 0,
+      "annotations": [],
+      "reviewed_by": "Giles Davis",
+      "review_status": "pending_review",
+      "review_date": null
+    },
+    "judge_assessment": {
+      "label": "Provisional LLM-as-a-judge assessment",
+      "status": "pending",
+      "total_points": null,
+      "annotations": [],
+      "judge_model_name": "GPT-5.6 Sol",
+      "judge_prompt_ref": "docs/judge-prompt.md",
+      "run_date": null,
+      "blind_to_reference": true,
+      "blind_to_version_label": true,
+      "import_status": "awaiting_external_run"
+    }
+  },
+  {
+    "task_id": "T09",
+    "version": "v2",
+    "context_packet": {
+      "system_instruction": "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints. Follow the supplied locale profile, brand guidance and relevant terminology entries. Do not state, imply, or add any claim, quality, offer, or mechanic that is not explicitly present in the customer's own request.",
+      "user_prompt": "Marketing copy for Native Bloom, our skincare brand. We want to promote our fragrance-free moisturiser range -- it's dermatologist-tested (please use that exact wording, nothing stronger like 'clinically proven'). New customers get 20% off with the code NEW20 -- include the code exactly as written. 40-60 words please.",
+      "retrieved_context": {
+        "locale_profile": {
+          "label": "Australian English",
+          "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+          "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+          "currency": {
+            "symbol": "$",
+            "code": "AUD",
+            "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+          },
+          "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+          "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+          "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any specific company's internal locale documentation."
+        },
+        "glossary_entries": [
+          {
+            "term_id": "G11",
+            "scope": "category",
+            "match_key": "personal_care",
+            "trigger_terms": "drug store",
+            "preferred_term": "chemist",
+            "dimension_subtype": "wrong_term",
+            "note": "Everyday AU term for a pharmacy retailer"
+          },
+          {
+            "term_id": "B08",
+            "scope": "task",
+            "match_key": "T09",
+            "trigger_terms": "skincare line|product range",
+            "preferred_term": "Native Bloom Essentials range",
+            "dimension_subtype": "inconsistent_with_terminology_resource",
+            "note": "Native Bloom's named product range"
+          }
+        ]
+      }
+    },
+    "output": {
+      "text": "Introducing the Native Bloom Essentials range, our fragrance-free moisturiser — dermatologist-tested. New customers get 20% off with code NEW20. Nourish your skin, naturally.",
+      "model_name": "claude-sonnet-5",
+      "run_date": "2026-09-11",
+      "generation_notes": "Regenerated as a minimal edit isolating two combined, independently-evidenced fixes (Finding 1 and Finding 2), bundled into this single V2 revision rather than tested as separate versions, a deliberate efficiency trade-off disclosed in docs/limitations.md. For this task: \"moisturizer\" corrected to \"moisturiser\" and the generic \"range\" renamed to the brand's actual \"Native Bloom Essentials range\" (locale spelling and glossary, Finding 1). Finding 2's fix removed \"gentle, effective\" and \"for even the most sensitive skin\", keeping only \"dermatologist-tested\", the exact wording the customer required and nothing stronger. This output is now 23 words against a required 40-60, the largest shortfall of the six: this task's V1 output relied heavily on the unsupported claims to reach its length, and V1's reference assessment had already separately flagged this same task for a length violation before any accuracy fix was applied. No further customer-supplied fact was available to close the gap without inventing new content, so the shortfall is disclosed rather than padded."
+    },
+    "reference_assessment": {
+      "label": "Human evaluator assessment: created by the MVP author for demonstration",
+      "status": "Pass",
+      "total_points": 0,
+      "annotations": [],
+      "reviewed_by": "Giles Davis",
+      "review_status": "pending_review",
+      "review_date": null
+    },
+    "judge_assessment": {
+      "label": "Provisional LLM-as-a-judge assessment",
+      "status": "pending",
+      "total_points": null,
+      "annotations": [],
+      "judge_model_name": "GPT-5.6 Sol",
+      "judge_prompt_ref": "docs/judge-prompt.md",
+      "run_date": null,
+      "blind_to_reference": true,
+      "blind_to_version_label": true,
+      "import_status": "awaiting_external_run"
+    }
+  },
+  {
+    "task_id": "T10",
+    "version": "v2",
+    "context_packet": {
+      "system_instruction": "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints. Follow the supplied locale profile, brand guidance and relevant terminology entries. Do not state, imply, or add any claim, quality, offer, or mechanic that is not explicitly present in the customer's own request.",
+      "user_prompt": "Need promo copy for Brightpath Learning's new 6-week digital marketing course. It has live weekly Zoom sessions, and there's an early-bird price of $249 if you sign up before 20 March -- please get that date right. Also mention that people get a certificate when they finish. 40-60 words.",
+      "retrieved_context": {
+        "locale_profile": {
+          "label": "Australian English",
+          "spelling": "British-derived spelling conventions: colour, favourite, customise, organise, moisturiser, centre, enrol (not color, favorite, customize, organize, moisturizer, center, enroll).",
+          "date_format": "Day before month, e.g. '20 March' or '20/03/2026'. Avoid the US month-first order (e.g. 'March 20' or '03/20/2026').",
+          "currency": {
+            "symbol": "$",
+            "code": "AUD",
+            "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+          },
+          "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
+          "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
+          "source_note": "A defensible general-conventions summary for demonstration purposes, not a comprehensive style guide and not sourced from any specific company's internal locale documentation."
+        },
+        "glossary_entries": [
+          {
+            "term_id": "B09",
+            "scope": "task",
+            "match_key": "T10",
+            "trigger_terms": "completion certificate|certificate",
+            "preferred_term": "Brightpath Certificate of Completion",
+            "dimension_subtype": "inconsistent_with_terminology_resource",
+            "note": "Brightpath's named certificate"
+          }
+        ]
+      }
+    },
+    "output": {
+      "text": "Master digital marketing in just 6 weeks with Brightpath Learning. Join live weekly Zoom sessions, earn your Brightpath Certificate of Completion, and lock in the early-bird price of $249 before 20 March. Enrol now and take the next step in your career.",
+      "model_name": "claude-sonnet-5",
+      "run_date": "2026-09-11",
+      "generation_notes": "Regenerated as a minimal edit from V1's frozen output, to isolate the effect actually attributable to V2's retrieval mechanism: only word- or phrase-level substitutions directly motivated by the retrieved context (a locale-profile spelling/date convention, or a matched glossary entry) were applied. Everything else was left exactly as V1 wrote it, including V1's own accuracy or word-count issues where present: those are not something the locale/glossary mechanism has any bearing on, so a genuine V2 generation would have no reason to also fix them. Where a task's V1 output contained no locale- or glossary-relevant content at all, V2 is identical to V1. This task is not one of the 6 tasks affected by Finding 2, so its text is unaffected by the system instruction's new no-fabrication clause: it never contained an unsupported addition in the first place."
+    },
+    "reference_assessment": {
+      "label": "Human evaluator assessment: created by the MVP author for demonstration",
+      "status": "Pass",
+      "total_points": 0,
+      "annotations": [],
+      "reviewed_by": "Giles Davis",
+      "review_status": "pending_review",
+      "review_date": null
+    },
+    "judge_assessment": {
+      "label": "Provisional LLM-as-a-judge assessment",
+      "status": "pending",
+      "total_points": null,
+      "annotations": [],
+      "judge_model_name": "GPT-5.6 Sol",
+      "judge_prompt_ref": "docs/judge-prompt.md",
+      "run_date": null,
+      "blind_to_reference": true,
+      "blind_to_version_label": true,
+      "import_status": "awaiting_external_run"
+    }
+  }
+]

@@ -71,8 +71,9 @@ def main():
     v1_results = load_json(DATA_DIR / "v1-results.json")
     v2_results = load_json(DATA_DIR / "v2-results.json")
     findings = load_json(DATA_DIR / "findings.json")
+    monitoring_notes = load_json(DATA_DIR / "monitoring-notes.json")
 
-    if None in (rubric, locale_profiles, tasks, v1_results, v2_results, findings):
+    if None in (rubric, locale_profiles, tasks, v1_results, v2_results, findings, monitoring_notes):
         report()
         return 1
 
@@ -239,6 +240,8 @@ def main():
     known_annotation_ids = set(all_annotation_ids)
     for f in findings:
         fid = f.get("finding_id", "?")
+        if f.get("recommendation_type") == "monitor":
+            err(f"finding {fid}: recommendation_type 'monitor' is only valid in monitoring-notes.json, not findings.json")
         for atid in f.get("observation", {}).get("affected_task_ids", []):
             if atid not in task_ids_set:
                 err(f"finding {fid}: affected_task_ids references unknown task {atid}")
@@ -248,6 +251,21 @@ def main():
             aid = link.get("annotation_id")
             if aid and aid not in known_annotation_ids:
                 err(f"finding {fid}: evidence_links references unknown annotation_id {aid}")
+
+    # --- monitoring notes reference valid task/annotation IDs ---
+    for m in monitoring_notes:
+        mid = m.get("note_id", "?")
+        if m.get("recommendation_type") != "monitor":
+            err(f"monitoring note {mid}: recommendation_type must be 'monitor', got {m.get('recommendation_type')!r}")
+        for atid in m.get("observation", {}).get("affected_task_ids", []):
+            if atid not in task_ids_set:
+                err(f"monitoring note {mid}: affected_task_ids references unknown task {atid}")
+        for link in m.get("evidence_links", []):
+            if link.get("task_id") not in task_ids_set:
+                err(f"monitoring note {mid}: evidence_links references unknown task {link.get('task_id')}")
+            aid = link.get("annotation_id")
+            if aid and aid not in known_annotation_ids:
+                err(f"monitoring note {mid}: evidence_links references unknown annotation_id {aid}")
 
     return report()
 

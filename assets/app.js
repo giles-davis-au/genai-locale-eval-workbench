@@ -12,6 +12,7 @@
     v1Results: [],
     v2Results: [],
     findings: [],
+    monitoringNotes: [],
     loadError: null,
   };
 
@@ -30,6 +31,7 @@
     ["v1Results", "data/v1-results.json", "json"],
     ["v2Results", "data/v2-results.json", "json"],
     ["findings", "data/findings.json", "json"],
+    ["monitoringNotes", "data/monitoring-notes.json", "json"],
   ];
 
   function parseCsv(text) {
@@ -719,7 +721,7 @@
     return findingId.replace(/^F/, "Finding ");
   }
 
-  const RECOMMENDATION_TYPE_LABELS = { system_change: "system change", evaluator_training: "evaluator training" };
+  const RECOMMENDATION_TYPE_LABELS = { system_change: "system change", evaluator_training: "evaluator training", monitor: "monitor" };
 
   function findingCard(finding) {
     const obs = finding.observation;
@@ -768,6 +770,46 @@
     return card;
   }
 
+  function monitoringNoteCard(note) {
+    const obs = note.observation;
+    const badge = el("span", {
+      class: "finding-badge",
+      text: `Recommendation: ${RECOMMENDATION_TYPE_LABELS[note.recommendation_type] || note.recommendation_type}`,
+    });
+    const card = el("article", { class: "finding-card monitoring-note-card" }, [
+      el("h3", { text: `${note.note_id}: ${note.title}` }),
+      badge,
+      el("p", { text: obs.summary }),
+    ]);
+    const statCard = el("div", { class: "metric-card" }, [
+      el("div", { class: "metric-value", text: `${obs.count} / ${obs.denominator}` }),
+      el("div", { class: "metric-label", text: "affected tasks" }),
+    ]);
+    card.appendChild(statCard);
+    card.appendChild(el("p", { class: "prose", text: "Evidence:" }));
+    card.appendChild(evidenceLinkList(note.evidence_links));
+    card.appendChild(labeledParagraph("Why not actioned:", note.why_not_actioned));
+    return card;
+  }
+
+  function renderMonitoringNotes() {
+    const container = document.getElementById("v4-monitoring");
+    if (state.monitoringNotes.length === 0) {
+      container.hidden = true;
+      return;
+    }
+    container.hidden = false;
+    container.innerHTML = "";
+    container.appendChild(el("h3", { class: "monitoring-heading", text: "Noted, not currently actioned" }));
+    container.appendChild(el("p", {
+      class: "prose",
+      text: "Real signal that doesn't clear the bar for a finding, usually because it's a single instance rather than an established pattern. These aren't findings, so they don't get a full observation-to-recommendation chain. They're disclosed anyway, rather than silently dropped, so a reader can judge for themselves whether the evidence should have been enough to act on.",
+    }));
+    for (const note of state.monitoringNotes) {
+      container.appendChild(monitoringNoteCard(note));
+    }
+  }
+
   function renderView4() {
     const empty = document.getElementById("v4-empty-state");
     const content = document.getElementById("v4-content");
@@ -782,11 +824,12 @@
     content.innerHTML = "";
     content.appendChild(el("p", {
       class: "prose",
-      text: "Each finding below follows the same chain: what was observed and how often, the specific examples it's grounded in, the alternative explanations considered before accepting it as signal, the bounded hypothesis about the V1 generation system configuration, and the recommendation it motivates. Both findings drive a recommendation; they differ in type (shown on each card), and are ordered accordingly: the system-change recommendation that actually shaped this artifact's V2 comes first, followed by the evaluator-training recommendation, which isn't implemented anywhere in this build.",
+      text: "Each finding below follows the same chain: what was observed and how often, the specific examples it's grounded in, the alternative explanations considered before accepting it as signal, the bounded hypothesis about the V1 generation system configuration, and the recommendation it motivates. Every finding drives a recommendation; they differ in type (shown on each card), and are ordered accordingly: Finding 1's system-change recommendation, which actually shaped this artifact's V2, comes first; Finding 2's system-change recommendation is proposed but not yet built into anything; Finding 3's evaluator-training recommendation isn't implemented anywhere in this build.",
     }));
     for (const finding of state.findings) {
       content.appendChild(findingCard(finding));
     }
+    renderMonitoringNotes();
   }
 
   function renderView5() {
@@ -800,7 +843,11 @@
     }
     empty.hidden = true;
     content.hidden = false;
-    // Full implementation lands in Phase 4 (retrieval-augmented V2 comparison).
+    content.innerHTML = "";
+    content.appendChild(el("p", {
+      class: "empty-state",
+      text: "V2 output, context and a draft human evaluator assessment now exist for all 10 tasks, but the human evaluator assessment is still pending Giles's review and the LLM-as-a-judge hasn't been run yet. Inspect the raw V2 records directly in data/v2-results.json until the paired V1/V2 comparison view is built.",
+    }));
   }
 
   // ---------- navigation ----------

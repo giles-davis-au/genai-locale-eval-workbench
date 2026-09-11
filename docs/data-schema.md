@@ -138,9 +138,33 @@ Array of finding objects used by View 4 (pattern investigation):
 }
 ```
 
-`finding_id` is a short internal reference (`F1`, `F2`, ...), analogous to `task_id`; the app displays it spelled out ("Finding 1"). Every finding drives a recommendation; `recommendation_type` states, as authored fact rather than something the reader has to infer from `proposed_recommendation`'s wording, which kind: `"system_change"` (a change to the V1/V2 generation system configuration, e.g. Finding 1's locale-profile retrieval) or `"evaluator_training"` (a change to how the human evaluator works, not to the generation system, e.g. Finding 2). The app's step-5 heading and coloured badge both read this field directly ("Recommendation: system change" / "Recommendation: evaluator training"), so the two never drift apart. Findings are ordered in the array by this field, `"system_change"` first: that's the recommendation actually built into this artifact's V2, so it's the finding chain a reader most needs to see before View 5's V1/V2 comparison; the `"evaluator_training"` finding, which nothing in this build implements, follows.
+`finding_id` is a short internal reference (`F1`, `F2`, ...), analogous to `task_id`; the app displays it spelled out ("Finding 1"). Every finding drives a recommendation; `recommendation_type` states, as authored fact rather than something the reader has to infer from `proposed_recommendation`'s wording, which kind: `"system_change"` (a change to the V1/V2 generation system configuration, e.g. Finding 1's locale-profile retrieval or Finding 2's proposed no-fabrication instruction) or `"evaluator_training"` (a change to how the human evaluator works, not to the generation system, e.g. Finding 3). A third value, `"monitor"`, exists for the same field but is only ever used in `data/monitoring-notes.json` below, never in `findings.json` itself: nothing in this file should carry `"monitor"`, since a finding by definition has a full evidence-to-recommendation chain, and a monitoring note by definition doesn't. The app's step-5 heading and coloured badge both read `recommendation_type` directly ("Recommendation: system change" / "Recommendation: evaluator training"), so the two never drift apart. Findings are ordered in the array by this field, `"system_change"` findings first: not every `"system_change"` finding has actually been built, though (Finding 1's has, Finding 2's hasn't yet), so a reader still needs each finding's own text to know which recommendations this artifact has acted on; the `"evaluator_training"` finding, which nothing in this build implements, comes last.
 
 Every `task_id` and `annotation_id` referenced here must resolve to a real record in `v1-results.json` (the validator checks this). An `evidence_links` entry's `annotation_id` is `null` when the entry points at an LLM-as-a-judge annotation, since judge annotations (imported from external output) carry no per-annotation id; only reference/human annotations do.
+
+## `data/monitoring-notes.json`
+
+Array of monitoring-note objects, rendered in a separate, visually distinct section below the findings in View 4:
+
+```json
+{
+  "note_id": "M1",
+  "title": "short title",
+  "recommendation_type": "monitor",
+  "observation": {
+    "summary": "what occurred and in how many records",
+    "affected_task_ids": ["T09"],
+    "count": 1,
+    "denominator": 10
+  },
+  "evidence_links": [
+    { "task_id": "T09", "version": "v1", "annotation_id": "T09-V1-REF-2" }
+  ],
+  "why_not_actioned": "why this evidence doesn't clear the bar for a full finding and a recommendation"
+}
+```
+
+A monitoring note is real, disclosed signal that stops short of a finding, almost always because it's a single instance rather than an established pattern: treating n=1 as a pattern would be exactly the kind of overclaiming this project's own diagnostic-sample disclaimers exist to prevent, but silently dropping a severe single instance understates what the evaluation actually found. `note_id` is a short internal reference (`M1`, `M2`, ...), analogous to `finding_id`, and `recommendation_type` is always `"monitor"` here (the only place that value is valid). There is deliberately no `alternative_explanations`, `hypothesis` or `proposed_recommendation` field: a monitoring note doesn't get the full reasoning chain a finding does, since there's no pattern to reason about yet; `why_not_actioned` replaces all three, stating plainly why the evidence stops short of the bar for action. The same `task_id`/`annotation_id` resolution rule as `findings.json` applies, and is checked by the same validator logic.
 
 ## Validation summary
 
