@@ -828,7 +828,15 @@
     content.innerHTML = "";
     content.appendChild(el("p", {
       class: "prose",
-      text: "Each finding below follows the same chain: what was observed and how often, the specific examples it's grounded in, the alternative explanations considered before accepting it as signal, the bounded hypothesis about the V1 generation system configuration, and the recommendation it motivates. Every finding drives a recommendation; they differ in type (shown on each card), and are ordered accordingly: Finding 1's system-change recommendation, which actually shaped this artifact's V2, comes first; Finding 2's system-change recommendation is proposed but not yet built into anything; Finding 3's evaluator-training recommendation isn't implemented anywhere in this build.",
+      text: "Each finding below follows the same chain: what was observed and how often, the specific examples it's grounded in, the alternative explanations considered before accepting it as signal, the bounded hypothesis about the V1 generation system configuration, and the recommendation it motivates.",
+    }));
+    content.appendChild(el("p", {
+      class: "prose",
+      text: "Every finding drives a recommendation; they differ in type (shown on each card), and are ordered accordingly: Finding 1 and Finding 2's system-change recommendations come first, both now built into V2 in a single bundled revision (Finding 1 is the one that actually shaped this artifact's V2 design); Finding 3's evaluator-training recommendation comes last and isn't implemented anywhere in this build.",
+    }));
+    content.appendChild(el("p", {
+      class: "prose",
+      text: "A separate \"Noted, not currently actioned\" section at the bottom covers signals that don't clear the bar for a finding, usually because they're a single instance rather than an established pattern.",
     }));
     for (const finding of state.findings) {
       content.appendChild(findingCard(finding));
