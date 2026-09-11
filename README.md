@@ -42,14 +42,28 @@ Then open <http://localhost:8080> in a browser. Press `Ctrl+C` in the terminal t
 
 The only dependency is Python's standard library (`http.server`) to serve static files; no package manager, bundler, or third-party runtime dependency is involved anywhere in this repository.
 
-## 4. What does it explicitly not prove?
+## 4. Suggested walkthrough order
 
-- **Not a statistically representative measurement.** Ten synthetic tasks produce diagnostic signal, not a production-quality rate. The app deliberately uses language like *concentration*, *recurring observation* and *diagnostic signal* rather than *statistically significant*.
-- **Not a validated automated evaluator.** The LLM-as-a-judge is a provisional comparison signal, run independently and kept blind to the human evaluator's assessment. Ten examples do not calibrate or validate it (Zheng et al. document real LLM-as-a-judge biases; see references below).
-- **Not gold-standard human evaluation.** The human evaluator assessment is a demonstration record in the shape of one, created by this project's author: not expert judgement, not validated ground truth, and not any company's real evaluator output.
-- **Not sophisticated RAG.** V2's context construction is transparent, deterministic keyword/alias matching over a CSV glossary, with no embeddings, vector database or retrieval service.
-- **Not production regression testing.** The V1/V2 paired comparison is a rudimentary regression check on ten fixed tasks, not an independent validation set or longitudinal monitoring.
-- **Not translation evaluation, not multilingual expertise, not any specific company's product.** This repository is independent and self-contained: not affiliated with, endorsed by, or built using data or tooling from any real organisation.
+For a reviewer short on time:
+
+1. Read "Project status" above and skim [docs/limitations.md](docs/limitations.md), so you know what this repository does and doesn't claim before looking at any specific number.
+2. Run the app (see above), then open **View 1** (setup) and **View 2** (one V1 record in full: context, output, both assessments).
+3. Open **View 3** (V1 dashboard, the aggregate pattern) and **View 4** (the evidence-linked findings that pattern led to).
+4. Open **View 5** (compare V1 vs V2), starting with its Summary section, then the full comparison table below it.
+5. For depth beyond the app: [docs/methodology.md](docs/methodology.md) (why the rubric and design choices are what they are) and [docs/provenance.md](docs/provenance.md) (who/what produced each piece of data and when). [CLAUDE.md](CLAUDE.md) orients a reviewing coding agent to the repository, if that's relevant to how you're assessing this.
+
+This follows the same order the five views and the project's own five build phases are already in.
+
+## 5. What does it explicitly not prove?
+
+The reasoning behind each of these lives in [docs/limitations.md](docs/limitations.md); this is the short version.
+
+- Not a statistically representative measurement: ten tasks is a diagnostic sample.
+- Not a validated automated evaluator: the LLM-as-a-judge is a provisional signal.
+- Not gold-standard human evaluation: the human evaluator assessment is a demonstration record.
+- Not sophisticated RAG: V2's context construction is plain, unfiltered inclusion of a small glossary file.
+- Not production regression testing: the V1/V2 comparison is a rudimentary regression check on ten fixed tasks.
+- Not translation evaluation, multilingual, or any real company's product.
 
 ## Why these design choices
 
@@ -60,7 +74,7 @@ The only dependency is Python's standard library (`http.server`) to serve static
 - **Human evaluator assessment created by the MVP author**: see [docs/provenance.md](docs/provenance.md) for how these were drafted and reviewed before being committed.
 - **LLM-as-a-judge kept separate and provisional**: it's a different model, run independently by the author outside this build session, and never shown the human evaluator's assessment or (where practical) told which generation version it is judging. See [docs/judge-prompt.md](docs/judge-prompt.md) for the exact process.
 - **V1 → V2**: the V2 recommendation follows from a specific V1 observation, not a predetermined "V2 is better" narrative. See [docs/methodology.md](docs/methodology.md) and the in-app pattern-investigation view.
-- **Lightweight glossary lookup**: deliberately basic (deterministic keyword/alias matching over CSV), described honestly as lightweight retrieval-augmented context, not semantic RAG.
+- **Terminology glossary as universal context**: the entire glossary is supplied to every task rather than matched to it, since a real platform can't know in advance which categories or businesses it will serve; described honestly as lightweight retrieval-augmented context, not semantic RAG.
 - **Scoring thresholds**: a simple, disclosed points-based policy (minor=1, major=5, critical=10; 0–1 Pass, 2–4 Needs revision, 5+ or any critical Fail), stored in `data/rubric.json` rather than scattered through code, and explicitly labelled as a project-specific choice rather than a universal standard.
 
 ## References
