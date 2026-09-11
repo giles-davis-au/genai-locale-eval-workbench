@@ -171,7 +171,7 @@ Marketing copy for Native Bloom, our skincare brand. We want to promote our frag
 
 **GENERATED COPY TO ASSESS:**
 """
-Introducing the Native Bloom Essentials range, our fragrance-free moisturiser — dermatologist-tested. New customers get 20% off with code NEW20. Nourish your skin, naturally.
+Introducing Native Bloom's fragrance-free moisturiser range — dermatologist-tested. New customers get 20% off with code NEW20. Nourish your skin, naturally.
 """
 
 ### T10
@@ -183,6 +183,6 @@ Need promo copy for Brightpath Learning's new 6-week digital marketing course. I
 
 **GENERATED COPY TO ASSESS:**
 """
-Master digital marketing in just 6 weeks with Brightpath Learning. Join live weekly Zoom sessions, earn your Brightpath Certificate of Completion, and lock in the early-bird price of $249 before 20 March. Enrol now and take the next step in your career.
+Master digital marketing in just 6 weeks with Brightpath Learning. Join live weekly Zoom sessions, earn a certificate on completion, and lock in the early-bird price of $249 before 20 March. Enrol now and take the next step in your career.
 """
 

@@ -92,12 +92,15 @@ genai-locale-eval-workbench/
 │   ├── findings.json
 │   ├── monitoring-notes.json
 │   └── judge-intake/        # staging area for externally-run LLM-as-a-judge output, see docs/judge-prompt.md
+│       └── responses/       # raw combined LLM-as-a-judge responses, kept for provenance
 ├── docs/
 │   ├── methodology.md
 │   ├── limitations.md
 │   ├── provenance.md
 │   ├── judge-prompt.md
 │   ├── judge-run-v1.md      # generated; see scripts/build_judge_run.py
+│   ├── judge-run-v2.md      # generated; see scripts/build_judge_run.py
+│   ├── judge-run-v2.1.md    # generated; a scoped partial re-run, see docs/judge-prompt.md
 │   └── data-schema.md
 └── scripts/
     ├── validate_data.py

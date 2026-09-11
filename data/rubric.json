@@ -46,7 +46,7 @@
       "source": "mqm_core",
       "description": "Errors occurring in text that is grammatically acceptable but inappropriate because it deviates from supplied brand-voice guidance, or exhibits inappropriate register or awkward, non-idiomatic phrasing.",
       "subtypes": [
-        { "id": "organization_style", "name": "Organization style", "source": "mqm_core", "source_note": "Applied here to deviation from the brand-voice guidance supplied as part of V2's retrieved context." },
+        { "id": "organization_style", "name": "Organization style", "source": "mqm_core", "source_note": "Defined for completeness; no task in this build supplies distinct brand-voice guidance separate from the locale profile's general tone_notes, so unlikely to be used." },
         { "id": "language_register", "name": "Language register", "source": "mqm_core" },
         { "id": "awkward_style", "name": "Awkward style", "source": "mqm_core" },
         { "id": "unidiomatic_style", "name": "Unidiomatic style", "source": "mqm_core" }

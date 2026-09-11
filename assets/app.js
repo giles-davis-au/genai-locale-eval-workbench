@@ -137,7 +137,7 @@
       ? sample.context_packet.system_instruction
       : "Write concise marketing copy appropriate for the specified target locale. Preserve all supplied facts and satisfy the stated constraints.";
     container.appendChild(el("p", {
-      text: "V1 provides only the platform-level system instruction plus the user's own prompt (which names the target locale). It receives no locale profile and no terminology or brand glossary.",
+      text: "V1 provides only the platform-level system instruction plus the user's own prompt (which names the target locale). It receives no locale profile and no terminology glossary.",
     }));
     container.appendChild(el("p", { html: `<strong>V1 system instruction (verbatim):</strong>` }));
     container.appendChild(el("p", { class: "output-text", text: instruction }));
@@ -266,7 +266,7 @@
         el("pre", { class: "output-text", text: JSON.stringify(rc.locale_profile, null, 2) }),
       ]);
       if (rc.glossary_entries && rc.glossary_entries.length) {
-        rcBody.appendChild(el("p", { html: `<strong>Terminology glossary supplied (${rc.glossary_entries.length} entries, universal — not filtered to this task):</strong>` }));
+        rcBody.appendChild(el("p", { html: `<strong>Terminology glossary supplied (${rc.glossary_entries.length} entries; universal, not filtered to this task):</strong>` }));
         rcBody.appendChild(el("ul", {}, rc.glossary_entries.map((g) =>
           el("li", { text: `${g.trigger_terms} → ${g.preferred_term} (${g.note})` }))));
       } else {
