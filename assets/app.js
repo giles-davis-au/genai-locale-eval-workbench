@@ -721,6 +721,10 @@
     return findingId.replace(/^F/, "Finding ");
   }
 
+  function noteLabel(noteId) {
+    return noteId.replace(/^M/, "Monitoring note ");
+  }
+
   const RECOMMENDATION_TYPE_LABELS = { system_change: "system change", evaluator_training: "evaluator training", monitor: "monitor" };
 
   function findingCard(finding) {
@@ -777,7 +781,7 @@
       text: `Recommendation: ${RECOMMENDATION_TYPE_LABELS[note.recommendation_type] || note.recommendation_type}`,
     });
     const card = el("article", { class: "finding-card monitoring-note-card" }, [
-      el("h3", { text: `${note.note_id}: ${note.title}` }),
+      el("h3", { text: `${noteLabel(note.note_id)}: ${note.title}` }),
       badge,
       el("p", { text: obs.summary }),
     ]);
