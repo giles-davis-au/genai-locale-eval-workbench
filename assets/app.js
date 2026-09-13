@@ -1026,6 +1026,41 @@
     return table;
   }
 
+  function renderLocaleProfile(profile) {
+    const rows = [
+      ["Label", profile.label],
+      ["Spelling", profile.spelling],
+      ["Date format", profile.date_format],
+      ["Currency", `${profile.currency.symbol} (${profile.currency.code}): ${profile.currency.guidance}`],
+      ["Measurement", profile.measurement],
+      ["Tone notes", profile.tone_notes],
+      ["Source note", profile.source_note],
+    ];
+    return el("table", { class: "data-table" }, [
+      el("tbody", {}, rows.map(([field, value]) => el("tr", {}, [
+        el("th", { text: field }),
+        el("td", { text: value }),
+      ]))),
+    ]);
+  }
+
+  function renderTerminologyGlossary(entries) {
+    return el("table", { class: "data-table" }, [
+      el("thead", {}, [el("tr", {}, [
+        el("th", { text: "Term ID" }),
+        el("th", { text: "Trigger terms" }),
+        el("th", { text: "Preferred term" }),
+        el("th", { text: "Note" }),
+      ])]),
+      el("tbody", {}, entries.map((g) => el("tr", {}, [
+        el("td", { text: g.term_id }),
+        el("td", { text: g.trigger_terms.split("|").join(" / ") }),
+        el("td", { text: g.preferred_term }),
+        el("td", { text: g.note }),
+      ]))),
+    ]);
+  }
+
   function renderView5() {
     const empty = document.getElementById("v5-empty-state");
     const content = document.getElementById("v5-content");
@@ -1042,6 +1077,29 @@
       class: "prose",
       text: "Every task re-evaluated on the same rubric, under both assessors, before and after the changes recommended in View 4. This is a rudimentary regression check on ten reused tasks, not an independent validation set: it reports whatever the stored evidence shows, including any new issues V2 introduced, not just what it fixed. Click a row for the full before/after detail, including any issue new to V2.",
     }));
+    content.appendChild(el("h3", { text: "System instructions" }));
+    content.appendChild(el("h4", { text: "V1" }));
+    content.appendChild(el("p", {
+      class: "output-text",
+      text: state.v1Results.length ? state.v1Results[0].context_packet.system_instruction : "",
+    }));
+    content.appendChild(el("h4", { text: "V2" }));
+    content.appendChild(el("p", {
+      class: "output-text",
+      text: state.v2Results.length ? state.v2Results[0].context_packet.system_instruction : "",
+    }));
+    if (state.v2Results.length) {
+      const sampleContext = state.v2Results[0].context_packet.retrieved_context;
+      content.appendChild(el("h3", { text: "Retrieved context (V2 only)" }));
+      content.appendChild(el("p", {
+        class: "prose",
+        text: "Identical for every task: V1 never receives any of this. See data/locale-profiles.json and data/terminology.csv.",
+      }));
+      content.appendChild(el("h4", { text: "Locale profile" }));
+      content.appendChild(renderLocaleProfile(sampleContext.locale_profile));
+      content.appendChild(el("h4", { text: "Terminology glossary" }));
+      content.appendChild(renderTerminologyGlossary(sampleContext.glossary_entries));
+    }
     content.appendChild(el("h3", { text: "Summary" }));
     content.appendChild(el("p", {
       class: "prose",
