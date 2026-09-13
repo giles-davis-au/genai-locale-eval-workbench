@@ -6,7 +6,7 @@
     "currency": {
       "symbol": "$",
       "code": "AUD",
-      "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency, which none of these tasks do."
+      "guidance": "Use the plain '$' symbol for prices aimed at a local Australian audience already operating within their own market context. Only use 'A$' when the copy could otherwise be read in a cross-market context alongside another dollar currency."
     },
     "measurement": "Metric units where units are mentioned (km, kg, °C, cm).",
     "tone_notes": "Plain, direct, moderately informal marketing tone. Do not force slang markers (e.g. 'mate', 'arvo', 'no worries') or cultural stereotypes where they would not naturally appear in ordinary brand marketing copy.",
