@@ -4,6 +4,8 @@
 
 By [Giles Davis](https://www.linkedin.com/in/gilesbdavis/).
 
+**Live demo:** <https://giles-davis-au.github.io/genai-locale-eval-workbench/> — static and read-only, nothing to install or clone.
+
 ## Project status
 
 **All 5 phases complete.** All 10 V1 and all 10 V2 tasks have a frozen output, an approved human evaluator assessment, and an imported LLM-as-a-judge assessment; `scripts/validate_data.py` reports 0 errors, 0 warnings. Full build history, including a 2026-09-11 amendment that reworked `data/terminology.csv` and regenerated two V2 records, is in [docs/provenance.md](docs/provenance.md). See [Implementation phases](#implementation-phases) below for what each phase added, and section 4 below for what this repository explicitly does not claim.
