@@ -1,0 +1,885 @@
+[
+  {
+    "data": {
+      "task_id": "T01",
+      "business_name": "Rowan & Ash",
+      "content_category": "clothing",
+      "category_label": "Clothing",
+      "target_locale": "en-AU",
+      "brief": "Rowan & Ash, a Sydney-based sustainable clothing label, wants short marketing copy announcing this week's promotion.",
+      "user_prompt": "Hi, I run Rowan & Ash, a sustainable clothing label based in Sydney. Can you write some short marketing copy for this week's promotion? We've got 20% off our puffer jackets, and free shipping on any order over $75 -- plus we just launched a new merino wool range if you want to mention that too. Keep it to one short paragraph, around 40-60 words, no headings. Please don't say anything about organic cotton or fabric claims we haven't given you -- the jackets aren't organic cotton.",
+      "output_text": "Layer up for less this week at Rowan & Ash \u2014 get 20% off our puffer jackets, our best-selling outerwear for the cooler months. Plus, enjoy free shipping on all orders over $75. Don't miss our new merino wool range, made to keep you warm without compromising on style. Shop now before the sale ends.",
+      "output_model_name": "claude-sonnet-5",
+      "sol_judge_model_name": "GPT-5.6 Sol",
+      "sol_status": "Fail",
+      "sol_total_points": 15,
+      "sol_summary": "Sol (LLM-as-judge) reference: Fail \u2014 15 points"
+    },
+    "predictions": [
+      {
+        "model_version": "GPT-5.6 Sol",
+        "result": [
+          {
+            "id": "T01-sol-0",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 77,
+              "end": 103,
+              "text": "our best-selling outerwear",
+              "labels": [
+                "accuracy: addition"
+              ]
+            }
+          },
+          {
+            "id": "T01-sol-0",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "major"
+              ]
+            }
+          },
+          {
+            "id": "T01-sol-0",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "The brief does not state that the puffer jackets are best-selling."
+              ]
+            }
+          },
+          {
+            "id": "T01-sol-0",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "our puffer jackets"
+              ]
+            }
+          },
+          {
+            "id": "T01-sol-1",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 215,
+              "end": 236,
+              "text": "made to keep you warm",
+              "labels": [
+                "accuracy: addition"
+              ]
+            }
+          },
+          {
+            "id": "T01-sol-1",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "critical"
+              ]
+            }
+          },
+          {
+            "id": "T01-sol-1",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "This is an unsupported fabric or performance claim, which the customer explicitly prohibited."
+              ]
+            }
+          },
+          {
+            "id": "T01-sol-1",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "designed with effortless style"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data": {
+      "task_id": "T02",
+      "business_name": "Cartly",
+      "content_category": "food_delivery",
+      "category_label": "Food delivery",
+      "target_locale": "en-AU",
+      "brief": "Cartly, a same-day grocery and meal delivery service, wants promo copy for new customers in Melbourne and Brisbane.",
+      "user_prompt": "Need promo copy for Cartly -- we're a same-day grocery and meal delivery service. We currently only deliver in Melbourne and Brisbane, so please mention both cities. Minimum order is $30, and new customers get $10 credit on their first order only (not every order, just to be clear). Around 40-60 words please.",
+      "output_text": "Cartly now delivers same-day in Melbourne and Brisbane, bringing your groceries and favorite meals straight to your door. Place an order of $30 or more and get $10 credit on your first order. Fast, fresh, and hassle-free \u2014 download the app and start shopping today!",
+      "output_model_name": "claude-sonnet-5",
+      "sol_judge_model_name": "GPT-5.6 Sol",
+      "sol_status": "Pass",
+      "sol_total_points": 1,
+      "sol_summary": "Sol (LLM-as-judge) reference: Pass \u2014 1 points"
+    },
+    "predictions": [
+      {
+        "model_version": "GPT-5.6 Sol",
+        "result": [
+          {
+            "id": "T02-sol-0",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 84,
+              "end": 92,
+              "text": "favorite",
+              "labels": [
+                "linguistic_conventions: spelling"
+              ]
+            }
+          },
+          {
+            "id": "T02-sol-0",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "minor"
+              ]
+            }
+          },
+          {
+            "id": "T02-sol-0",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "Australian English uses the spelling \u201cfavourite\u201d."
+              ]
+            }
+          },
+          {
+            "id": "T02-sol-0",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "favourite"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data": {
+      "task_id": "T03",
+      "business_name": "Pulse Studio",
+      "content_category": "fitness_membership",
+      "category_label": "Fitness membership",
+      "target_locale": "en-AU",
+      "brief": "Pulse Studio, a boutique gym chain, wants copy promoting membership ahead of opening a new Perth location.",
+      "user_prompt": "Writing copy for Pulse Studio, a boutique gym. We're opening a new location in Perth and want to promote memberships. Key points: no lock-in contract, and a 7-day free trial (please say exactly 7 days). Make sure the Perth opening gets a mention. 40-60 words.",
+      "output_text": "Pulse Studio is opening a brand-new location in Perth, and we want you to be part of it. Enjoy a 7-day free trial with no lock-in contract \u2014 just walk in, work out, and see the difference. Flexible memberships, expert trainers, and a community that keeps you motivated. Your first class is on us.",
+      "output_model_name": "claude-sonnet-5",
+      "sol_judge_model_name": "GPT-5.6 Sol",
+      "sol_status": "Fail",
+      "sol_total_points": 5,
+      "sol_summary": "Sol (LLM-as-judge) reference: Fail \u2014 5 points"
+    },
+    "predictions": [
+      {
+        "model_version": "GPT-5.6 Sol",
+        "result": [
+          {
+            "id": "T03-sol-0",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 211,
+              "end": 296,
+              "text": "expert trainers, and a community that keeps you motivated. Your first class is on us.",
+              "labels": [
+                "accuracy: addition"
+              ]
+            }
+          },
+          {
+            "id": "T03-sol-0",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "major"
+              ]
+            }
+          },
+          {
+            "id": "T03-sol-0",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "The brief does not substantiate the trainer expertise or community claim, and \u201cYour first class is on us\u201d introduces an offer beyond the stated 7-day free trial."
+              ]
+            }
+          },
+          {
+            "id": "T03-sol-0",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "Flexible memberships and seven days to experience Pulse Studio for yourself."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data": {
+      "task_id": "T04",
+      "business_name": "Riverside Markets",
+      "content_category": "community_event",
+      "category_label": "Community event",
+      "target_locale": "en-AU",
+      "brief": "Riverside Markets, a council-run community market, wants short flyer-style promo copy for its regular market day.",
+      "user_prompt": "Can you draft a short flyer-style promo for Riverside Markets? It's a community market run by the local council, on every first Sunday of the month -- not weekly. Entry is free, and there's local produce plus live music, with parking on site for stallholders and visitors. Keep it under 50 words and make it feel like a flyer, not a full paragraph.",
+      "output_text": "Join us at Riverside Markets \u2014 free entry, first Sunday of every month! Browse local produce, enjoy live music, and support your community. Parking available on site. See you there!",
+      "output_model_name": "claude-sonnet-5",
+      "sol_judge_model_name": "GPT-5.6 Sol",
+      "sol_status": "Pass",
+      "sol_total_points": 0,
+      "sol_summary": "Sol (LLM-as-judge) reference: Pass \u2014 0 points"
+    },
+    "predictions": [
+      {
+        "model_version": "GPT-5.6 Sol",
+        "result": []
+      }
+    ]
+  },
+  {
+    "data": {
+      "task_id": "T05",
+      "business_name": "Feld & Co",
+      "content_category": "homewares",
+      "category_label": "Homewares",
+      "target_locale": "en-AU",
+      "brief": "Feld & Co, a homewares brand, wants promo copy for a weekend sale on its linen bedding range.",
+      "user_prompt": "Marketing copy needed for Feld & Co, a homewares brand. This weekend only we've got 15% off doona covers from our linen bedding range, and we ship Australia-wide. 40-60 words.",
+      "output_text": "This weekend only, save 15% on doona covers from our linen bedding range at Feld & Co. Soft, breathable, and made to last \u2014 refresh your bedroom with timeless style. Ships Australia-wide, so everyone can enjoy the comfort of quality linen, no matter where you live.",
+      "output_model_name": "claude-sonnet-5",
+      "sol_judge_model_name": "GPT-5.6 Sol",
+      "sol_status": "Fail",
+      "sol_total_points": 5,
+      "sol_summary": "Sol (LLM-as-judge) reference: Fail \u2014 5 points"
+    },
+    "predictions": [
+      {
+        "model_version": "GPT-5.6 Sol",
+        "result": [
+          {
+            "id": "T05-sol-0",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 87,
+              "end": 121,
+              "text": "Soft, breathable, and made to last",
+              "labels": [
+                "accuracy: addition"
+              ]
+            }
+          },
+          {
+            "id": "T05-sol-0",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "major"
+              ]
+            }
+          },
+          {
+            "id": "T05-sol-0",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "These product-performance claims were not supplied in the brief."
+              ]
+            }
+          },
+          {
+            "id": "T05-sol-0",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "Refresh your bedroom with timeless linen style"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data": {
+      "task_id": "T06",
+      "business_name": "Wanderlow",
+      "content_category": "travel_accessories",
+      "category_label": "Travel accessories",
+      "target_locale": "en-AU",
+      "brief": "Wanderlow, a travel accessories brand, wants copy promoting its carry-on compliant cabin bags.",
+      "user_prompt": "Copy for Wanderlow, we make travel accessories. Want to promote our cabin bags -- they're carry-on compliant, come with a lifetime warranty, and right now people get 10% off if they sign up to our newsletter. Please mention all three of those. 40-60 words.",
+      "output_text": "Travel smarter with Wanderlow's carry-on compliant cabin bags, built for the modern traveler. Backed by a lifetime warranty, they're designed to go the distance \u2014 trip after trip. Sign up for our newsletter today and get 10% off your first purchase.",
+      "output_model_name": "claude-sonnet-5",
+      "sol_judge_model_name": "GPT-5.6 Sol",
+      "sol_status": "Fail",
+      "sol_total_points": 6,
+      "sol_summary": "Sol (LLM-as-judge) reference: Fail \u2014 6 points"
+    },
+    "predictions": [
+      {
+        "model_version": "GPT-5.6 Sol",
+        "result": [
+          {
+            "id": "T06-sol-0",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 84,
+              "end": 92,
+              "text": "traveler",
+              "labels": [
+                "linguistic_conventions: spelling"
+              ]
+            }
+          },
+          {
+            "id": "T06-sol-0",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "minor"
+              ]
+            }
+          },
+          {
+            "id": "T06-sol-0",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "Australian English uses the spelling \u201ctraveller\u201d."
+              ]
+            }
+          },
+          {
+            "id": "T06-sol-0",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "traveller"
+              ]
+            }
+          },
+          {
+            "id": "T06-sol-1",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 225,
+              "end": 248,
+              "text": "off your first purchase",
+              "labels": [
+                "accuracy: addition"
+              ]
+            }
+          },
+          {
+            "id": "T06-sol-1",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "major"
+              ]
+            }
+          },
+          {
+            "id": "T06-sol-1",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "The brief says newsletter subscribers receive 10% off but does not restrict the discount to their first purchase."
+              ]
+            }
+          },
+          {
+            "id": "T06-sol-1",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "off when you sign up"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data": {
+      "task_id": "T07",
+      "business_name": "ReelHouse",
+      "content_category": "streaming_subscription",
+      "category_label": "Streaming subscription",
+      "target_locale": "en-AU",
+      "brief": "ReelHouse, a video streaming service, wants promo copy for its ad-free tier and a new local drama series.",
+      "user_prompt": "Need a short promo for ReelHouse, our streaming service. We want to highlight the 30-day free trial, our ad-free tier which is $12.99 a month (please use that exact price), and a new Australian-made drama series that's launching. Keep it under 45 words.",
+      "output_text": "Stream more, pay less. Get 30 days free on ReelHouse, then enjoy our ad-free tier for just $12.99/month. Don't miss our brand-new Australian drama series, launching exclusively on ReelHouse this month.",
+      "output_model_name": "claude-sonnet-5",
+      "sol_judge_model_name": "GPT-5.6 Sol",
+      "sol_status": "Fail",
+      "sol_total_points": 5,
+      "sol_summary": "Sol (LLM-as-judge) reference: Fail \u2014 5 points"
+    },
+    "predictions": [
+      {
+        "model_version": "GPT-5.6 Sol",
+        "result": [
+          {
+            "id": "T07-sol-0",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 190,
+              "end": 200,
+              "text": "this month",
+              "labels": [
+                "accuracy: addition"
+              ]
+            }
+          },
+          {
+            "id": "T07-sol-0",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "major"
+              ]
+            }
+          },
+          {
+            "id": "T07-sol-0",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "The brief says the series is launching but supplies no launch month."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data": {
+      "task_id": "T08",
+      "business_name": "Milk & Bean",
+      "content_category": "cafe_promotion",
+      "category_label": "Caf\u00e9 promotion",
+      "target_locale": "en-AU",
+      "brief": "Milk & Bean, a caf\u00e9 chain, wants copy promoting its app-based coffee loyalty stamp card.",
+      "user_prompt": "Promo copy for Milk & Bean -- we're a caf\u00e9 chain. We've got a coffee loyalty stamp card in our app: buy 5 coffees, get the 6th free. It's only valid at our Melbourne CBD stores, and the offer ends at the end of the month, so please mention both of those restrictions. 40-60 words.",
+      "output_text": "Buy 5 coffees, get your 6th free \u2014 only at Milk & Bean! Just tap your order in the app to start collecting stamps. Valid at Melbourne CBD stores only, offer ends this month. Grab your coffee to go and start earning today.",
+      "output_model_name": "claude-sonnet-5",
+      "sol_judge_model_name": "GPT-5.6 Sol",
+      "sol_status": "Fail",
+      "sol_total_points": 5,
+      "sol_summary": "Sol (LLM-as-judge) reference: Fail \u2014 5 points"
+    },
+    "predictions": [
+      {
+        "model_version": "GPT-5.6 Sol",
+        "result": [
+          {
+            "id": "T08-sol-0",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 56,
+              "end": 114,
+              "text": "Just tap your order in the app to start collecting stamps.",
+              "labels": [
+                "accuracy: addition"
+              ]
+            }
+          },
+          {
+            "id": "T08-sol-0",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "major"
+              ]
+            }
+          },
+          {
+            "id": "T08-sol-0",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "The brief establishes an in-app stamp card but does not say that customers order through the app or that tapping an order starts stamp collection."
+              ]
+            }
+          },
+          {
+            "id": "T08-sol-0",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "Use the loyalty stamp card in our app to start collecting stamps."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data": {
+      "task_id": "T09",
+      "business_name": "Native Bloom",
+      "content_category": "personal_care",
+      "category_label": "Personal care",
+      "target_locale": "en-AU",
+      "brief": "Native Bloom, a skincare brand, wants promo copy for its fragrance-free moisturiser range aimed at new customers.",
+      "user_prompt": "Marketing copy for Native Bloom, our skincare brand. We want to promote our fragrance-free moisturiser range -- it's dermatologist-tested (please use that exact wording, nothing stronger like 'clinically proven'). New customers get 20% off with the code NEW20 -- include the code exactly as written. 40-60 words please.",
+      "output_text": "Introducing Native Bloom's fragrance-free moisturizer range \u2014 gentle, effective, and dermatologist-tested for even the most sensitive skin. New customers get 20% off with code NEW20. Nourish your skin, naturally.",
+      "output_model_name": "claude-sonnet-5",
+      "sol_judge_model_name": "GPT-5.6 Sol",
+      "sol_status": "Fail",
+      "sol_total_points": 16,
+      "sol_summary": "Sol (LLM-as-judge) reference: Fail \u2014 16 points"
+    },
+    "predictions": [
+      {
+        "model_version": "GPT-5.6 Sol",
+        "result": [
+          {
+            "id": "T09-sol-0",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 42,
+              "end": 53,
+              "text": "moisturizer",
+              "labels": [
+                "linguistic_conventions: spelling"
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-0",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "minor"
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-0",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "Australian English uses the spelling \u201cmoisturiser\u201d, which also matches the customer's wording."
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-0",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "moisturiser"
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-1",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 62,
+              "end": 138,
+              "text": "gentle, effective, and dermatologist-tested for even the most sensitive skin",
+              "labels": [
+                "accuracy: addition"
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-1",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "major"
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-1",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "Only \u201cdermatologist-tested\u201d is supported. The claims of gentleness, effectiveness and suitability for highly sensitive skin were not supplied."
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-1",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "fragrance-free and dermatologist-tested"
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-2",
+            "from_name": "doc_dimension_subtype",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "constraint_compliance: length_violation"
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-2",
+            "from_name": "doc_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "critical"
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-2",
+            "from_name": "doc_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "The copy is substantially shorter than the requested 40\u201360 words."
+              ]
+            }
+          },
+          {
+            "id": "T09-sol-2",
+            "from_name": "doc_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "Expand the copy to 40\u201360 words without adding unsupported product claims."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data": {
+      "task_id": "T10",
+      "business_name": "Brightpath Learning",
+      "content_category": "online_course",
+      "category_label": "Online course",
+      "target_locale": "en-AU",
+      "brief": "Brightpath Learning, an online education provider, wants promo copy for its 6-week digital marketing course.",
+      "user_prompt": "Need promo copy for Brightpath Learning's new 6-week digital marketing course. It has live weekly Zoom sessions, and there's an early-bird price of $249 if you sign up before 20 March -- please get that date right. Also mention that people get a certificate when they finish. 40-60 words.",
+      "output_text": "Master digital marketing in just 6 weeks with Brightpath Learning. Join live weekly Zoom sessions, earn a certificate on completion, and lock in the early-bird price of $249 before March 20. Enroll now and take the next step in your career.",
+      "output_model_name": "claude-sonnet-5",
+      "sol_judge_model_name": "GPT-5.6 Sol",
+      "sol_status": "Fail",
+      "sol_total_points": 6,
+      "sol_summary": "Sol (LLM-as-judge) reference: Fail \u2014 6 points"
+    },
+    "predictions": [
+      {
+        "model_version": "GPT-5.6 Sol",
+        "result": [
+          {
+            "id": "T10-sol-0",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 181,
+              "end": 189,
+              "text": "March 20",
+              "labels": [
+                "locale_conventions: date_format"
+              ]
+            }
+          },
+          {
+            "id": "T10-sol-0",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "major"
+              ]
+            }
+          },
+          {
+            "id": "T10-sol-0",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "The month-first date format is not appropriate for en-AU and reverses the explicitly supplied wording."
+              ]
+            }
+          },
+          {
+            "id": "T10-sol-0",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "20 March"
+              ]
+            }
+          },
+          {
+            "id": "T10-sol-1",
+            "from_name": "span_dimension_subtype",
+            "to_name": "output_text",
+            "type": "labels",
+            "value": {
+              "start": 191,
+              "end": 197,
+              "text": "Enroll",
+              "labels": [
+                "linguistic_conventions: spelling"
+              ]
+            }
+          },
+          {
+            "id": "T10-sol-1",
+            "from_name": "span_severity",
+            "to_name": "output_text",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "minor"
+              ]
+            }
+          },
+          {
+            "id": "T10-sol-1",
+            "from_name": "span_rationale",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "Australian English normally uses the spelling \u201cEnrol\u201d."
+              ]
+            }
+          },
+          {
+            "id": "T10-sol-1",
+            "from_name": "span_suggested_correction",
+            "to_name": "output_text",
+            "type": "textarea",
+            "value": {
+              "text": [
+                "Enrol"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,91 @@
+<View>
+  <Header value="V1 output under review"/>
+  <Text name="task_id_display" value="$task_id"/>
+  <Text name="business_name_display" value="$business_name"/>
+  <Text name="category_label_display" value="$category_label"/>
+  <Text name="target_locale_display" value="$target_locale"/>
+  <Text name="brief_display" value="$brief"/>
+
+  <Header value="User prompt (input to the model under test)"/>
+  <Text name="user_prompt_display" value="$user_prompt"/>
+
+  <Header value="V1 model output (this is what you are assessing)"/>
+  <Text name="output_text" value="$output_text"/>
+
+  <Header value="Sol (LLM-as-judge) reference assessment"/>
+  <Text name="sol_summary_display" value="$sol_summary"/>
+
+  <View style="border: 1px solid #ccc; padding: 1em; margin-top: 1em;">
+    <Header value="Span-level issues (highlight the exact text an issue applies to)"/>
+    <Labels name="span_dimension_subtype" toName="output_text">
+      <Label value="terminology: inconsistent_with_terminology_resource"/>
+      <Label value="terminology: wrong_term"/>
+      <Label value="accuracy: addition"/>
+      <Label value="accuracy: omission"/>
+      <Label value="accuracy: altered_fact"/>
+      <Label value="linguistic_conventions: grammar"/>
+      <Label value="linguistic_conventions: punctuation"/>
+      <Label value="linguistic_conventions: spelling"/>
+      <Label value="style: organization_style"/>
+      <Label value="style: language_register"/>
+      <Label value="style: awkward_style"/>
+      <Label value="style: unidiomatic_style"/>
+      <Label value="locale_conventions: currency_format"/>
+      <Label value="locale_conventions: date_format"/>
+      <Label value="locale_conventions: measurement_format"/>
+      <Label value="locale_conventions: number_format"/>
+      <Label value="locale_conventions: time_format"/>
+      <Label value="locale_conventions: address_format"/>
+      <Label value="locale_conventions: telephone_format"/>
+      <Label value="locale_conventions: shortcut_key"/>
+      <Label value="audience_appropriateness: culture_specific_reference"/>
+      <Label value="constraint_compliance: length_violation"/>
+      <Label value="constraint_compliance: missing_required_element"/>
+      <Label value="constraint_compliance: format_violation"/>
+    </Labels>
+    <Choices name="span_severity" toName="output_text" perRegion="true" required="true">
+      <Choice value="minor"/>
+      <Choice value="major"/>
+      <Choice value="critical"/>
+    </Choices>
+    <TextArea name="span_rationale" toName="output_text" perRegion="true" placeholder="Rationale"/>
+    <TextArea name="span_suggested_correction" toName="output_text" perRegion="true" placeholder="Suggested correction"/>
+  </View>
+
+  <View style="border: 1px solid #ccc; padding: 1em; margin-top: 1em;">
+    <Header value="Whole-output issues (no specific span applies, e.g. a length constraint)"/>
+    <Choices name="doc_dimension_subtype" toName="output_text">
+      <Choice value="terminology: inconsistent_with_terminology_resource"/>
+      <Choice value="terminology: wrong_term"/>
+      <Choice value="accuracy: addition"/>
+      <Choice value="accuracy: omission"/>
+      <Choice value="accuracy: altered_fact"/>
+      <Choice value="linguistic_conventions: grammar"/>
+      <Choice value="linguistic_conventions: punctuation"/>
+      <Choice value="linguistic_conventions: spelling"/>
+      <Choice value="style: organization_style"/>
+      <Choice value="style: language_register"/>
+      <Choice value="style: awkward_style"/>
+      <Choice value="style: unidiomatic_style"/>
+      <Choice value="locale_conventions: currency_format"/>
+      <Choice value="locale_conventions: date_format"/>
+      <Choice value="locale_conventions: measurement_format"/>
+      <Choice value="locale_conventions: number_format"/>
+      <Choice value="locale_conventions: time_format"/>
+      <Choice value="locale_conventions: address_format"/>
+      <Choice value="locale_conventions: telephone_format"/>
+      <Choice value="locale_conventions: shortcut_key"/>
+      <Choice value="audience_appropriateness: culture_specific_reference"/>
+      <Choice value="constraint_compliance: length_violation"/>
+      <Choice value="constraint_compliance: missing_required_element"/>
+      <Choice value="constraint_compliance: format_violation"/>
+    </Choices>
+    <Choices name="doc_severity" toName="output_text">
+      <Choice value="minor"/>
+      <Choice value="major"/>
+      <Choice value="critical"/>
+    </Choices>
+    <TextArea name="doc_rationale" toName="output_text" placeholder="Rationale"/>
+    <TextArea name="doc_suggested_correction" toName="output_text" placeholder="Suggested correction"/>
+  </View>
+</View>

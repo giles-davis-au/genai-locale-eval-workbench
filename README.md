@@ -121,13 +121,23 @@ genai-locale-eval-workbench/
 │   ├── judge-run-v2.md      # generated; see scripts/build_judge_run.py
 │   ├── judge-run-v2.1.md    # generated; a scoped partial re-run, see docs/judge-prompt.md
 │   └── data-schema.md
-└── scripts/
-    ├── validate_data.py
-    ├── build_v2_context.py
-    ├── build_judge_run.py
-    ├── split_judge_response.py
-    └── import_judge_results.py
+├── scripts/
+│   ├── validate_data.py
+│   ├── build_v2_context.py
+│   ├── build_judge_run.py
+│   ├── split_judge_response.py
+│   └── import_judge_results.py
+└── label-studio/
+    ├── label-studio.brief.md      # the brief that specified this folder's files
+    ├── tasks_all10.json           # all 10 V1 tasks + their Sol assessments, as Label Studio tasks/predictions
+    ├── tasks_selected.json        # a 6-task subset, see selection_report.md
+    ├── label_config.xml           # Label Studio labeling-interface config, derived from data/rubric.json
+    ├── selection_report.md
+    ├── validation_report.md
+    └── local_setup.md             # how the local Label Studio instance was set up and run
 ```
+
+**`label-studio/` is a separate exercise, not part of the case study above.** It holds the files used to generate a Label Studio-compatible import package — the V1 outputs and their LLM-as-a-judge (Sol) assessments, imported as genuine Label Studio predictions — so that a local instance of Label Studio could be walked through using its own review UI. See `label-studio/local_setup.md` for how it was set up and run.
 
 ## Implementation phases
 
